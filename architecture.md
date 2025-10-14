@@ -1,6 +1,7 @@
-Workflow Stages  SEARCH → SELECT → EXTRACT → ANALYZE → REPORT
+Workflow Stages  QUESTION → SEARCH → SELECT → EXTRACT → ANALYZE → REPORT
 
 ├─ Planner/Controller
+├─ Question Formulation Agent
 ├─ Search Agent
 ├─ Screening Agent
 ├─ Extraction Agent
