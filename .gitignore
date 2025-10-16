@@ -1,0 +1,4 @@
+pdfs/*
+*.ipynb
+.env
+debug_logs
