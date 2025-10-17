@@ -1,4 +1,3 @@
-# pip install pymupdf rapidfuzz openai
 import os, re, json, uuid
 from pathlib import Path
 from datetime import datetime, UTC
@@ -67,7 +66,7 @@ class PDFLLMExtractor:
         base_url: str = "https://api.studio.nebius.com/v1/",
         model: str = "openai/gpt-oss-20b",
         temperature: float = 0.0,
-        max_tokens: int = 800,
+        max_tokens: int = 2000,
         debug: bool = False,
         save_debug: bool = False,
         debug_dir: str = "debug_logs",
@@ -94,12 +93,72 @@ class PDFLLMExtractor:
     def _now_tag(self) -> str:
         return datetime.now(UTC).strftime("%Y%m%dT%H%M%SZ")
 
-    def _save_text(self, name: str, text: str) -> Path:
+    def _save_text(self, name: str, data: Any) -> Path:
+        """Save debug data to a UTF-8 .txt file.
+
+        Accepts strings and other Python types (e.g., dict, list). Dicts are
+        rendered with one top-level key per block for readability.
+        """
         if not self.save_debug:
             return Path()
-        fname = self.debug_dir / f"{name}_{self._now_tag()}_{uuid.uuid4().hex[:6]}.txt"
+
+        def _indent(text: str, n: int = 2) -> str:
+            pad = " " * n
+            return "\n".join(pad + line if line else pad for line in text.splitlines())
+
+        def _format_value(val: Any) -> str:
+            # Strings: pretty-print if they contain valid JSON
+            if isinstance(val, str):
+                s = val.strip()
+                if s.startswith("{") or s.startswith("["):
+                    try:
+                        parsed = json.loads(s)
+                        return json.dumps(parsed, ensure_ascii=False, indent=2, sort_keys=True)
+                    except Exception:
+                        pass
+                return val
+            # Mapping: pretty JSON for nested dicts when not top-level
+            if isinstance(val, dict):
+                try:
+                    return json.dumps(val, ensure_ascii=False, indent=2, sort_keys=True)
+                except Exception:
+                    from pprint import pformat
+                    return pformat(val, width=100, compact=False)
+            # Sequences/Sets: one item per line
+            if isinstance(val, (list, tuple, set)):
+                lines = []
+                for item in val:
+                    try:
+                        as_json = json.dumps(item, ensure_ascii=False)
+                    except Exception:
+                        from pprint import pformat
+                        as_json = pformat(item, width=100, compact=False)
+                    lines.append(f"- {as_json}")
+                return "\n".join(lines)
+            # Fallback: JSON if possible, else repr
+            try:
+                return json.dumps(val, ensure_ascii=False, indent=2)
+            except Exception:
+                from pprint import pformat
+                return pformat(val, width=100, compact=False)
+
+        def _format_for_save(obj: Any) -> str:
+            # Top-level dict: one block per key with clear separation
+            if isinstance(obj, dict):
+                parts = []
+                for k in sorted(obj.keys(), key=lambda x: str(x)):
+                    v = obj[k]
+                    v_text = _format_value(v)
+                    parts.append(f"{k}:\n{_indent(v_text, 2)}")
+                return "\n\n".join(parts)
+            # Other types
+            return _format_value(obj)
+
+        text = _format_for_save(data) if data is not None else ""
+
+        fname = self.debug_dir / f"{name}.txt"  # _{self._now_tag()}
         with open(fname, "w", encoding="utf-8") as f:
-            f.write(text or "")
+            f.write(text)
         self._d(f"Saved {name} -> {fname}")
         return fname
 
@@ -170,6 +229,9 @@ class PDFLLMExtractor:
             for key in ("results"):
                 if ctx.get(key):
                     self._d(f"{key.upper()} head:", repr(ctx[key][:200]))
+
+        if self.save_debug:
+            self._save_text('ctx', ctx)
 
         return ctx
 
@@ -405,7 +467,7 @@ TEXT:
             ],
             "confidence": 0.1,
             "comment": "Extraction failed",
-            "comment_detailed": comment[:600]
+            "comment_detailed": comment[:600].replace("See llm_raw_*.txt for the raw content", "See terminal logs (llm_raw_* dump) for the raw content")
         }
 
 
