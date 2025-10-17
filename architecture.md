@@ -114,13 +114,14 @@ Rules:
 ### Flow
 pages = self.extract_pages(pdf_path)
 
-Building context from predefined keywords and found tables.
-context = self.build_context(pages)
-	slice_sections(full_text)
-	find_table_like_blocks(p["text"])
+(Skipped)
+# Building context from predefined keywords and found tables.
+# context = self.build_context(pages)
+# 	slice_sections(full_text)
+# 	find_table_like_blocks(p["text"])
 	
 User message is a combination of question, json EXTRACTION_SCHEMA, Rules for llm to answer and context
-user_payload = self.make_user_message(question, context)
+user_payload = self.make_user_message(question, pages)
 
 raw = self.llm_raw_output_all(self.SYSTEM_PROMPT, user_payload)
 
@@ -128,8 +129,8 @@ parsed = self.parse_json_safely(raw)
 ### Output
 parsed
 
-#### Improvement plan and ideas
-Context building is not working great now. Sections are predefined now, and I believe, the text from them is bound by the page ending
+### Improvement plan and ideas
+Context building is not working now. It is skipped. Sections are predefined, and I believe, the text from them is bound by the page ending. I need to think of how to narrow the search context
 
 json EXTRACTION_SCHEMA is predefined. I think it should vary with the research question 
 

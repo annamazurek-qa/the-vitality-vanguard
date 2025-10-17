@@ -1,4 +1,5 @@
-pdfs/*
+pdfs
 *.ipynb
 .env
 debug_logs
+extractor_output
