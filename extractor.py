@@ -212,7 +212,7 @@ class PDFLLMExtractor:
             for p in pages:
                 table_blocks += self.find_table_like_blocks(p["text"])
 
-        ctx = {
+        context = {
             "abstract": secs.get("abstract", "")[:4000],
             "methods": secs.get("methods", "")[:6000],
             "results": secs.get("results", "")[:8000],
@@ -224,35 +224,35 @@ class PDFLLMExtractor:
 
         # Debug summary
         self._d("Context lengths:",
-                {k: len(v) for k, v in ctx.items()})
+                {k: len(v) for k, v in context.items()})
         if self.debug:
             for key in ("results"):
-                if ctx.get(key):
-                    self._d(f"{key.upper()} head:", repr(ctx[key][:200]))
+                if context.get(key):
+                    self._d(f"{key.upper()} head:", repr(context[key][:200]))
 
         if self.save_debug:
-            self._save_text('ctx', ctx)
+            self._save_text('context', context)
 
-        return ctx
+        return context
 
     # ========= Prompt builder =========
-    def make_user_message(self, question: str, ctx: Dict[str, str]) -> str:
+    def make_user_message(self, question: str, context: Dict[str, str]) -> str:
         schema_json = json.dumps(self.EXTRACTION_SCHEMA, ensure_ascii=False, indent=2)
 
         # Put keyword windows & results first (helpful for your metformin question)
         blocks = []
-        if ctx.get("results"):
-            blocks.append("== RESULTS ==\n" + ctx["results"])
-        if ctx.get("discussion"):
-            blocks.append("== DISCUSSION ==\n" + ctx["discussion"])
-        if ctx.get("conclusion"):
-            blocks.append("== CONCLUSION ==\n" + ctx["conclusion"])
-        if ctx.get("tables_texty"):
-            blocks.append("== TABLE-LIKE BLOCKS ==\n" + ctx["tables_texty"])
-        if ctx.get("abstract"):
-            blocks.append("== ABSTRACT ==\n" + ctx["abstract"])
+        if context.get("results"):
+            blocks.append("== RESULTS ==\n" + context["results"])
+        if context.get("discussion"):
+            blocks.append("== DISCUSSION ==\n" + context["discussion"])
+        if context.get("conclusion"):
+            blocks.append("== CONCLUSION ==\n" + context["conclusion"])
+        if context.get("tables_texty"):
+            blocks.append("== TABLE-LIKE BLOCKS ==\n" + context["tables_texty"])
+        if context.get("abstract"):
+            blocks.append("== ABSTRACT ==\n" + context["abstract"])
         # As a last resort:
-        blocks.append("== FULL TAIL ==\n" + ctx.get("full_tail", ""))
+        blocks.append("== FULL TAIL ==\n" + context.get("full_tail", ""))
 
         context_block = "\n\n".join(blocks)[:14000]
 
@@ -434,8 +434,8 @@ TEXT:
             return self._empty_payload("No text pages extracted (scanned PDF?)")
 
         # 2) Context
-        ctx = self.build_context(pages)
-        user_payload = self.make_user_message(question, ctx)
+        context = self.build_context(pages)
+        user_payload = self.make_user_message(question, context)
 
         # 3) LLM
         try:
