@@ -115,10 +115,10 @@ Rules:
 pages = self.extract_pages(pdf_path)
 
 (Skipped)
-# Building context from predefined keywords and found tables.
-# context = self.build_context(pages)
-# 	slice_sections(full_text)
-# 	find_table_like_blocks(p["text"])
+~~Building context from predefined keywords and found tables.
+context = self.build_context(pages)
+	slice_sections(full_text)
+	find_table_like_blocks(p["text"])~~
 	
 User message is a combination of question, json EXTRACTION_SCHEMA, Rules for llm to answer and context
 user_payload = self.make_user_message(question, pages)
