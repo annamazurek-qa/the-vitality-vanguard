@@ -17,7 +17,7 @@ Not an agent really
 What is the effect of metformin on lifespan in animal models?
 ```
 
-**sections to search (predefined now, should not be)**
+**Sections to search (predefined now, should not be)**
 ```
 SECTION_HEADS = [
 
@@ -130,10 +130,12 @@ parsed = self.parse_json_safely(raw)
 parsed
 
 ### Improvement plan and ideas
-Context building is not working now. It is skipped. Sections are predefined, and I believe, the text from them is bound by the page ending. I need to think of how to narrow the search context
+Context building is not working now. It is skipped. Sections are predefined, and I believe, the text from them is bound by the page ending. 
+
+I need to think of how to narrow the search context. Maybe use a more advanced extractor that can see sections and make an small llm call to filter out irrelevant ones
 
 json EXTRACTION_SCHEMA is predefined. I think it should vary with the research question 
 
-I still have no idea what to extract specifically
+I still have no idea of what to extract specifically
 
 Don't know how to handle different outcome types in multiple researches 
