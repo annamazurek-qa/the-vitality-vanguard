@@ -1,0 +1,20 @@
+{
+  "pico": {
+    "population": "Adults with type 2 diabetes",
+    "intervention": "Resveratrol",
+    "comparison": "Placebo or standard care",
+    "outcomes": ["HbA1c", "FPG", "HOMA-IR"]
+  },
+  "designs": ["RCT", "crossover RCT"],
+  "include": { "humans": true, "languages": ["en"], "year_min": 1990 },
+  "exclude": { "animal": true, "in_vitro": true, "review": true },
+  "taxonomy": {
+    "data_types": {
+      "Blood biochemistry": ["HbA1c", "fasting plasma glucose", "FPG", "lipid", "insulin"],
+      "RNA sequencing": ["RNA-seq", "transcriptome", "reads per kilobase"],
+      "DNA methylation": ["methylation", "bisulfite"],
+      "Neurocognitive": ["cognitive", "MMSE", "MoCA", "neuropsych"],
+      "Imaging": ["MRI", "CT", "PET", "ultrasound"]
+    }
+  }
+}
