@@ -1,4 +1,5 @@
 ## MVP
+
 ##### Protocol&Question Formulation Agent
 @Arthur
 This agent's primary role is to define the scope and methodology of the review, creating a clear and answerable research question.
@@ -61,7 +62,19 @@ studies and the overall pooled result. It can also create a Funnel Plot to asses
 
 ##### Use Cases & Testing 
 @Eli
+Market research
+Open Source - whe value of it?
+https://silvi.ai/help
 
 ##### Code architecture. Agents framework development and data storage unification
 ## Next steps
 ##### Article screening agent
+
+
+#### Notes from call with mentor
+pubmed baseline
+
+deabetis
+metformin
+
+abstract final plot and forest plot - generation of statistics  
