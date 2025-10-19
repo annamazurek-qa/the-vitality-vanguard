@@ -36,6 +36,9 @@ This agent mimics the human process of screening thousands of articles to find t
 obviously irrelevant studies.
 2. Full-Text Retrieval & Analysis: For potentially relevant studies, the agent retrieves the full-text articles. It then employs more advanced NLP to analyze the full text against the detailed inclusion criteria (e.g., study design must be a randomized controlled trial, population age must be within a certain range).
 • Output: A final list of included studies and a generated PRISMA (Preferred Reporting Items for Systematic Reviews and Meta-Analyses) flow diagram detailing the selection process
+
+Does: relevance screening (title/abstract first pass), automatic classification (article type, data type, species), apply inclusion/exclusion, optional full-text eligibility decision using text provided by others.
+
 ##### Data extraction from pdf or text to useful data
 @Dmitry
 Module 4: Data Extraction & Risk of Bias Agent
@@ -72,9 +75,6 @@ https://silvi.ai/help
 
 
 #### Notes from call with mentor
-pubmed baseline
+pubmed baseline+deabetis+metformin database
 
-deabetis
-metformin
-
-abstract final plot and forest plot - generation of statistics  
+abstract final plot and forest plot - generation of statistics
