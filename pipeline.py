@@ -104,9 +104,9 @@ class MetaAnalysisPipeline:
         self.log("")
 
     def log(self, message: str):
-        """Log message to console and file."""
+        """Log message to console and file (UTF-8 safe on Windows)."""
         print(message)
-        with open(self.log_file, 'a') as f:
+        with open(self.log_file, 'a', encoding='utf-8', errors='replace') as f:
             f.write(f"{message}\n")
 
     def step(self, step_num: int, description: str):
@@ -131,12 +131,11 @@ class MetaAnalysisPipeline:
 
         if protocol_path and os.path.exists(protocol_path):
             self.log(f"Loading existing protocol from: {protocol_path}")
-            with open(protocol_path, 'r') as f:
+            with open(protocol_path, 'r', encoding='utf-8') as f:
                 protocol = json.load(f)
 
-            # Save copy to output
             output_path = self.protocol_dir / "protocol.json"
-            with open(output_path, 'w') as f:
+            with open(output_path, 'w', encoding='utf-8') as f:
                 json.dump(protocol, f, indent=2)
 
             self.log(f"✓ Protocol loaded and saved to: {output_path}")
@@ -314,9 +313,9 @@ class MetaAnalysisPipeline:
 
         # Save citations
         citations_path = self.search_dir / "citations.jsonl"
-        with open(citations_path, 'w') as f:
+        with open(citations_path, 'w', encoding='utf-8', errors='replace') as f:
             for meta in metadata_list:
-                f.write(json.dumps(meta) + '\n')
+                f.write(json.dumps(meta, ensure_ascii=False) + '\n')
 
         self.log(f"✓ Saved {len(metadata_list)} citations to: {citations_path}")
 
@@ -403,7 +402,7 @@ class MetaAnalysisPipeline:
         included_ids = []
         ft_decisions = self.screening_dir / "ft_decisions.jsonl"
         if ft_decisions.exists():
-            with open(ft_decisions) as f:
+            with open(ft_decisions, encoding='utf-8', errors='replace') as f:
                 for line in f:
                     record = json.loads(line)
                     if record.get("decision") == "include":
@@ -451,12 +450,12 @@ class MetaAnalysisPipeline:
 
             try:
                 # Extract data
-                result = extractor.extract_from_pdf(str(pdf_path), question)
+                result = extractor.extract(str(pdf_path), question)
 
                 # Save extraction
                 output_file = self.extraction_dir / f"{study_id}.json"
-                with open(output_file, 'w') as f:
-                    json.dump(result, f, indent=2)
+                with open(output_file, 'w', encoding='utf-8') as f:
+                    json.dump(result, f, indent=2, ensure_ascii=False)
 
                 extraction_files.append(str(output_file))
                 self.log(f"    ✓ Saved to: {output_file.name}")
@@ -533,8 +532,8 @@ class MetaAnalysisPipeline:
 
         # Save results summary
         summary_path = self.analysis_dir / "meta_analysis_results.json"
-        with open(summary_path, 'w') as f:
-            json.dump(results, f, indent=2)
+        with open(summary_path, 'w', encoding='utf-8') as f:
+            json.dump(results, f, indent=2, ensure_ascii=False)
 
         self.log(f"✓ Meta-analysis complete: {len(results)} outcomes analyzed")
         self.log(f"  Results saved to: {summary_path}")
@@ -549,7 +548,7 @@ class MetaAnalysisPipeline:
 
         elapsed = time.time() - self.start_time
 
-        with open(report_path, 'w') as f:
+        with open(report_path, 'w', encoding='utf-8') as f:
             f.write("# Meta-Analysis Report\n\n")
             f.write(f"**Generated:** {datetime.now().isoformat()}\n\n")
             f.write(f"**Pipeline Runtime:** {elapsed:.1f} seconds\n\n")
