@@ -17,15 +17,203 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 
-# ---------- SIMPLE DEFAULTS (edit if you want) ----------
-BASE_DIR = os.path.abspath(os.path.dirname(__file__))
-INPATH = BASE_DIR                 # scans for *.json here
-OUTDIR = os.path.join(BASE_DIR, "meta_output")
-MIN_K = 2                         # min studies per (outcome,type) to pool
-MAKE_PLOTS = True                 # set False to skip forest plots
-
 Z = 1.96
 
+# --- Add this helper near the top (imports: os, json, math, glob already available) ---
+def _impute_ci_from_raw(json_paths, outdir):
+    """
+    Fill missing CIs for continuous MDs using follow-up or change stats
+    when both arms are present at the same outcome/timepoint.
+
+    Writes updated copies to {outdir}/ci_imputed/.
+    """
+    import os, json, math
+
+    outdir_ci = os.path.join(outdir, "ci_imputed")
+    os.makedirs(outdir_ci, exist_ok=True)
+    Z = 1.96
+
+    def _as_list_of_dicts(x):
+        if x is None:
+            return []
+        if isinstance(x, dict):
+            return [x]
+        if isinstance(x, list):
+            return [i for i in x if isinstance(i, dict)]
+        return []
+
+    def _f(x):
+        try:
+            return float(x)
+        except Exception:
+            return None
+
+    def _i(x):
+        try:
+            return int(x)
+        except Exception:
+            v = _f(x)
+            return int(v) if v is not None else None
+
+    def _classify_arm(arm_name, exposure_label, comparator_label):
+        """Return 'intervention' | 'control' | None based on simple heuristics."""
+        s = str(arm_name or "").lower()
+        exp = str(exposure_label or "").lower()
+        comp = str(comparator_label or "").lower()
+
+        # obvious control markers
+        control_tokens = ["placebo", "control", "standard care", "usual care", "no treatment", "non-use", "non use"]
+        if any(tok in s for tok in control_tokens) or (comp and comp in s):
+            return "control"
+
+        # obvious intervention markers
+        if exp and exp in s:
+            return "intervention"
+        intervention_tokens = ["resveratrol", "metformin"]
+        if any(tok in s for tok in intervention_tokens) and not any(tok in s for tok in control_tokens):
+            return "intervention"
+
+        return None
+
+    def _pair_stats(rows, exposure_label, comparator_label, mean_key, sd_key):
+        """
+        Try to find one intervention and one control row with given keys and n.
+        Returns (md, ci_low, ci_high, unit) or None.
+        """
+        # index by arm name
+        by_arm = {}
+        for r in rows:
+            arm = r.get("arm_name")
+            if not isinstance(arm, str):
+                continue
+            by_arm.setdefault(arm, []).append(r)
+
+        # flatten to one row per arm (prefer row that has the needed fields)
+        arms = {}
+        for arm, lst in by_arm.items():
+            best = None
+            for r in lst:
+                m, s, n = _f(r.get(mean_key)), _f(r.get(sd_key)), _i(r.get("n"))
+                if m is not None and s is not None and n is not None:
+                    best = r
+                    break
+            if best is not None:
+                arms[arm] = best
+
+        if len(arms) < 2:
+            return None
+
+        # try to classify
+        classified = {}
+        for arm, r in arms.items():
+            tag = _classify_arm(arm, exposure_label, comparator_label)
+            if tag:
+                classified[tag] = (arm, r)
+
+        # if classification failed but we have exactly two arms, pick a reasonable default:
+        if "intervention" not in classified or "control" not in classified:
+            if len(arms) == 2:
+                a_name, b_name = list(arms.keys())
+                # prefer the one that doesn't look like control as intervention
+                a_tag = _classify_arm(a_name, exposure_label, comparator_label)
+                b_tag = _classify_arm(b_name, exposure_label, comparator_label)
+                # choose intervention as the one not explicitly control
+                if a_tag == "control":
+                    classified["control"] = (a_name, arms[a_name])
+                    classified["intervention"] = (b_name, arms[b_name])
+                elif b_tag == "control":
+                    classified["control"] = (b_name, arms[b_name])
+                    classified["intervention"] = (a_name, arms[a_name])
+                else:
+                    # last resort: alphabetical, but skip to avoid wrong sign
+                    return None
+            else:
+                return None
+
+        _, a = classified.get("intervention")
+        _, b = classified.get("control")
+        if a is None or b is None:
+            return None
+
+        m1, s1, n1 = _f(a.get(mean_key)), _f(a.get(sd_key)), _i(a.get("n"))
+        m0, s0, n0 = _f(b.get(mean_key)), _f(b.get(sd_key)), _i(b.get("n"))
+        if None in (m1, s1, n1, m0, s0, n0):
+            return None
+
+        md = m1 - m0
+        se = ((s1**2) / n1 + (s0**2) / n0) ** 0.5
+        unit = a.get("units") or b.get("units")
+        return md, md - Z * se, md + Z * se, unit
+
+    updated = []
+    for p in json_paths:
+        try:
+            with open(p, "r", encoding="utf-8") as f:
+                data = json.load(f)
+        except Exception:
+            continue
+
+        raw = _as_list_of_dicts(data.get("outcomes_raw"))
+        if not raw:
+            continue
+
+        exp = (data.get("exposure") or {}).get("label")
+        comp = (data.get("exposure") or {}).get("comparator")
+
+        # group raw rows by (name, timepoint_weeks)
+        groups = {}
+        for r in raw:
+            # guard in case a stray non-dict slipped through
+            if not isinstance(r, dict):
+                continue
+            key = (r.get("name"), r.get("timepoint_weeks"))
+            groups.setdefault(key, []).append(r)
+
+        changed = False
+        for (name, tp), rows in groups.items():
+            # try follow-up first, then change scores
+            res = _pair_stats(rows, exp, comp, "followup_mean", "followup_sd")
+            if res is None:
+                res = _pair_stats(rows, exp, comp, "change_mean", "change_sd")
+            if res is None:
+                continue
+
+            est, lo, hi, unit = res
+            efs = data.get("effects_by_outcome") or []
+            attached = False
+
+            for e in efs:
+                if e.get("name") == name and (e.get("timepoint_weeks") == tp or (e.get("timepoint_weeks") is None and tp is None)):
+                    # only fill CIs if missing
+                    if e.get("ci_low") is None and e.get("ci_high") is None:
+                        e["ci_low"] = round(lo, 4)
+                        e["ci_high"] = round(hi, 4)
+                        if e.get("estimate") is None:
+                            e["estimate"] = round(est, 4)
+                        e["unit"] = e.get("unit") or unit
+                        e["notes"] = (e.get("notes") or "") + " [CI imputed from raw (unadjusted)]"
+                        changed = True
+                        attached = True
+                        break
+
+            if not attached:
+                # append a new, explicitly unadjusted MD effect
+                efs.append({
+                    "name": name, "type": "MD", "timepoint_weeks": tp,
+                    "estimate": round(est, 4), "ci_low": round(lo, 4), "ci_high": round(hi, 4),
+                    "adjusted": False, "unit": unit, "subgroup": None,
+                    "notes": "Effect computed from raw (unadjusted)"
+                })
+                data["effects_by_outcome"] = efs
+                changed = True
+
+        if changed:
+            outp = os.path.join(outdir_ci, os.path.basename(p))
+            with open(outp, "w", encoding="utf-8") as w:
+                json.dump(data, w, ensure_ascii=False, indent=2)
+            updated.append(outp)
+
+    return updated
 
 def coerce_float(x):
     if x is None or (isinstance(x, str) and str(x).strip() == ""):
@@ -288,9 +476,15 @@ class MetaAnalyzer:
 if __name__ == "__main__":
     INPATH = "extractor_output/"
     OUTDIR = "meta_output/"
-    MIN_K = 2                         # min studies per (outcome,type) to pool
-    MAKE_PLOTS = True                 # set False to skip forest plots
+    MIN_K = 2
+    MAKE_PLOTS = True
 
     os.makedirs(OUTDIR, exist_ok=True)
+
+    # NEW: impute missing CIs into copies under OUTDIR/ci_imputed/
+    json_paths = sorted(glob.glob(os.path.join(INPATH, "*.json")))
+    _impute_ci_from_raw(json_paths, OUTDIR)
+
+    # Proceed with your usual analyzer on the originals or on the ci_imputed copies
     analyzer = MetaAnalyzer(json_paths=[], outdir=OUTDIR, min_k=MIN_K)
     analyzer.run(make_plots=MAKE_PLOTS)
