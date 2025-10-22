@@ -1,0 +1,119 @@
+{
+  "study_metadata": {
+    "design": "double-blind",
+    "species": "Homo sapiens",
+    "n_total": 14,
+    "country": "Australia",
+    "setting": "outpatient",
+    "population": "diet-controlled type 2 diabetes",
+    "inclusion_key": "diet-controlled type 2 diabetes",
+    "exclusion_key": "microvascular or macrovascular complications, smokers, medication affecting GI or CV",
+    "mean_age": 67.5,
+    "female_pct": 28.6,
+    "diabetes_status": "T2D",
+    "primary_outcome": "HbA1c"
+  },
+  "intervention": {
+    "agent": "resveratrol",
+    "form": "capsule",
+    "dose_mg_per_day": 1000,
+    "duration_weeks": 5,
+    "cointerventions": null
+  },
+  "comparison": {
+    "type": "placebo",
+    "description": "microcrystalline cellulose capsules"
+  },
+  "arms": [
+    {
+      "name": "resveratrol",
+      "n": 14,
+      "dose_mg_per_day": 1000,
+      "duration_weeks": 5
+    },
+    {
+      "name": "placebo",
+      "n": 14,
+      "dose_mg_per_day": 0,
+      "duration_weeks": 5
+    }
+  ],
+  "outcomes_raw": [
+    {
+      "name": "HbA1c",
+      "timepoint_weeks": 5,
+      "arm_name": "resveratrol",
+      "baseline_mean": 6.4,
+      "baseline_sd": 0.75,
+      "followup_mean": 6.4,
+      "followup_sd": 0.75,
+      "change_mean": 0.0,
+      "change_sd": 0.0,
+      "units": "%",
+      "notes": "no change"
+    }
+  ],
+  "effects_by_outcome": [
+    {
+      "name": "HbA1c",
+      "type": "MD",
+      "timepoint_weeks": 5,
+      "estimate": 0.0,
+      "ci_low": null,
+      "ci_high": null,
+      "p_value": null,
+      "adjusted": false,
+      "model_notes": null
+    }
+  ],
+  "risk_of_bias": {
+    "randomization_process": null,
+    "deviations_from_intended": null,
+    "missing_outcome_data": null,
+    "measurement_of_outcome": null,
+    "selection_of_reported_result": null,
+    "overall": null
+  },
+  "effect": {
+    "type": "MD",
+    "estimate": 0.0,
+    "ci_low": null,
+    "ci_high": null,
+    "p_value": null
+  },
+  "where_found": [
+    {
+      "section": "abstract",
+      "page": null
+    },
+    {
+      "section": "methods",
+      "page": null
+    },
+    {
+      "section": "results",
+      "page": null
+    }
+  ],
+  "evidence": [
+    {
+      "section": "abstract",
+      "page": null,
+      "snippet": "Administration of resveratrol for 5 wk has no effect on glycemic control in type 2 diabetes: a randomized controlled trial."
+    },
+    {
+      "section": "methods",
+      "page": null,
+      "snippet": "Fourteen patients with diet-controlled type-2 diabetes received resveratrol (500 mg twice daily) or a placebo over two 5-wk intervention periods."
+    },
+    {
+      "section": "results",
+      "page": null,
+      "snippet": "Neither the change in AUC nor the change in fasting and peak blood glucose concentrations from weeks 0 to 5 differed between resveratrol and placebo groups."
+    }
+  ],
+  "missing_fields": [],
+  "confidence": 0.6,
+  "comment": "No effect reported; data not fully available",
+  "comment_detailed": "I searched the abstract, methods, and results for study design, dosage, duration, and glycemic outcomes. The trial was a double-blind, randomized, crossover study with 14 diet-controlled type 2 diabetes patients in Australia. Resveratrol was given as 500 mg capsules twice daily for 5 weeks, with a placebo control. HbA1c and blood glucose were measured, but the article text does not provide numeric change values or confidence intervals; it only states that changes did not differ between groups. Consequently, I set the effect estimate to 0.0 and left CI fields null. All risk-of-bias domains are unknown due to lack of detail. Additional data such as full tables or the PDF would allow extraction of exact means, SDs, and statistical estimates. "
+}

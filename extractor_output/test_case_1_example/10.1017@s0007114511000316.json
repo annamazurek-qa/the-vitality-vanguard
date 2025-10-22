@@ -1,0 +1,132 @@
+{
+  "study_metadata": {
+    "design": "double-blind",
+    "species": "Homo sapiens",
+    "n_total": 19,
+    "country": "Hungary",
+    "setting": "outpatient",
+    "population": "type 2 diabetic patients",
+    "inclusion_key": "type 2 diabetes, age >18, normal creatinine clearance, on ACEi or ARB",
+    "exclusion_key": "insulin treatment, steroids, alcohol or drug abuse, severe liver or cardiac disease, autoimmune disease, acute infection, malignancy",
+    "mean_age": null,
+    "female_pct": null,
+    "diabetes_status": "T2D",
+    "primary_outcome": "HOMA_IR"
+  },
+  "intervention": {
+    "agent": "resveratrol",
+    "form": "capsule",
+    "dose_mg_per_day": 10.0,
+    "duration_weeks": 4.0,
+    "cointerventions": null
+  },
+  "comparison": {
+    "type": "placebo",
+    "description": "gelatin capsules containing only carrier microcrystalline cellulose"
+  },
+  "arms": [
+    {
+      "name": "resveratrol",
+      "n": 10,
+      "dose_mg_per_day": 10.0,
+      "duration_weeks": 4.0
+    },
+    {
+      "name": "placebo",
+      "n": 9,
+      "dose_mg_per_day": 0.0,
+      "duration_weeks": 4.0
+    }
+  ],
+  "outcomes_raw": [
+    {
+      "name": "HOMA_IR",
+      "timepoint_weeks": 4.0,
+      "arm_name": "resveratrol",
+      "baseline_mean": null,
+      "baseline_sd": null,
+      "followup_mean": null,
+      "followup_sd": null,
+      "change_mean": null,
+      "change_sd": null,
+      "units": "HOMA_units",
+      "notes": "significantly decreased"
+    }
+  ],
+  "effects_by_outcome": [],
+  "risk_of_bias": {
+    "randomization_process": null,
+    "deviations_from_intended": null,
+    "missing_outcome_data": null,
+    "measurement_of_outcome": null,
+    "selection_of_reported_result": null,
+    "overall": null
+  },
+  "effect": {
+    "type": null,
+    "estimate": null,
+    "ci_low": null,
+    "ci_high": null,
+    "p_value": null
+  },
+  "where_found": [
+    {
+      "section": "abstract",
+      "page": null
+    },
+    {
+      "section": "methods",
+      "page": null
+    },
+    {
+      "section": "results",
+      "page": null
+    }
+  ],
+  "evidence": [
+    {
+      "section": "abstract",
+      "page": null,
+      "snippet": "After the fourth week, resveratrol significantly decreased insulin resistance (homeostasis model of assessment for insulin resistance) and urinary ortho-tyrosine excretion."
+    },
+    {
+      "section": "methods",
+      "page": null,
+      "snippet": "Nineteen patients were randomly assigned into two groups: ten patients to receive oral resveratrol twice daily (5 mg per capsule) and nine patients to placebo."
+    },
+    {
+      "section": "results",
+      "page": null,
+      "snippet": "After the fourth week, resveratrol significantly decreased insulin resistance (HOMAIR) and urinary ortho-tyrosine excretion."
+    }
+  ],
+  "missing_fields": [
+    "study_metadata.mean_age",
+    "study_metadata.female_pct",
+    "outcomes_raw.baseline_mean",
+    "outcomes_raw.baseline_sd",
+    "outcomes_raw.followup_mean",
+    "outcomes_raw.followup_sd",
+    "outcomes_raw.change_mean",
+    "outcomes_raw.change_sd",
+    "effects_by_outcome.estimate",
+    "effects_by_outcome.ci_low",
+    "effects_by_outcome.ci_high",
+    "effects_by_outcome.p_value",
+    "risk_of_bias.randomization_process",
+    "risk_of_bias.deviations_from_intended",
+    "risk_of_bias.missing_outcome_data",
+    "risk_of_bias.measurement_of_outcome",
+    "risk_of_bias.selection_of_reported_result",
+    "risk_of_bias.overall",
+    "effect.type",
+    "effect.estimate",
+    "effect.ci_low",
+    "effect.ci_high",
+    "effect.p_value",
+    "where_found.page"
+  ],
+  "confidence": 0.7,
+  "comment": "Limited numeric data; effect size unknown.",
+  "comment_detailed": "I searched the abstract, methods, and results sections for study design, participant numbers, dosage, and outcome reporting. The study is a 4‑week double‑blind RCT with 19 male type 2 diabetic patients, 10 receiving 5 mg capsules twice daily (10 mg day⁻¹) and 9 placebo. The primary outcome is HOMA‑IR, reported as significantly decreased after 4 weeks, but no numeric values, SDs, or confidence intervals are provided. Consequently, effect size, CI, and risk‑of‑bias assessments cannot be calculated. Full tables or the PDF would provide the missing statistics. Confidence is moderate (0.7) due to clear reporting of design and outcome direction but absence of quantitative data."
+}

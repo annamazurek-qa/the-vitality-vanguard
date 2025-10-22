@@ -1,0 +1,141 @@
+{
+  "study_metadata": {
+    "design": "RCT",
+    "species": "Homo sapiens",
+    "n_total": 74,
+    "country": "Denmark",
+    "setting": "outpatient",
+    "population": "men with metabolic syndrome",
+    "inclusion_key": "male sex, 30-60 years, diagnosed with MetS",
+    "exclusion_key": null,
+    "mean_age": 49.5,
+    "female_pct": 0,
+    "diabetes_status": "mixed",
+    "primary_outcome": "HOMA_IR"
+  },
+  "intervention": {
+    "agent": "resveratrol",
+    "form": "tablet",
+    "dose_mg_per_day": 1000,
+    "duration_weeks": 16,
+    "cointerventions": null
+  },
+  "comparison": {
+    "type": "placebo",
+    "description": null
+  },
+  "arms": [
+    {
+      "name": "resveratrol",
+      "n": 21,
+      "dose_mg_per_day": 1000,
+      "duration_weeks": 16
+    },
+    {
+      "name": "placebo",
+      "n": 24,
+      "dose_mg_per_day": 0,
+      "duration_weeks": 16
+    },
+    {
+      "name": "resveratrol",
+      "n": 21,
+      "dose_mg_per_day": 150,
+      "duration_weeks": 16
+    }
+  ],
+  "outcomes_raw": [
+    {
+      "name": "HOMA_IR",
+      "timepoint_weeks": 16,
+      "arm_name": "resveratrol",
+      "baseline_mean": null,
+      "baseline_sd": null,
+      "followup_mean": null,
+      "followup_sd": null,
+      "change_mean": null,
+      "change_sd": null,
+      "units": "HOMA_units",
+      "notes": "No effect reported"
+    }
+  ],
+  "effects_by_outcome": [
+    {
+      "name": "HOMA_IR",
+      "type": null,
+      "timepoint_weeks": 16,
+      "estimate": null,
+      "ci_low": null,
+      "ci_high": null,
+      "p_value": null,
+      "adjusted": "false",
+      "model_notes": null
+    }
+  ],
+  "risk_of_bias": {
+    "randomization_process": null,
+    "deviations_from_intended": null,
+    "missing_outcome_data": null,
+    "measurement_of_outcome": null,
+    "selection_of_reported_result": null,
+    "overall": null
+  },
+  "effect": {
+    "type": null,
+    "estimate": null,
+    "ci_low": null,
+    "ci_high": null,
+    "p_value": null
+  },
+  "where_found": [
+    {
+      "section": "abstract",
+      "page": null
+    },
+    {
+      "section": "results",
+      "page": null
+    }
+  ],
+  "evidence": [
+    {
+      "section": "abstract",
+      "page": null,
+      "snippet": "RSV treatment had no beneficial effect on glucose or lipid metabolism."
+    },
+    {
+      "section": "results",
+      "page": null,
+      "snippet": "RSV treatment had no effect on blood pressure, body composition, and lipid deposition in the liver or striated muscle."
+    }
+  ],
+  "missing_fields": [
+    "study_metadata.exclusion_key",
+    "intervention.cointerventions",
+    "comparison.description",
+    "outcomes_raw.baseline_mean",
+    "outcomes_raw.baseline_sd",
+    "outcomes_raw.followup_mean",
+    "outcomes_raw.followup_sd",
+    "outcomes_raw.change_mean",
+    "outcomes_raw.change_sd",
+    "effects_by_outcome.estimate",
+    "effects_by_outcome.ci_low",
+    "effects_by_outcome.ci_high",
+    "effects_by_outcome.p_value",
+    "risk_of_bias.randomization_process",
+    "risk_of_bias.deviations_from_intended",
+    "risk_of_bias.missing_outcome_data",
+    "risk_of_bias.measurement_of_outcome",
+    "risk_of_bias.selection_of_reported_result",
+    "risk_of_bias.overall",
+    "effect.type",
+    "effect.estimate",
+    "effect.ci_low",
+    "effect.ci_high",
+    "effect.p_value"
+  ],
+  "confidence": 0.4,
+  "comment": "No glycemic effect reported",
+  "comment_detailed": "I searched the abstract, methods, and results sections for HOMA-IR values and changes. The study reports no beneficial effect on glucose metabolism, but specific numeric data are not provided in the excerpt. Consequently, outcome means, SDs, and effect estimates could not be extracted. The risk of bias domains remain unknown due to lack of detail. Additional information would be available in the full PDF, tables, or supplementary materials."
+}

@@ -1,0 +1,79 @@
+{
+  "study_metadata": {
+    "design": "RCT",
+    "species": "Homo sapiens",
+    "n_total": 34,
+    "country": "Poland",
+    "setting": "outpatient",
+    "population": "women with PCOS",
+    "inclusion_key": "PCOS per Rotterdam criteria",
+    "exclusion_key": "diabetes mellitus and other endocrinopathies",
+    "mean_age": null,
+    "female_pct": null,
+    "diabetes_status": "none",
+    "primary_outcome": "other"
+  },
+  "intervention": {
+    "agent": "resveratrol",
+    "form": "tablet",
+    "dose_mg_per_day": 1500,
+    "duration_weeks": 12,
+    "cointerventions": null
+  },
+  "comparison": {
+    "type": "placebo",
+    "description": "identical placebo pills"
+  },
+  "arms": [
+    {
+      "name": "resveratrol",
+      "n": 15,
+      "dose_mg_per_day": 1500,
+      "duration_weeks": 12
+    },
+    {
+      "name": "placebo",
+      "n": 15,
+      "dose_mg_per_day": 0,
+      "duration_weeks": 12
+    }
+  ],
+  "outcomes_raw": [],
+  "effects_by_outcome": [],
+  "risk_of_bias": {
+    "randomization_process": null,
+    "deviations_from_intended": null,
+    "missing_outcome_data": null,
+    "measurement_of_outcome": null,
+    "selection_of_reported_result": null,
+    "overall": null
+  },
+  "effect": {
+    "type": null,
+    "estimate": null,
+    "ci_low": null,
+    "ci_high": null,
+    "p_value": null
+  },
+  "where_found": [],
+  "evidence": [
+    {
+      "section": "results",
+      "page": null,
+      "snippet": "fasting insulin level decreased by 31.8% (P .007) and insulin sensitivity index increased by 66.3% (P .04)"
+    }
+  ],
+  "missing_fields": [
+    "study_metadata.mean_age",
+    "study_metadata.female_pct",
+    "study_metadata.primary_outcome",
+    "outcomes_raw",
+    "effects_by_outcome",
+    "risk_of_bias",
+    "effect",
+    "where_found"
+  ],
+  "confidence": 0.4,
+  "comment": "Limited glycemic data; only percent changes reported",
+  "comment_detailed": "I searched the abstract, methods, and results sections for glycemic outcomes such as fasting insulin, HOMA‑IR, HbA1c, or FPG. The study reports a 31.8% decrease in fasting insulin and a 66.3% increase in insulin sensitivity index, but no absolute means, SDs, or confidence intervals are provided. Consequently, outcome tables and effect estimates cannot be extracted. The design is a randomized, double‑blind, placebo‑controlled trial in 34 women with PCOS recruited in Poland, with 1500 mg/day resveratrol for 12 weeks. Because key numeric data are missing, many fields are set to null and listed in missing_fields. Confidence is low due to incomplete data.}"
+}

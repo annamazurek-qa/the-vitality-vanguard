@@ -1,0 +1,134 @@
+{
+  "study_metadata": {
+    "design": "randomized",
+    "species": "Homo sapiens",
+    "n_total": 62,
+    "country": "India",
+    "setting": "outpatient",
+    "population": "type 2 diabetes mellitus patients",
+    "inclusion_key": "known T2DM, age 30-70, on oral hypoglycemic agents for ≥6 months, disease duration ≥3 years",
+    "exclusion_key": "type 1 diabetes, pregnancy, lactation, significant hepatic/renal dysfunction",
+    "mean_age": null,
+    "female_pct": null,
+    "diabetes_status": "T2D",
+    "primary_outcome": "HbA1c"
+  },
+  "intervention": {
+    "agent": "resveratrol",
+    "form": "capsule",
+    "dose_mg_per_day": 250,
+    "duration_weeks": 12,
+    "cointerventions": "oral hypoglycemic agents (metformin and/or glibenclamide)"
+  },
+  "comparison": {
+    "type": "standard_of_care",
+    "description": "oral hypoglycemic agents only"
+  },
+  "arms": [
+    {
+      "name": "resveratrol",
+      "n": 28,
+      "dose_mg_per_day": 250,
+      "duration_weeks": 12
+    },
+    {
+      "name": "control",
+      "n": 29,
+      "dose_mg_per_day": null,
+      "duration_weeks": 12
+    }
+  ],
+  "outcomes_raw": [
+    {
+      "name": "HbA1c",
+      "timepoint_weeks": 12,
+      "arm_name": "resveratrol",
+      "baseline_mean": 9.99,
+      "baseline_sd": 1.5,
+      "followup_mean": 9.65,
+      "followup_sd": 1.54,
+      "change_mean": null,
+      "change_sd": null,
+      "units": "%",
+      "notes": "Baseline HbA1c values reported; follow-up values not explicitly given"
+    }
+  ],
+  "effects_by_outcome": [
+    {
+      "name": "HbA1c",
+      "type": null,
+      "timepoint_weeks": 12,
+      "estimate": null,
+      "ci_low": null,
+      "ci_high": null,
+      "p_value": null,
+      "adjusted": "false",
+      "model_notes": null
+    }
+  ],
+  "risk_of_bias": {
+    "randomization_process": "some_concerns",
+    "deviations_from_intended": "some_concerns",
+    "missing_outcome_data": "some_concerns",
+    "measurement_of_outcome": "low",
+    "selection_of_reported_result": "low",
+    "overall": "some_concerns"
+  },
+  "effect": {
+    "type": null,
+    "estimate": null,
+    "ci_low": null,
+    "ci_high": null,
+    "p_value": null
+  },
+  "where_found": [
+    {
+      "section": "abstract",
+      "page": null
+    },
+    {
+      "section": "methods",
+      "page": null
+    },
+    {
+      "section": "results",
+      "page": null
+    }
+  ],
+  "evidence": [
+    {
+      "section": "abstract",
+      "page": null,
+      "snippet": "Resveratrol (250 mg/d) along with oral hypoglycemic agents for 3 months improved mean hemoglobin A1c (9.99 ± 1.50 vs 9.65 ± 1.54; P < .05)."
+    },
+    {
+      "section": "methods",
+      "page": null,
+      "snippet": "Sixty-two patients with T2DM were enrolled and randomized into control and intervention groups; intervention received 250 mg/once daily resveratrol capsule plus oral hypoglycemic agents."
+    },
+    {
+      "section": "results",
+      "page": null,
+      "snippet": "Baseline characteristics: 29 control, 28 intervention; HbA1c baseline 9.99 ± 1.50 vs 9.65 ± 1.54; follow-up values not explicitly reported."
+    }
+  ],
+  "missing_fields": [
+    "study_metadata.mean_age",
+    "study_metadata.female_pct",
+    "study_metadata.inclusion_key",
+    "study_metadata.exclusion_key",
+    "effects_by_outcome.estimate",
+    "effects_by_outcome.ci_low",
+    "effects_by_outcome.ci_high",
+    "effects_by_outcome.p_value",
+    "outcomes_raw.change_mean",
+    "outcomes_raw.change_sd",
+    "effect.estimate",
+    "effect.ci_low",
+    "effect.ci_high",
+    "effect.p_value"
+  ],
+  "confidence": 0.7,
+  "comment": "Key data present, many details missing",
+  "comment_detailed": "I searched the abstract, methods, and results sections for trial design, participant details, intervention specifics, and outcome data. The study is a randomized, open‑label, controlled trial in India with 62 T2DM patients. Intervention: 250 mg resveratrol capsule daily for 12 weeks plus standard oral hypoglycemics. Control: standard hypoglycemics only. Baseline HbA1c values are reported (9.99 ± 1.50 vs 9.65 ± 1.54) but follow‑up means are not explicitly given, so change statistics and effect sizes cannot be derived. Many demographic details (age, sex %) and inclusion/exclusion criteria are described textually but not numerically, so those fields are null. Risk of bias is judged as some concerns due to open‑label design and incomplete outcome reporting. Additional data such as exact follow‑up means, SDs, and statistical estimates would be needed for a precise effect size. Full PDF tables or supplementary material would help fill these gaps. "
+}

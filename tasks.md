@@ -1,4 +1,5 @@
 ## MVP
+
 ##### Protocol&Question Formulation Agent
 @Arthur
 This agent's primary role is to define the scope and methodology of the review, creating a clear and answerable research question.
@@ -35,6 +36,9 @@ This agent mimics the human process of screening thousands of articles to find t
 obviously irrelevant studies.
 2. Full-Text Retrieval & Analysis: For potentially relevant studies, the agent retrieves the full-text articles. It then employs more advanced NLP to analyze the full text against the detailed inclusion criteria (e.g., study design must be a randomized controlled trial, population age must be within a certain range).
 • Output: A final list of included studies and a generated PRISMA (Preferred Reporting Items for Systematic Reviews and Meta-Analyses) flow diagram detailing the selection process
+
+Does: relevance screening (title/abstract first pass), automatic classification (article type, data type, species), apply inclusion/exclusion, optional full-text eligibility decision using text provided by others.
+
 ##### Data extraction from pdf or text to useful data
 @Dmitry
 Module 4: Data Extraction & Risk of Bias Agent
@@ -61,7 +65,16 @@ studies and the overall pooled result. It can also create a Funnel Plot to asses
 
 ##### Use Cases & Testing 
 @Eli
+Market research
+Open Source - whe value of it?
+https://silvi.ai/help
 
 ##### Code architecture. Agents framework development and data storage unification
 ## Next steps
 ##### Article screening agent
+
+
+#### Notes from call with mentor
+pubmed baseline+deabetis+metformin database
+
+abstract final plot and forest plot - generation of statistics

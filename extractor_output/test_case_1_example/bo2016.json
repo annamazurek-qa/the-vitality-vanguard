@@ -1,0 +1,114 @@
+{
+  "study_metadata": {
+    "design": "RCT",
+    "species": "Homo sapiens",
+    "n_total": 192,
+    "country": "Italy",
+    "setting": "outpatient",
+    "population": "type 2 diabetes mellitus",
+    "inclusion_key": "age≥40, BMI<35, on diet/hypoglycemic agents, consent",
+    "exclusion_key": "insulin, anticoagulants, steroids, anti-inflammatory drugs, alcohol abuse, liver/kidney disease, complications, recent CV events",
+    "mean_age": null,
+    "female_pct": null,
+    "diabetes_status": "T2D",
+    "primary_outcome": "CRP"
+  },
+  "intervention": {
+    "agent": "resveratrol",
+    "form": "capsule",
+    "dose_mg_per_day": null,
+    "duration_weeks": 24,
+    "cointerventions": "standard hypoglycemic therapy"
+  },
+  "comparison": {
+    "type": "placebo",
+    "description": "inert microcellulose"
+  },
+  "arms": [
+    {
+      "name": "resveratrol 500",
+      "n": null,
+      "dose_mg_per_day": 500,
+      "duration_weeks": 24
+    },
+    {
+      "name": "resveratrol 40",
+      "n": null,
+      "dose_mg_per_day": 40,
+      "duration_weeks": 24
+    },
+    {
+      "name": "placebo",
+      "n": null,
+      "dose_mg_per_day": 0,
+      "duration_weeks": 24
+    }
+  ],
+  "outcomes_raw": [],
+  "effects_by_outcome": [],
+  "risk_of_bias": {
+    "randomization_process": null,
+    "deviations_from_intended": null,
+    "missing_outcome_data": null,
+    "measurement_of_outcome": null,
+    "selection_of_reported_result": null,
+    "overall": null
+  },
+  "effect": {
+    "type": null,
+    "estimate": null,
+    "ci_low": null,
+    "ci_high": null,
+    "p_value": null
+  },
+  "where_found": [
+    {
+      "section": "abstract",
+      "page": null
+    },
+    {
+      "section": "methods",
+      "page": null
+    },
+    {
+      "section": "results",
+      "page": null
+    }
+  ],
+  "evidence": [
+    {
+      "section": "abstract",
+      "page": null,
+      "snippet": "Six months of resveratrol supplementation has no measurable effect in type 2 diabetic patients. A randomized, double blind, placebo-controlled trial."
+    },
+    {
+      "section": "results",
+      "page": null,
+      "snippet": "We failed to detect significant differences in weight, BMI, waist circumference, and values of arterial blood pressure, fasting glucose, glycated hemoglobin, insulin, C-peptide, free fatty acids, liver transaminases, uric acid, adiponectin, interleukin-6, in both the Resv500 and Resv40 arms vs placebo."
+    }
+  ],
+  "missing_fields": [
+    "study_metadata.mean_age",
+    "study_metadata.female_pct",
+    "study_metadata.inclusion_key",
+    "study_metadata.exclusion_key",
+    "intervention.dose_mg_per_day",
+    "arms.n",
+    "outcomes_raw",
+    "effects_by_outcome",
+    "risk_of_bias.randomization_process",
+    "risk_of_bias.deviations_from_intended",
+    "risk_of_bias.missing_outcome_data",
+    "risk_of_bias.measurement_of_outcome",
+    "risk_of_bias.selection_of_reported_result",
+    "risk_of_bias.overall",
+    "effect.type",
+    "effect.estimate",
+    "effect.ci_low",
+    "effect.ci_high",
+    "effect.p_value"
+  ],
+  "confidence": 0.6,
+  "comment": "Limited numeric data; effect unclear",
+  "comment_detailed": "I searched the abstract, methods, and results sections for numeric outcomes on fasting glucose, HbA1c, and HOMA-IR. The text reports no significant differences but does not provide means, SDs, or effect sizes. Therefore, outcome data and effect estimates are set to null. Design, population, and intervention details were extracted from the methods. Risk‑of‑bias items are unknown due to lack of reporting. Additional data would be available in full tables or supplementary material."
+}

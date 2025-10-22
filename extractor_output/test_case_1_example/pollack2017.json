@@ -1,0 +1,147 @@
+{
+  "study_metadata": {
+    "design": "RCT",
+    "species": "Homo sapiens",
+    "n_total": 30,
+    "country": "United States",
+    "setting": "outpatient",
+    "population": "older adults with impaired glucose tolerance",
+    "inclusion_key": "fasting plasma glucose <126 mg/dL (or <140 if HbA1c <7%) and 2‑hour glucose >170 mg/dL",
+    "exclusion_key": "serious chronic or acute illness, active cancer, symptomatic heart failure, COPD, inflammatory conditions, significant liver or renal disease, recent cardiovascular event, prior bariatric surgery, smoking, drugs influencing glucose metabolism, antioxidant vitamins, warfarin, antiplatelet drugs, anti‑epileptics, mexilitene, quinidine, cyclosporine, tacrolimus, HIV protease inhibitors, high‑dose statin therapy",
+    "mean_age": null,
+    "female_pct": null,
+    "diabetes_status": "prediabetes",
+    "primary_outcome": "HOMA_IR"
+  },
+  "intervention": {
+    "agent": "resveratrol",
+    "form": "capsule",
+    "dose_mg_per_day": 3000,
+    "duration_weeks": 6,
+    "cointerventions": null
+  },
+  "comparison": {
+    "type": "placebo",
+    "description": "placebo capsules"
+  },
+  "arms": [
+    {
+      "name": "resveratrol",
+      "n": 30,
+      "dose_mg_per_day": 3000,
+      "duration_weeks": 6
+    },
+    {
+      "name": "placebo",
+      "n": 30,
+      "dose_mg_per_day": 0,
+      "duration_weeks": 6
+    }
+  ],
+  "outcomes_raw": [
+    {
+      "name": "HOMA_IR",
+      "timepoint_weeks": 6,
+      "arm_name": "resveratrol",
+      "baseline_mean": null,
+      "baseline_sd": null,
+      "followup_mean": null,
+      "followup_sd": null,
+      "change_mean": null,
+      "change_sd": null,
+      "units": "HOMA_units",
+      "notes": "no change reported"
+    },
+    {
+      "name": "HOMA_IR",
+      "timepoint_weeks": 6,
+      "arm_name": "placebo",
+      "baseline_mean": null,
+      "baseline_sd": null,
+      "followup_mean": null,
+      "followup_sd": null,
+      "change_mean": null,
+      "change_sd": null,
+      "units": "HOMA_units",
+      "notes": "no change reported"
+    }
+  ],
+  "effects_by_outcome": [
+    {
+      "name": "HOMA_IR",
+      "type": "MD",
+      "timepoint_weeks": 6,
+      "estimate": 0,
+      "ci_low": null,
+      "ci_high": null,
+      "p_value": null,
+      "adjusted": false,
+      "model_notes": "no change reported"
+    }
+  ],
+  "risk_of_bias": {
+    "randomization_process": null,
+    "deviations_from_intended": null,
+    "missing_outcome_data": null,
+    "measurement_of_outcome": null,
+    "selection_of_reported_result": null,
+    "overall": null
+  },
+  "effect": {
+    "type": "MD",
+    "estimate": 0,
+    "ci_low": null,
+    "ci_high": null,
+    "p_value": null
+  },
+  "where_found": [
+    {
+      "section": "abstract",
+      "page": null
+    },
+    {
+      "section": "methods",
+      "page": null
+    },
+    {
+      "section": "results",
+      "page": null
+    }
+  ],
+  "evidence": [
+    {
+      "section": "abstract",
+      "page": null,
+      "snippet": "no changes in glucose tolerance, insulin sensitivity, weight, blood pressure, or lipid profile following resveratrol treatment."
+    },
+    {
+      "section": "methods",
+      "page": null,
+      "snippet": "randomized, double‑blind crossover study, we treated older glucose‑intolerant adults (n = 30) with resveratrol (2–3 g/daily) or placebo, each for 6 weeks."
+    },
+    {
+      "section": "results",
+      "page": null,
+      "snippet": "There were no changes in glucose tolerance, insulin sensitivity, weight, blood pressure, or lipid profile following resveratrol treatment."
+    }
+  ],
+  "missing_fields": [
+    "study_metadata.mean_age",
+    "study_metadata.female_pct",
+    "study_metadata.inclusion_key",
+    "study_metadata.exclusion_key",
+    "outcomes_raw.baseline_mean",
+    "outcomes_raw.baseline_sd",
+    "outcomes_raw.followup_mean",
+    "outcomes_raw.followup_sd",
+    "outcomes_raw.change_mean",
+    "outcomes_raw.change_sd",
+    "risk_of_bias.*",
+    "effect.ci_low",
+    "effect.ci_high",
+    "effect.p_value"
+  ],
+  "confidence": 0.7,
+  "comment": "Limited data; outcome values missing.",
+  "comment_detailed": "I searched the abstract, methods, and results sections for study design, population, dose, duration, and outcome data. The study is a randomized, double‑blind crossover RCT with 30 older adults with impaired glucose tolerance, receiving 2–3 g/day resveratrol for 6 weeks versus placebo. Outcome values for HOMA‑IR are not reported numerically; only a statement of no change is provided. Risk‑of‑bias domains and effect‑size confidence intervals are absent. Full tables or supplementary data would provide the missing means, SDs, and CI estimates. Confidence is moderate (0.7) due to incomplete numeric data."
+}

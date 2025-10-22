@@ -1,0 +1,96 @@
+{
+  "study_metadata": {
+    "design": "RCT",
+    "species": "Homo sapiens",
+    "n_total": 24,
+    "country": "Denmark",
+    "setting": "outpatient",
+    "population": "obese men",
+    "inclusion_key": "obese (BMI >30)",
+    "exclusion_key": "overt endocrine disorders",
+    "mean_age": null,
+    "female_pct": null,
+    "diabetes_status": "other",
+    "primary_outcome": "other"
+  },
+  "intervention": {
+    "agent": "resveratrol",
+    "form": "tablet",
+    "dose_mg_per_day": 1500,
+    "duration_weeks": 4,
+    "cointerventions": null
+  },
+  "comparison": {
+    "type": "placebo",
+    "description": "placebo tablets"
+  },
+  "arms": [
+    {
+      "name": "resveratrol",
+      "n": 12,
+      "dose_mg_per_day": 1500,
+      "duration_weeks": 4
+    },
+    {
+      "name": "placebo",
+      "n": 12,
+      "dose_mg_per_day": 0,
+      "duration_weeks": 4
+    }
+  ],
+  "outcomes_raw": [],
+  "effects_by_outcome": [],
+  "risk_of_bias": {
+    "randomization_process": null,
+    "deviations_from_intended": null,
+    "missing_outcome_data": null,
+    "measurement_of_outcome": null,
+    "selection_of_reported_result": null,
+    "overall": null
+  },
+  "effect": null,
+  "where_found": [
+    {
+      "section": "abstract",
+      "page": null
+    },
+    {
+      "section": "methods",
+      "page": null
+    },
+    {
+      "section": "results",
+      "page": null
+    }
+  ],
+  "evidence": [
+    {
+      "section": "methods",
+      "page": null,
+      "snippet": "The study was an investigator-initiated randomized, double-blinded, placebo-controlled, parallel-group trial."
+    },
+    {
+      "section": "intervention",
+      "page": null,
+      "snippet": "Subjects were treated for 4 weeks with tablets containing 500 mg trans-resveratrol thrice daily."
+    },
+    {
+      "section": "results",
+      "page": null,
+      "snippet": "Insulin sensitivity, the primary outcome measure, deteriorated insignificantly in both groups."
+    }
+  ],
+  "missing_fields": [
+    "study_metadata.mean_age",
+    "study_metadata.female_pct",
+    "study_metadata.diabetes_status",
+    "study_metadata.primary_outcome",
+    "outcomes_raw",
+    "effects_by_outcome",
+    "risk_of_bias",
+    "effect"
+  ],
+  "confidence": 0.6,
+  "comment": "No effect size reported; data insufficient",
+  "comment_detailed": "I searched the abstract, methods, and results sections for study design, participant details, dosage, duration, and outcome data. The trial was a randomized, double-blind, placebo-controlled, parallel-group study of 24 obese men in Denmark, with 500 mg tablets taken thrice daily for 4 weeks. Primary outcome was insulin sensitivity measured by hyperinsulinemic euglycemic clamp, but the paper reports only that the change was insignificant in both groups, without numeric values or confidence intervals. Therefore, effect size fields are null. Missing fields include mean age, female percentage, diabetes status, and detailed outcome data. Additional information such as full tables or supplementary data would be needed to compute effect estimates. Confidence is moderate (0.6) due to clear reporting of design and intervention but lack of quantitative results."
+}

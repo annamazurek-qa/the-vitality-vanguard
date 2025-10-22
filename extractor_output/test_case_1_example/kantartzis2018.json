@@ -1,0 +1,99 @@
+{
+  "study_metadata": {
+    "design": "RCT",
+    "species": "Homo sapiens",
+    "n_total": 112,
+    "country": "Germany",
+    "setting": "outpatient",
+    "population": "overweight and obese insulin resistant subjects",
+    "inclusion_key": "age 18-70, BMI >=27, HOMA-IR >=2.0",
+    "exclusion_key": null,
+    "mean_age": null,
+    "female_pct": null,
+    "diabetes_status": "prediabetes",
+    "primary_outcome": null
+  },
+  "intervention": {
+    "agent": "resveratrol",
+    "form": "capsule",
+    "dose_mg_per_day": 150,
+    "duration_weeks": 12,
+    "cointerventions": null
+  },
+  "comparison": {
+    "type": "placebo",
+    "description": null
+  },
+  "arms": [
+    {
+      "name": "resveratrol",
+      "n": 54,
+      "dose_mg_per_day": 150,
+      "duration_weeks": 12
+    },
+    {
+      "name": "placebo",
+      "n": 54,
+      "dose_mg_per_day": 0,
+      "duration_weeks": 12
+    }
+  ],
+  "outcomes_raw": [],
+  "effects_by_outcome": [],
+  "risk_of_bias": {
+    "randomization_process": null,
+    "deviations_from_intended": null,
+    "missing_outcome_data": null,
+    "measurement_of_outcome": null,
+    "selection_of_reported_result": null,
+    "overall": null
+  },
+  "effect": {
+    "type": null,
+    "estimate": null,
+    "ci_low": null,
+    "ci_high": null,
+    "p_value": null
+  },
+  "where_found": [],
+  "evidence": [
+    {
+      "section": "abstract",
+      "page": null,
+      "snippet": "We performed the so far largest randomized and placebo-controlled clinical trial (N=112, 12 week intervention) to investigate effects and safety of resveratrol supplementation on liver fat content and cardiometabolic risk parameters in overweight and obese and insulin resistant subjects."
+    },
+    {
+      "section": "results",
+      "page": null,
+      "snippet": "In respect to the secondary outcome measures no differences in the changes of the metabolic parameters HbA1c, HOMA-IR, ISIOGTT, blood pressure, cIMT and cardiorespiratory fitness were found."
+    },
+    {
+      "section": "methods",
+      "page": null,
+      "snippet": "Study subjects were randomly allocated to two oral doses of 75 mg resveratrol (total daily dose of 150 mg) per day or matching placebo."
+    }
+  ],
+  "missing_fields": [
+    "study_metadata.mean_age",
+    "study_metadata.female_pct",
+    "study_metadata.exclusion_key",
+    "study_metadata.primary_outcome",
+    "intervention.cointerventions",
+    "comparison.description",
+    "risk_of_bias.randomization_process",
+    "risk_of_bias.deviations_from_intended",
+    "risk_of_bias.missing_outcome_data",
+    "risk_of_bias.measurement_of_outcome",
+    "risk_of_bias.selection_of_reported_result",
+    "risk_of_bias.overall",
+    "where_found",
+    "effect.type",
+    "effect.estimate",
+    "effect.ci_low",
+    "effect.ci_high",
+    "effect.p_value"
+  ],
+  "confidence": 0.8,
+  "comment": "No effect on glycemic control observed",
+  "comment_detailed": "I searched the abstract, methods, and results sections for numeric outcomes and statements about glycemic parameters. The study reports no differences in HbA1c, HOMA-IR, and glucose tolerance between resveratrol and placebo, but does not provide mean changes or confidence intervals. Consequently, effect estimates and risk‑of‑bias judgments could not be derived. Full tables or supplementary data would be needed to quantify the effect size."
+}

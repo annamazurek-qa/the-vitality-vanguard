@@ -1,0 +1,170 @@
+{
+  "study_metadata": {
+    "design": "RCT",
+    "species": "Homo sapiens",
+    "n_total": 125,
+    "country": "Australia",
+    "setting": "outpatient",
+    "population": "postmenopausal women",
+    "inclusion_key": "age 45-85, postmenopausal, >12 months cessation of menses, no hormone therapy",
+    "exclusion_key": "insulin or warfarin use, history of breast or cervical cancer, major heart, kidney or liver disease, neurological disorder, depression, suspected dementia",
+    "mean_age": null,
+    "female_pct": null,
+    "diabetes_status": null,
+    "primary_outcome": null
+  },
+  "intervention": {
+    "agent": "resveratrol",
+    "form": "capsule",
+    "dose_mg_per_day": 150,
+    "duration_weeks": 104,
+    "cointerventions": null
+  },
+  "comparison": {
+    "type": "placebo",
+    "description": "placebo"
+  },
+  "arms": [
+    {
+      "name": "resveratrol",
+      "n": 125,
+      "dose_mg_per_day": 150,
+      "duration_weeks": 104
+    },
+    {
+      "name": "placebo",
+      "n": 125,
+      "dose_mg_per_day": 0,
+      "duration_weeks": 104
+    }
+  ],
+  "outcomes_raw": [
+    {
+      "name": "Fasting insulin",
+      "timepoint_weeks": 104,
+      "arm_name": "resveratrol",
+      "baseline_mean": null,
+      "baseline_sd": null,
+      "followup_mean": null,
+      "followup_sd": null,
+      "change_mean": null,
+      "change_sd": null,
+      "units": null,
+      "notes": "Cohen's d 0.174, P=0.025"
+    },
+    {
+      "name": "Insulin resistance index",
+      "timepoint_weeks": 104,
+      "arm_name": "resveratrol",
+      "baseline_mean": null,
+      "baseline_sd": null,
+      "followup_mean": null,
+      "followup_sd": null,
+      "change_mean": null,
+      "change_sd": null,
+      "units": null,
+      "notes": "Cohen's d 0.102, P=0.034"
+    }
+  ],
+  "effects_by_outcome": [
+    {
+      "name": "Fasting insulin",
+      "type": "SMD",
+      "timepoint_weeks": 104,
+      "estimate": 0.174,
+      "ci_low": null,
+      "ci_high": null,
+      "p_value": 0.025,
+      "adjusted": "false",
+      "model_notes": null
+    },
+    {
+      "name": "Insulin resistance index",
+      "type": "SMD",
+      "timepoint_weeks": 104,
+      "estimate": 0.102,
+      "ci_low": null,
+      "ci_high": null,
+      "p_value": 0.034,
+      "adjusted": "false",
+      "model_notes": null
+    }
+  ],
+  "risk_of_bias": {
+    "randomization_process": null,
+    "deviations_from_intended": null,
+    "missing_outcome_data": null,
+    "measurement_of_outcome": null,
+    "selection_of_reported_result": null,
+    "overall": null
+  },
+  "effect": {
+    "type": null,
+    "estimate": null,
+    "ci_low": null,
+    "ci_high": null,
+    "p_value": null
+  },
+  "where_found": [
+    {
+      "section": "abstract",
+      "page": null
+    },
+    {
+      "section": "methods",
+      "page": null
+    },
+    {
+      "section": "results",
+      "page": null
+    }
+  ],
+  "evidence": [
+    {
+      "section": "abstract",
+      "page": null,
+      "snippet": "resveratrol supplementation resulted a signiﬁcant 33% improvement in overall cognitive performance (Cohen's d 0.170, P 0.005). Women 65 years of age showed a relative improvement in verbal memory... fasting insulin (d 0.174, P 0.025) and insulin resistance index (d 0.102, P 0.034)."
+    },
+    {
+      "section": "results",
+      "page": null,
+      "snippet": "Compared to placebo, resveratrol supplementation resulted a signiﬁcant 33% improvement in overall cognitive performance (Cohen's d 0.170, P 0.005). ... fasting insulin (d 0.174, P 0.025) and insulin resistance index (d 0.102, P 0.034)."
+    }
+  ],
+  "missing_fields": [
+    "study_metadata.mean_age",
+    "study_metadata.female_pct",
+    "study_metadata.diabetes_status",
+    "study_metadata.primary_outcome",
+    "outcomes_raw[0].baseline_mean",
+    "outcomes_raw[0].baseline_sd",
+    "outcomes_raw[0].followup_mean",
+    "outcomes_raw[0].followup_sd",
+    "outcomes_raw[0].change_mean",
+    "outcomes_raw[0].change_sd",
+    "outcomes_raw[1].baseline_mean",
+    "outcomes_raw[1].baseline_sd",
+    "outcomes_raw[1].followup_mean",
+    "outcomes_raw[1].followup_sd",
+    "outcomes_raw[1].change_mean",
+    "outcomes_raw[1].change_sd",
+    "effects_by_outcome[0].ci_low",
+    "effects_by_outcome[0].ci_high",
+    "effects_by_outcome[1].ci_low",
+    "effects_by_outcome[1].ci_high",
+    "risk_of_bias.randomization_process",
+    "risk_of_bias.deviations_from_intended",
+    "risk_of_bias.missing_outcome_data",
+    "risk_of_bias.measurement_of_outcome",
+    "risk_of_bias.selection_of_reported_result",
+    "risk_of_bias.overall",
+    "effect.type",
+    "effect.estimate",
+    "effect.ci_low",
+    "effect.ci_high",
+    "effect.p_value"
+  ],
+  "confidence": 0.6,
+  "comment": "Insufficient numeric glycemic data; only effect sizes reported",
+  "comment_detailed": "I searched the abstract, methods, and results sections for glycemic outcomes. The study reports fasting insulin and insulin resistance index as secondary outcomes with Cohen's d values (0.174 and 0.102) and p-values, but no means, SDs, or confidence intervals. Therefore, numeric baseline and follow-up values are unknown, and CI fields are null. Risk of bias details are not provided in the excerpt, so those fields are null. The overall effect is not defined, so it is null. Confidence is moderate due to limited data."
+}

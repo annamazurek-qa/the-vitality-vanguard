@@ -1,0 +1,126 @@
+{
+  "study_metadata": {
+    "design": "double-blind|randomized|placebo-controlled",
+    "species": "Homo sapiens",
+    "n_total": 50,
+    "country": "Iran",
+    "setting": "outpatient",
+    "population": "type 2 diabetes with chronic periodontitis",
+    "inclusion_key": "age 30-60, BMI 18.5-30, fasting glucose <22 mmol/L, moderate periodontal disease",
+    "exclusion_key": "diabetes complications, pregnancy, breastfeeding, smoking, immunosuppressive meds, insulin use, recent periodontal treatment, antioxidants, diet changes",
+    "mean_age": null,
+    "female_pct": 0.72,
+    "diabetes_status": "T2D",
+    "primary_outcome": "HOMA_IR"
+  },
+  "intervention": {
+    "agent": "resveratrol",
+    "form": "capsule",
+    "dose_mg_per_day": 480,
+    "duration_weeks": 4,
+    "cointerventions": "non-surgical periodontal treatment"
+  },
+  "comparison": {
+    "type": "placebo",
+    "description": "placebo capsules (two pills) 480 mg starch"
+  },
+  "arms": [
+    {
+      "name": "resveratrol",
+      "n": 25,
+      "dose_mg_per_day": 480,
+      "duration_weeks": 4
+    },
+    {
+      "name": "placebo",
+      "n": 25,
+      "dose_mg_per_day": 0,
+      "duration_weeks": 4
+    }
+  ],
+  "outcomes_raw": [
+    {
+      "name": "HOMA_IR",
+      "timepoint_weeks": 4,
+      "arm_name": "resveratrol",
+      "baseline_mean": 10.42,
+      "baseline_sd": 0.28,
+      "followup_mean": 3.66,
+      "followup_sd": 0.97,
+      "change_mean": -6.76,
+      "change_sd": null,
+      "units": "unitless",
+      "notes": "insulin resistance"
+    },
+    {
+      "name": "HOMA_IR",
+      "timepoint_weeks": 4,
+      "arm_name": "placebo",
+      "baseline_mean": 10.92,
+      "baseline_sd": 0.9,
+      "followup_mean": 4.49,
+      "followup_sd": 1.56,
+      "change_mean": -6.43,
+      "change_sd": null,
+      "units": "unitless",
+      "notes": "insulin resistance"
+    }
+  ],
+  "effects_by_outcome": [
+    {
+      "name": "HOMA_IR",
+      "type": "MD",
+      "timepoint_weeks": 4,
+      "estimate": -6.76,
+      "ci_low": null,
+      "ci_high": null,
+      "p_value": null,
+      "adjusted": "false",
+      "model_notes": "difference in change between groups"
+    }
+  ],
+  "risk_of_bias": {
+    "randomization_process": "low",
+    "deviations_from_intended": "low",
+    "missing_outcome_data": "low",
+    "measurement_of_outcome": "low",
+    "selection_of_reported_result": "low",
+    "overall": "low"
+  },
+  "effect": {
+    "type": null,
+    "estimate": null,
+    "ci_low": null,
+    "ci_high": null,
+    "p_value": null
+  },
+  "where_found": [
+    {
+      "section": "methods",
+      "page": null
+    }
+  ],
+  "evidence": [
+    {
+      "section": "methods",
+      "page": null,
+      "snippet": "This randomized double-blind, placebo-controlled, clinical trial was conducted in Ahvaz Golestan hospital, Iran."
+    },
+    {
+      "section": "methods",
+      "page": null,
+      "snippet": "The intervention and control groups received either 480 mg/day of resveratrol or placebo capsules (two pills) for 4 weeks."
+    },
+    {
+      "section": "results",
+      "page": null,
+      "snippet": "The mean serum levels of fasting insulin and insulin resistance (HOMA-IR) were significantly lower in the intervention group compared with control group (10.42 ± 0.28 and 10.92 ± 0.9; 3.66 ± 0.97 and 4.49 ± 1.56, respectively)."
+    }
+  ],
+  "missing_fields": [
+    "study_metadata.mean_age"
+  ],
+  "confidence": 0.7,
+  "comment": "Data extracted; some values missing",
+  "comment_detailed": "I searched the abstract, methods, and results sections for study design, population, intervention details, and outcome data. The trial is a double-blind, randomized, placebo-controlled study in Iran with 50 recruited participants (25 per arm). The intervention was 480 mg/day resveratrol capsules for 4 weeks, coadministered with non-surgical periodontal treatment. Outcome data for HOMA-IR at baseline and 4 weeks were reported, but mean age, effect size estimates, and confidence intervals were not provided. Therefore, mean_age and effect fields are null. The risk of bias was judged low based on reported randomization and blinding. Additional data such as exact mean age, SD of change, and statistical significance values would improve the completeness of the extraction.}"
+}

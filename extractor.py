@@ -1,9 +1,9 @@
-import os, re, json, uuid
+import os, re, json
 from pathlib import Path
-from datetime import datetime, UTC
 from typing import List, Dict, Any, Tuple, Optional
 
-import fitz  # PyMuPDF
+#import fitz  # 
+from PyPDF2 import PdfReader
 from rapidfuzz import fuzz
 from openai import OpenAI
 
@@ -34,25 +34,48 @@ class PDFLLMExtractor:
 
     # ---------- Default extraction schema ----------
     EXTRACTION_SCHEMA = {
-      "study_metadata": {
-        "design": "RCT|cohort|case-control|cross-sectional|other|null",
-        "species": "Homo sapiens|Mus musculus|other|null",
-        "n_total": "int|null",
-        "primary_outcome": "string|null"
-      },
-      "effect": {
-        "type": "SMD|OR|RR|HR|mean_diff|null",
-        "estimate": "float|null",
-        "ci_low": "float|null",
-        "ci_high": "float|null",
-        "p_value": "float|null"
-      },
-      "where_found": [{"section":"abstract|methods|results|tables_texty|full_tail","page":"int|null"}],
-      "evidence": [{"section":"string","page":"int|null","snippet":"string (≤200 chars)"}],
-      "missing_fields": ["string"],
-      "confidence": "float in [0,1]",
-      "comment": "string (≤20 words)",
-      "comment_detailed": "string (≤150 words)"
+        "study_metadata": {
+            "study_id": "string|null",
+            "design": "RCT|cohort|case-control|trial|other|null"
+        },
+
+        "exposure": {
+            "label": "string|null",         # intervention or exposure (e.g., resveratrol, metformin)
+            "comparator": "string|null"     # placebo|non_use|standard_care|other
+        },
+
+        "effects_by_outcome": [
+            {
+                "name": "HOMA_IR|FPG|HbA1c|overall_cancer|site_specific|other",
+                "type": "MD|SMD|RR|OR|HR|LOGRR|LOGOR|LOGHR|null",
+                "timepoint_weeks": "float|null",
+                "estimate": "float|null",     # on the scale implied by 'type' (e.g., MD or RR or LOGRR)
+                "ci_low": "float|null",
+                "ci_high": "float|null",
+                "adjusted": "true|false|null",
+                "unit": "HOMA_units|mmol_L|mg_dL|%|ratio|other|null",
+                "subgroup": "string|null",    # optional: pooled separately if present
+                "notes": "string|null"
+            }
+        ],
+
+        "outcomes_raw": [
+            {
+                "name": "string",
+                "timepoint_weeks": "float|null",
+                "arm_name": "intervention|control|exposed|unexposed|other",
+                "n": "int|null",
+                "baseline_mean": "float|null",
+                "baseline_sd": "float|null",
+                "followup_mean": "float|null",
+                "followup_sd": "float|null",
+                "change_mean": "float|null",
+                "change_sd": "float|null",
+                "units": "string|null"
+            }
+        ],
+
+        "comment_detailed": "string"      # free-form debugging/explanation text (no length limit)
     }
 
     SYSTEM_PROMPT = (
@@ -66,19 +89,24 @@ class PDFLLMExtractor:
         base_url: str = "https://api.studio.nebius.com/v1/",
         model: str = "openai/gpt-oss-20b",
         temperature: float = 0.0,
-        max_tokens: int = 2000,
+        max_tokens: int = 5000,
         debug: bool = False,
         save_debug: bool = False,
         debug_dir: str = "debug_logs",
+        output_dir: Optional[str] = "extractor_output",
     ):
         self.model = model
         self.temperature = temperature
         self.max_tokens = max_tokens
         self.debug = debug
         self.save_debug = save_debug
+        self.pdf_name = None
         self.debug_dir = Path(debug_dir)
+        self.output_dir = Path(output_dir) if output_dir else None
         if self.save_debug:
             self.debug_dir.mkdir(parents=True, exist_ok=True)
+        if self.output_dir:
+            self.output_dir.mkdir(parents=True, exist_ok=True)
 
         self.client = OpenAI(
             base_url=base_url,
@@ -89,9 +117,6 @@ class PDFLLMExtractor:
     def _d(self, *args):
         if self.debug:
             print("[DEBUG]", *args)
-
-    def _now_tag(self) -> str:
-        return datetime.now(UTC).strftime("%Y%m%dT%H%M%SZ")
 
     def _save_text(self, name: str, data: Any) -> Path:
         """Save debug data to a UTF-8 .txt file.
@@ -156,24 +181,46 @@ class PDFLLMExtractor:
 
         text = _format_for_save(data) if data is not None else ""
 
-        fname = self.debug_dir / f"{name}.txt"  # _{self._now_tag()}
+        fname = self.debug_dir / f"{self.pdf_name}_{name}.txt"
         with open(fname, "w", encoding="utf-8") as f:
             f.write(text)
         self._d(f"Saved {name} -> {fname}")
         return fname
 
+    def _save_output(self, pdf_path: str, payload: Dict[str, Any]) -> Optional[Path]:
+        """Persist extraction results to `extractor_output/<pdfname>.json`."""
+        if not self.output_dir:
+            return None
+
+        target = self.output_dir / f"{self.pdf_name}.json"
+        with open(target, "w", encoding="utf-8") as f:
+            json.dump(payload, f, ensure_ascii=False, indent=2)
+        self._d(f"Saved extraction output -> {target}")
+        return target
+
     # ========= PDF → pages =========
     def extract_pages(self, pdf_path: str) -> List[Dict[str, Any]]:
-        doc = fitz.open(pdf_path)
-        pages = []
-        for i, page in enumerate(doc):
-            text = page.get_text("text")
-            text = re.sub(r"[ \t]+", " ", text)
-            text = re.sub(r"\n{3,}", "\n\n", text).strip()
-            pages.append({"page": i + 1, "text": text})
+        pages: List[Dict[str, Any]] = []
+        try:
+            with open(pdf_path, "rb") as f:
+                reader = PdfReader(f)
+                for i, page in enumerate(reader.pages):
+                    # PyPDF2 may return None if the page has no extractable text
+                    try:
+                        text = page.extract_text() or ""
+                    except Exception:
+                        text = ""
+                    text = re.sub(r"[ \t]+", " ", text)
+                    text = re.sub(r"\n{3,}", "\n\n", text).strip()
+                    pages.append({"page": i + 1, "text": text})
+        except Exception as e:
+            self._d(f"PDF read error: {type(e).__name__}: {e}")
+
         self._d(f"Pages extracted: {len(pages)}")
         if pages:
             self._d("Page[1] head:", repr(pages[0]["text"][:200]))
+            if self.save_debug:
+                self._save_text('pages', pages)
         return pages
 
     # ========= Table-ish finder (text only) =========
@@ -212,7 +259,7 @@ class PDFLLMExtractor:
             for p in pages:
                 table_blocks += self.find_table_like_blocks(p["text"])
 
-        ctx = {
+        context = {
             "abstract": secs.get("abstract", "")[:4000],
             "methods": secs.get("methods", "")[:6000],
             "results": secs.get("results", "")[:8000],
@@ -224,37 +271,39 @@ class PDFLLMExtractor:
 
         # Debug summary
         self._d("Context lengths:",
-                {k: len(v) for k, v in ctx.items()})
+                {k: len(v) for k, v in context.items()})
         if self.debug:
             for key in ("results"):
-                if ctx.get(key):
-                    self._d(f"{key.upper()} head:", repr(ctx[key][:200]))
+                if context.get(key):
+                    self._d(f"{key.upper()} head:", repr(context[key][:200]))
 
         if self.save_debug:
-            self._save_text('ctx', ctx)
+            self._save_text('context', context)
 
-        return ctx
+        return context
 
     # ========= Prompt builder =========
-    def make_user_message(self, question: str, ctx: Dict[str, str]) -> str:
+    def make_user_message(self, question: str, content) -> str:
         schema_json = json.dumps(self.EXTRACTION_SCHEMA, ensure_ascii=False, indent=2)
 
-        # Put keyword windows & results first (helpful for your metformin question)
-        blocks = []
-        if ctx.get("results"):
-            blocks.append("== RESULTS ==\n" + ctx["results"])
-        if ctx.get("discussion"):
-            blocks.append("== DISCUSSION ==\n" + ctx["discussion"])
-        if ctx.get("conclusion"):
-            blocks.append("== CONCLUSION ==\n" + ctx["conclusion"])
-        if ctx.get("tables_texty"):
-            blocks.append("== TABLE-LIKE BLOCKS ==\n" + ctx["tables_texty"])
-        if ctx.get("abstract"):
-            blocks.append("== ABSTRACT ==\n" + ctx["abstract"])
-        # As a last resort:
-        blocks.append("== FULL TAIL ==\n" + ctx.get("full_tail", ""))
+        # Handle list of pages or dict of sections
+        if isinstance(content, list):
+            # Assume list of pages, each a dict with "text"
+            text = "\n\n---PAGE BREAK---\n\n".join(p.get("text", "") for p in content)
+        elif isinstance(content, dict):
+            # Build section blocks from keys
+            blocks = []
+            for k, v in content.items():
+                if not v:
+                    continue
+                title = k.replace("_", " ").upper()
+                blocks.append(f"== {title} ==\n{v}")
+            text = "\n\n".join(blocks)
+        else:
+            # Fallback: treat it as raw text
+            text = str(content)
 
-        context_block = "\n\n".join(blocks)[:14000]
+        text = text[:14000]  # Safety truncate
 
         msg = f"""Task: Extract fields in this schema from the article text. If unknown, use null.
 Schema (types/examples, not values):
@@ -274,7 +323,7 @@ Rules:
 Question: {question}
 
 TEXT:
-{context_block}
+{text}
 """
         self._d("User message length:", len(msg))
         if self.debug:
@@ -428,28 +477,50 @@ TEXT:
 
     # ========= Public: run end-to-end on a PDF =========
     def extract(self, pdf_path: str, question: str) -> Dict[str, Any]:
+        self.pdf_name = Path(pdf_path).stem
         # 1) Pages
         pages = self.extract_pages(pdf_path)
         if not pages:
-            return self._empty_payload("No text pages extracted (scanned PDF?)")
+            result = self._empty_payload("No text pages extracted (scanned PDF?)")
+            self._save_output(pdf_path, result)
+            return result
 
         # 2) Context
-        ctx = self.build_context(pages)
-        user_payload = self.make_user_message(question, ctx)
+        # context = self.build_context(pages)
+        user_payload = self.make_user_message(question, pages)
 
         # 3) LLM
         try:
             raw = self.llm_raw_output_all(self.SYSTEM_PROMPT, user_payload)
         except Exception as e:
-            return self._empty_payload(f"LLM call failed: {e}", evidence=[{"section":"full_tail","page":None,"snippet":"LLM returned empty/failed; inspect full_response_*.txt"}])
+            result = self._empty_payload(
+                f"LLM call failed: {e}",
+                evidence=[{"section": "full_tail", "page": None, "snippet": "LLM returned empty/failed; inspect full_response_*.txt"}],
+            )
+            self._save_output(pdf_path, result)
+            return result
 
         # 4) Parse
         try:
             parsed = self.parse_json_safely(raw)
         except Exception as e:
-            return self._empty_payload(f"JSON parse failed: {e}", evidence=[{"section":"full_tail","page":None,"snippet":"See llm_raw_*.txt for the raw content"}])
+            result = self._empty_payload(
+                f"JSON parse failed: {e}",
+                evidence=[{"section": "full_tail", "page": None, "snippet": "See llm_raw_*.txt for the raw content"}],
+            )
+            self._save_output(pdf_path, result)
+            return result
 
+        self._save_output(pdf_path, parsed)
         return parsed
+
+    def extract_folder(self, folder_path: str, question: str) -> None:
+        """Run extraction for every PDF in a folder (non-recursive)."""
+        folder = Path(folder_path)
+        if not folder.is_dir():
+            raise ValueError(f"Not a folder: {folder_path}")
+        for fp in sorted(list(folder.glob("*.pdf")) + list(folder.glob("*.PDF"))):
+            self.extract(str(fp), question)
 
     # ========= Helper: null payload with explanation =========
     def _empty_payload(self, comment: str, evidence: Optional[List[Dict[str, Any]]] = None) -> Dict[str, Any]:
@@ -473,14 +544,17 @@ TEXT:
 
 # -------------- Example usage --------------
 if __name__ == "__main__":
-    pdf_path = "pdfs/86a4db7c14066bc18711a5c51c48ca7dcf68.pdf"
-    question = "What is the effect of metformin on lifespan in animal models?"
+    pdf_path = "pdfs/testcase_1/101.pdf"
+    pdf_folder_path = "pdfs/test_case_1_example"
+    question = "What is the effect of oral resveratrol on glycemic control in randomized human trials?"
 
     extractor = PDFLLMExtractor(
         model="openai/gpt-oss-20b",
         debug=True,          # print essential debug
         save_debug=True      # also dump raw/full responses to debug_logs/
     )
-    result = extractor.extract(pdf_path, question)
-    print("\n=== FINAL JSON ===")
-    print(json.dumps(result, indent=2, ensure_ascii=False))
+    
+    # result = extractor.extract(pdf_path, question)
+
+    # process all PDFs in a folder
+    extractor.extract_folder(pdf_folder_path, question)
