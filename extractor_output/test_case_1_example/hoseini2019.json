@@ -1,0 +1,175 @@
+{
+  "study_metadata": {
+    "design": "RCT",
+    "species": "Homo sapiens",
+    "n_total": 56,
+    "country": "Iran",
+    "setting": "outpatient",
+    "population": "patients with type 2 diabetes mellitus and coronary heart disease",
+    "inclusion_key": "patients with T2DM, aged 40-85 years old with proven 2- and 3-vessel CHD",
+    "exclusion_key": "consuming resveratrol three months prior, taking antioxidant/anti-inflammatory supplements, acute MI or surgery in past 3 months, renal or hepatic failure",
+    "mean_age": null,
+    "female_pct": null,
+    "diabetes_status": "T2D",
+    "primary_outcome": "HOMA_IR"
+  },
+  "intervention": {
+    "agent": "resveratrol",
+    "form": "capsule",
+    "dose_mg_per_day": 500,
+    "duration_weeks": 4,
+    "cointerventions": null
+  },
+  "comparison": {
+    "type": "placebo",
+    "description": "identical placebo capsules"
+  },
+  "arms": [
+    {
+      "name": "resveratrol",
+      "n": 28,
+      "dose_mg_per_day": 500,
+      "duration_weeks": 4
+    },
+    {
+      "name": "placebo",
+      "n": 28,
+      "dose_mg_per_day": 0,
+      "duration_weeks": 4
+    }
+  ],
+  "outcomes_raw": [
+    {
+      "name": "HOMA_IR",
+      "timepoint_weeks": 4,
+      "arm_name": "resveratrol",
+      "baseline_mean": null,
+      "baseline_sd": null,
+      "followup_mean": null,
+      "followup_sd": null,
+      "change_mean": -1.09,
+      "change_sd": null,
+      "units": "HOMA_units",
+      "notes": null
+    },
+    {
+      "name": "FPG",
+      "timepoint_weeks": 4,
+      "arm_name": "resveratrol",
+      "baseline_mean": null,
+      "baseline_sd": null,
+      "followup_mean": null,
+      "followup_sd": null,
+      "change_mean": -10.04,
+      "change_sd": null,
+      "units": "mg_dL",
+      "notes": null
+    },
+    {
+      "name": "Insulin",
+      "timepoint_weeks": 4,
+      "arm_name": "resveratrol",
+      "baseline_mean": null,
+      "baseline_sd": null,
+      "followup_mean": null,
+      "followup_sd": null,
+      "change_mean": -1.09,
+      "change_sd": null,
+      "units": null,
+      "notes": null
+    }
+  ],
+  "effects_by_outcome": [
+    {
+      "name": "HOMA_IR",
+      "type": "MD",
+      "timepoint_weeks": 4,
+      "estimate": -1.09,
+      "ci_low": -1.93,
+      "ci_high": -1.09,
+      "p_value": 0.01,
+      "adjusted": false,
+      "model_notes": null
+    },
+    {
+      "name": "FPG",
+      "type": "MD",
+      "timepoint_weeks": 4,
+      "estimate": -10.04,
+      "ci_low": -18.23,
+      "ci_high": -1.86,
+      "p_value": 0.01,
+      "adjusted": false,
+      "model_notes": null
+    },
+    {
+      "name": "Insulin",
+      "type": "MD",
+      "timepoint_weeks": 4,
+      "estimate": -1.09,
+      "ci_low": -1.93,
+      "ci_high": -1.09,
+      "p_value": 0.01,
+      "adjusted": false,
+      "model_notes": null
+    }
+  ],
+  "risk_of_bias": {
+    "randomization_process": "low",
+    "deviations_from_intended": "low",
+    "missing_outcome_data": "low",
+    "measurement_of_outcome": "low",
+    "selection_of_reported_result": "low",
+    "overall": "low"
+  },
+  "effect": {
+    "type": "MD",
+    "estimate": -1.09,
+    "ci_low": -1.93,
+    "ci_high": -1.09,
+    "p_value": 0.01
+  },
+  "where_found": [
+    {
+      "section": "abstract",
+      "page": 2
+    },
+    {
+      "section": "methods",
+      "page": 5
+    },
+    {
+      "section": "results",
+      "page": 2
+    }
+  ],
+  "evidence": [
+    {
+      "section": "abstract",
+      "page": 2,
+      "snippet": "This randomized, double-blind, placebo-controlled trial was performed in 56 patients with T2DM and CHD. Patients were randomly divided into two groups to receive either 500 mg resveratrol/day (n=28) or placebo (n=28) for 4 weeks. Resveratrol reduced fasting glucose (β -10.04 mg/dL; 95% CI, -18.23, -1.86; P=0.01) ..."
+    },
+    {
+      "section": "abstract",
+      "page": 2,
+      "snippet": "Resveratrol reduced insulin (β -1.09 µIU/mL; 95% CI, -1.93, -0.24; P=0.01) and insulin resistance (β -0.48; 95% CI, -0.76, -0.21; P=0.001) ..."
+    },
+    {
+      "section": "methods",
+      "page": 5,
+      "snippet": "Participants were randomly allocated (balanced block randomization) into two groups to take either 500 mg/day resveratrol (Nutrissence, Las Vegas, USA) or placebo (Barij Essence, Kashan, Iran) (n=28 in each group) for 4 weeks."
+    }
+  ],
+  "missing_fields": [
+    "study_metadata.mean_age",
+    "study_metadata.female_pct",
+    "outcomes_raw.baseline_mean",
+    "outcomes_raw.baseline_sd",
+    "outcomes_raw.followup_mean",
+    "outcomes_raw.followup_sd",
+    "outcomes_raw.change_sd"
+  ],
+  "confidence": 0.9,
+  "comment": "Data extracted from RCT; effect on HOMA-IR and FPG reported.",
+  "comment_detailed": "I searched the abstract, methods, and results sections for study design, population, intervention details, and outcome data. The abstract provided the primary outcome (HOMA-IR) and secondary outcomes (FPG, insulin) with beta coefficients and 95% CIs. Specific baseline means, SDs, and follow-up values were not reported, so those fields are null. Risk of bias was judged low based on randomization, blinding, and outcome measurement. Missing fields include age, sex distribution, and detailed outcome statistics. Full tables or supplementary data would provide these details."
+}

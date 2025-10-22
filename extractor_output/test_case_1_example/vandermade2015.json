@@ -1,0 +1,111 @@
+{
+  "study_metadata": {
+    "design": "randomized",
+    "species": "Homo sapiens",
+    "n_total": 45,
+    "country": "Netherlands",
+    "setting": "outpatient",
+    "population": "overweight and slightly obese adults",
+    "inclusion_key": null,
+    "exclusion_key": null,
+    "mean_age": 61.0,
+    "female_pct": 44.44,
+    "diabetes_status": "other",
+    "primary_outcome": null
+  },
+  "intervention": {
+    "agent": "resveratrol",
+    "form": "capsule",
+    "dose_mg_per_day": 150.0,
+    "duration_weeks": 4.0,
+    "cointerventions": null
+  },
+  "comparison": {
+    "type": "placebo",
+    "description": "placebo capsules"
+  },
+  "arms": [
+    {
+      "name": "resveratrol",
+      "n": 45,
+      "dose_mg_per_day": 150.0,
+      "duration_weeks": 4.0
+    },
+    {
+      "name": "placebo",
+      "n": 45,
+      "dose_mg_per_day": 0.0,
+      "duration_weeks": 4.0
+    }
+  ],
+  "outcomes_raw": [
+    {
+      "name": "glucose",
+      "timepoint_weeks": 4.0,
+      "arm_name": "resveratrol vs placebo",
+      "baseline_mean": null,
+      "baseline_sd": null,
+      "followup_mean": null,
+      "followup_sd": null,
+      "change_mean": -0.08,
+      "change_sd": 0.28,
+      "units": "mmol_L",
+      "notes": null
+    }
+  ],
+  "effects_by_outcome": [
+    {
+      "name": "glucose",
+      "type": "MD",
+      "timepoint_weeks": 4.0,
+      "estimate": -0.08,
+      "ci_low": null,
+      "ci_high": null,
+      "p_value": 0.064,
+      "adjusted": false,
+      "model_notes": null
+    }
+  ],
+  "effect": {
+    "type": "MD",
+    "estimate": -0.08,
+    "ci_low": null,
+    "ci_high": null,
+    "p_value": 0.064
+  },
+  "risk_of_bias": {
+    "randomization_process": null,
+    "deviations_from_intended": null,
+    "missing_outcome_data": null,
+    "measurement_of_outcome": null,
+    "selection_of_reported_result": null,
+    "overall": null
+  },
+  "where_found": [
+    {
+      "section": "results",
+      "page": 3
+    }
+  ],
+  "evidence": [
+    {
+      "section": "results",
+      "page": 3,
+      "snippet": "glucose; -0.08 ± 0.28 mmol/L (P = 0.064)"
+    }
+  ],
+  "missing_fields": [
+    "study_metadata.inclusion_key",
+    "study_metadata.exclusion_key",
+    "study_metadata.primary_outcome",
+    "risk_of_bias.randomization_process",
+    "risk_of_bias.deviations_from_intended",
+    "risk_of_bias.missing_outcome_data",
+    "risk_of_bias.measurement_of_outcome",
+    "risk_of_bias.selection_of_reported_result",
+    "risk_of_bias.overall"
+  ],
+  "confidence": 0.6,
+  "comment": "Limited data, only glucose outcome reported",
+  "comment_detailed": "I searched the abstract, methods, and results sections for study design, participant characteristics, intervention details, and outcome data. The article reports a randomized, placebo‑controlled crossover trial with 45 overweight/obese adults in the Netherlands. Intervention was 150 mg/day resveratrol for 4 weeks; placebo was identical capsules. Only one metabolic outcome—fasting glucose—was reported with a mean difference of –0.08 mmol/L (SD 0.28) versus placebo, p = 0.064. Baseline and follow‑up means, other outcomes, and risk‑of‑bias assessments were not provided in the text. Thus many fields remain unknown. Full tables or supplementary material would clarify baseline values, other outcomes, and bias judgments. Confidence is moderate due to limited reporting. "
+}

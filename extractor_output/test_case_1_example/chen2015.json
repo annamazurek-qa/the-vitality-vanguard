@@ -1,0 +1,152 @@
+{
+  "study_metadata": {
+    "design": "RCT",
+    "species": "Homo sapiens",
+    "n_total": 60,
+    "country": "China",
+    "setting": "outpatient",
+    "population": "NAFLD patients",
+    "inclusion_key": "bright liver on ultrasound, BMI 20-30, fasting glucose <7.8 mmol/L, age 20-60",
+    "exclusion_key": "excessive alcohol, other liver diseases, etc.",
+    "mean_age": null,
+    "female_pct": null,
+    "diabetes_status": null,
+    "primary_outcome": "HOMA_IR"
+  },
+  "intervention": {
+    "agent": "resveratrol",
+    "form": "capsule",
+    "dose_mg_per_day": 600,
+    "duration_weeks": 12,
+    "cointerventions": null
+  },
+  "comparison": {
+    "type": "placebo",
+    "description": "placebo capsules containing pullulan and maltodextrin"
+  },
+  "arms": [
+    {
+      "name": "resveratrol",
+      "n": 30,
+      "dose_mg_per_day": 600,
+      "duration_weeks": 12
+    },
+    {
+      "name": "placebo",
+      "n": 30,
+      "dose_mg_per_day": 0,
+      "duration_weeks": 12
+    }
+  ],
+  "outcomes_raw": [
+    {
+      "name": "HOMA_IR",
+      "timepoint_weeks": 12,
+      "arm_name": "resveratrol",
+      "baseline_mean": null,
+      "baseline_sd": null,
+      "followup_mean": null,
+      "followup_sd": null,
+      "change_mean": -60,
+      "change_sd": 1.15,
+      "units": "HOMA_units",
+      "notes": "significant decrease"
+    },
+    {
+      "name": "FPG",
+      "timepoint_weeks": 12,
+      "arm_name": "resveratrol",
+      "baseline_mean": null,
+      "baseline_sd": null,
+      "followup_mean": null,
+      "followup_sd": null,
+      "change_mean": -64,
+      "change_sd": 0.31,
+      "units": "mmol_L",
+      "notes": null
+    }
+  ],
+  "effects_by_outcome": [
+    {
+      "name": "HOMA_IR",
+      "type": "MD",
+      "timepoint_weeks": 12,
+      "estimate": -60,
+      "ci_low": null,
+      "ci_high": null,
+      "p_value": 0.016,
+      "adjusted": false,
+      "model_notes": null
+    },
+    {
+      "name": "FPG",
+      "type": "MD",
+      "timepoint_weeks": 12,
+      "estimate": -64,
+      "ci_low": null,
+      "ci_high": null,
+      "p_value": null,
+      "adjusted": false,
+      "model_notes": null
+    }
+  ],
+  "risk_of_bias": {
+    "randomization_process": null,
+    "deviations_from_intended": null,
+    "missing_outcome_data": null,
+    "measurement_of_outcome": null,
+    "selection_of_reported_result": null,
+    "overall": null
+  },
+  "effect": null,
+  "where_found": [
+    {
+      "section": "abstract",
+      "page": null
+    },
+    {
+      "section": "methods",
+      "page": null
+    },
+    {
+      "section": "results",
+      "page": null
+    }
+  ],
+  "evidence": [
+    {
+      "section": "methods",
+      "page": null,
+      "snippet": "Double-blind, randomized, placebo-controlled trial: 60 subjects with NAFLD were given 2 placebo capsules or 2 150 mg resveratrol capsules twice daily for three months."
+    },
+    {
+      "section": "results",
+      "page": null,
+      "snippet": "Resveratrol significantly decreased homeostasis model assessment insulin resistance index (−0.60 ± 1.15, P = 0.016)."
+    }
+  ],
+  "missing_fields": [
+    "study_metadata.mean_age",
+    "study_metadata.female_pct",
+    "study_metadata.diabetes_status",
+    "risk_of_bias.randomization_process",
+    "risk_of_bias.deviations_from_intended",
+    "risk_of_bias.missing_outcome_data",
+    "risk_of_bias.measurement_of_outcome",
+    "risk_of_bias.selection_of_reported_result",
+    "risk_of_bias.overall",
+    "effect.type",
+    "effect.estimate",
+    "effect.ci_low",
+    "effect.ci_high",
+    "effect.p_value",
+    "where_found.page",
+    "outcomes_raw.baseline_mean",
+    "outcomes_raw.baseline_sd",
+    "outcomes_raw.followup_mean",
+    "outcomes_raw.followup_sd"
+  ],
+  "confidence": 0.8,
+  "comment": "Extracted key data; some details missing.",
+  "comment_detailed": "I searched the abstract, methods, and results for trial design, participant numbers, intervention details, and outcome changes. The study is a double-blind, randomized, placebo-controlled RCT with 60 adults in China. Intervention: 2×150 mg capsules twice daily (600 mg/day) for 12 weeks. Primary outcome: HOMA‑IR; secondary: fasting glucose. I extracted mean changes but baseline and follow‑up means, SDs, and CIs were not reported, so those fields are null. Risk‑of‑bias items and overall effect size are unknown. Full PDF tables would provide missing SDs, baseline values, and confidence intervals. Confidence 0.8."
+}

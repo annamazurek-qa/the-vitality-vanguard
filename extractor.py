@@ -1,4 +1,4 @@
-import os, re, json, uuid
+import os, re, json
 from pathlib import Path
 from typing import List, Dict, Any, Tuple, Optional
 
@@ -54,6 +54,171 @@ class PDFLLMExtractor:
       "comment_detailed": "string (≤150 words)"
     }
 
+    RESVERATROL_T2D_SCHEMA = {
+        "study_metadata": {
+            "design": "RCT|randomized|double-blind|single-blind|other|null",
+            "species": "Homo sapiens|other|null",
+            "n_total": "int|null",
+            "country": "string|null",
+            "setting": "outpatient|inpatient|mixed|null",
+            "population": "string|null",
+            "inclusion_key": "string|null",
+            "exclusion_key": "string|null",
+            "mean_age": "float|null",
+            "female_pct": "float|null",
+            "diabetes_status": "T2D|prediabetes|mixed|other|null",
+            "primary_outcome": "HOMA_IR|FPG|HbA1c|other|null"
+        },
+
+        "intervention": {
+            "agent": "resveratrol",
+            "form": "capsule|tablet|powder|other|null",
+            "dose_mg_per_day": "float|null",
+            "duration_weeks": "float|null",
+            "cointerventions": "string|null"
+        },
+
+        "comparison": {
+            "type": "placebo|no_treatment|standard_of_care|other|null",
+            "description": "string|null"
+        },
+
+        "arms": [
+            {
+            "name": "resveratrol|placebo|other",
+            "n": "int|null",
+            "dose_mg_per_day": "float|null",
+            "duration_weeks": "float|null"
+            }
+        ],
+
+        "outcomes_raw": [
+            {
+            "name": "HOMA_IR|FPG|HbA1c|other",
+            "timepoint_weeks": "float|null",
+            "arm_name": "string|null",
+            "baseline_mean": "float|null",
+            "baseline_sd": "float|null",
+            "followup_mean": "float|null",
+            "followup_sd": "float|null",
+            "change_mean": "float|null",
+            "change_sd": "float|null",
+            "units": "HOMA_units|mmol_L|mg_dL|%|other|null",
+            "notes": "string|null"
+            }
+        ],
+
+        "effects_by_outcome": [
+            {
+            "name": "HOMA_IR|FPG|HbA1c|other",
+            "type": "MD|SMD|null",
+            "timepoint_weeks": "float|null",
+            "estimate": "float|null",
+            "ci_low": "float|null",
+            "ci_high": "float|null",
+            "p_value": "float|null",
+            "adjusted": "false",
+            "model_notes": "string|null"
+            }
+        ],
+
+        "risk_of_bias": {
+            "randomization_process": "low|some_concerns|high|null",
+            "deviations_from_intended": "low|some_concerns|high|null",
+            "missing_outcome_data": "low|some_concerns|high|null",
+            "measurement_of_outcome": "low|some_concerns|high|null",
+            "selection_of_reported_result": "low|some_concerns|high|null",
+            "overall": "low|some_concerns|high|null"
+        },
+
+        "effect": {
+            "type": "MD|SMD|null",
+            "estimate": "float|null",
+            "ci_low": "float|null",
+            "ci_high": "float|null",
+            "p_value": "float|null"
+        },
+
+        "where_found": [
+            { "section": "abstract|methods|results|tables_texty|full_tail", "page": "int|null" }
+        ],
+        "evidence": [
+            { "section": "string", "page": "int|null", "snippet": "string (≤200 chars)" }
+        ],
+        "missing_fields": ["string"],
+        "confidence": "float in [0,1]",
+        "comment": "string (≤20 words)",
+        "comment_detailed": "string (≤150 words)"
+        }
+
+    METFORMIN_CANCER_SCHEMA = {
+        "study_metadata": {
+            "design": "cohort|case-control|RCT|cross-sectional|other|null",
+            "species": "Homo sapiens|other|null",
+            "n_total": "int|null",
+            "country": "string|null",
+            "data_source": "registry|EHR|claims|trial|other|null",
+            "population": "string|null",
+            "mean_age": "float|null",
+            "female_pct": "float|null",
+            "diabetes_status": "T2D_only|mixed|non_diabetic|unknown|null",
+            "primary_outcome": "overall_cancer_incidence|site_specific|null"
+        },
+
+        "exposure": {
+            "definition": "ever_use|current_use|new_user|cumulative_dose|duration|other|null",
+            "comparator": "non_use|other_antidiabetics|placebo|no_treatment|null",
+            "dose_metric": "DDD|mg_day|categories|none|null",
+            "duration_months": "float|null",
+            "cumulative_dose": "float|null",
+            "exposure_window_notes": "string|null"
+        },
+
+        "outcome": {
+            "cancer_type": "overall|breast|colorectal|lung|prostate|other|null",
+            "ascertainment": "registry|ICD_codes|pathology|self_report|other|null",
+            "incident_only": "true|false|null",
+            "followup_years": "float|null"
+        },
+
+        "analysis": {
+            "effect_measure": "RR|OR|HR|null",
+            "estimate": "float|null",
+            "ci_low": "float|null",
+            "ci_high": "float|null",
+            "p_value": "float|null",
+            "is_adjusted": "true|false|null",
+            "adjustment_covariates": ["string"],
+            "model_type": "cox|logistic|poisson|other|null",
+            "time_scale": "calendar|age|time_since_dx|other|null",
+            "addressed_immortal_time_bias": "true|false|null",
+            "new_user_design": "true|false|null",
+            "dose_response_assessed": "true|false|null",
+            "subgroup_or_strata": "string|null",
+            "notes": "string|null"
+        },
+
+        "risk_of_bias": {
+            "tool": "NHLBI|ROBINS-I|other|null",
+            "confounding": "low|moderate|serious|critical|null",
+            "selection_bias": "low|moderate|serious|critical|null",
+            "misclassification_bias": "low|moderate|serious|critical|null",
+            "missing_data": "low|moderate|serious|critical|null",
+            "overall": "good|fair|poor|low|moderate|serious|critical|null"
+        },
+
+        "where_found": [
+            { "section": "abstract|methods|results|tables_texty|full_tail", "page": "int|null" }
+        ],
+        "evidence": [
+            { "section": "string", "page": "int|null", "snippet": "string (≤200 chars)" }
+        ],
+        "missing_fields": ["string"],
+        "confidence": "float in [0,1]",
+        "comment": "string (≤20 words)",
+        "comment_detailed": "string (≤150 words)"
+        }
+
     SYSTEM_PROMPT = (
       "You are a precise information extraction engine. "
       "Return ONLY a valid, minified JSON object that matches the requested schema. "
@@ -65,7 +230,7 @@ class PDFLLMExtractor:
         base_url: str = "https://api.studio.nebius.com/v1/",
         model: str = "openai/gpt-oss-20b",
         temperature: float = 0.0,
-        max_tokens: int = 2000,
+        max_tokens: int = 5000,
         debug: bool = False,
         save_debug: bool = False,
         debug_dir: str = "debug_logs",
@@ -251,7 +416,7 @@ class PDFLLMExtractor:
 
     # ========= Prompt builder =========
     def make_user_message(self, question: str, content) -> str:
-        schema_json = json.dumps(self.EXTRACTION_SCHEMA, ensure_ascii=False, indent=2)
+        schema_json = json.dumps(self.RESVERATROL_T2D_SCHEMA, ensure_ascii=False, indent=2)
 
         # Handle list of pages or dict of sections
         if isinstance(content, list):
@@ -481,6 +646,14 @@ TEXT:
         self._save_output(pdf_path, parsed)
         return parsed
 
+    def extract_folder(self, folder_path: str, question: str) -> None:
+        """Run extraction for every PDF in a folder (non-recursive)."""
+        folder = Path(folder_path)
+        if not folder.is_dir():
+            raise ValueError(f"Not a folder: {folder_path}")
+        for fp in sorted(list(folder.glob("*.pdf")) + list(folder.glob("*.PDF"))):
+            self.extract(str(fp), question)
+
     # ========= Helper: null payload with explanation =========
     def _empty_payload(self, comment: str, evidence: Optional[List[Dict[str, Any]]] = None) -> Dict[str, Any]:
         if evidence is None:
@@ -503,14 +676,17 @@ TEXT:
 
 # -------------- Example usage --------------
 if __name__ == "__main__":
-    pdf_path = "pdfs/molecules-30-00816.pdf"
-    question = "What is the effect of metformin on lifespan in animal models?"
+    pdf_path = "pdfs/testcase_1/101.pdf"
+    pdf_folder_path = "pdfs/test_case_1_example"
+    question = "What is the effect of oral resveratrol on glycemic control in randomized human trials?"
 
     extractor = PDFLLMExtractor(
         model="openai/gpt-oss-20b",
         debug=True,          # print essential debug
         save_debug=True      # also dump raw/full responses to debug_logs/
     )
-    result = extractor.extract(pdf_path, question)
-    print("\n=== FINAL JSON ===")
-    print(json.dumps(result, indent=2, ensure_ascii=False))
+    
+    # result = extractor.extract(pdf_path, question)
+
+    # process all PDFs in a folder
+    extractor.extract_folder(pdf_folder_path, question)

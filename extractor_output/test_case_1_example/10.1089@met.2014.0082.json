@@ -1,0 +1,81 @@
+{
+  "study_metadata": {
+    "design": "RCT|randomized|double-blind|placebo-controlled",
+    "species": "Homo sapiens",
+    "n_total": 24,
+    "country": "Mexico",
+    "setting": "outpatient",
+    "population": "metabolic syndrome",
+    "inclusion_key": "diagnosis of metabolic syndrome per IDF criteria, age 30-50, no T2DM",
+    "exclusion_key": "T2DM, prior treatment for metabolic syndrome components",
+    "mean_age": null,
+    "female_pct": null,
+    "diabetes_status": "other",
+    "primary_outcome": "other"
+  },
+  "intervention": {
+    "agent": "resveratrol",
+    "form": "capsule",
+    "dose_mg_per_day": 1500,
+    "duration_weeks": 13,
+    "cointerventions": "medical/nutritional therapy continued"
+  },
+  "comparison": {
+    "type": "placebo",
+    "description": "placebo capsules identical in appearance"
+  },
+  "arms": [
+    {
+      "name": "resveratrol",
+      "n": 12,
+      "dose_mg_per_day": 1500,
+      "duration_weeks": 13
+    },
+    {
+      "name": "placebo",
+      "n": 12,
+      "dose_mg_per_day": 0,
+      "duration_weeks": 13
+    }
+  ],
+  "outcomes_raw": [],
+  "effects_by_outcome": [],
+  "risk_of_bias": {
+    "randomization_process": "some_concerns",
+    "deviations_from_intended": "some_concerns",
+    "missing_outcome_data": "some_concerns",
+    "measurement_of_outcome": "some_concerns",
+    "selection_of_reported_result": "some_concerns",
+    "overall": "some_concerns"
+  },
+  "effect": {
+    "type": null,
+    "estimate": null,
+    "ci_low": null,
+    "ci_high": null,
+    "p_value": null
+  },
+  "where_found": [],
+  "evidence": [
+    {
+      "section": "Methods",
+      "page": null,
+      "snippet": "A randomized, double-blind, placebo-controlled clinical trial was carried out in 24 patients with metabolic syndrome..."
+    }
+  ],
+  "missing_fields": [
+    "study_metadata.mean_age",
+    "study_metadata.female_pct",
+    "study_metadata.diabetes_status",
+    "study_metadata.primary_outcome",
+    "outcomes_raw",
+    "effects_by_outcome",
+    "risk_of_bias",
+    "effect",
+    "where_found",
+    "evidence"
+  ],
+  "confidence": 0.6,
+  "comment": "Limited data, many fields missing",
+  "comment_detailed": "I searched the abstract, methods, and results sections for trial design, population, intervention details, and outcome data. The study reports a 3‑month, 1500 mg/day resveratrol capsule intervention versus placebo in 24 metabolic syndrome patients, but it does not provide mean age, female proportion, or a clear primary outcome in the required categories. Outcome statistics for AUC insulin are given as mean ± SD, but no change values or confidence intervals are reported, so effect estimates cannot be derived. Risk‑of‑bias judgments are inferred as some concerns due to incomplete reporting. Full tables or supplementary material would clarify missing numeric data and allow calculation of effect sizes. Confidence is moderate due to incomplete information. "
+}

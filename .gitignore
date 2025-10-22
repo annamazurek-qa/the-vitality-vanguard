@@ -1,5 +1,9 @@
-pdfs
+pdfs/*
+!pdfs/test_case_1_example/
+!pdfs/test_case_1_example/*
 *.ipynb
 .env
 debug_logs
-extractor_output
+extractor_output/*
+!extractor_output/test_case_1_example/
+!extractor_output/test_case_1_example/*

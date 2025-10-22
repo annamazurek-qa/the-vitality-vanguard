@@ -1,0 +1,126 @@
+{
+  "study_metadata": {
+    "design": "RCT",
+    "species": "Homo sapiens",
+    "n_total": 60,
+    "country": "Iran",
+    "setting": "outpatient",
+    "population": "type 2 diabetes with albuminuria",
+    "inclusion_key": "FPG ≤130 mg/dL, HbA1c ≤7%, urine albumin/creatinine ratio ≥30 mg/g, serum creatinine ≤2 mg/dL",
+    "exclusion_key": "pregnancy, lactation, alcoholism, liver failure, uncontrolled hypertension, recent ACEi/ARB use, heart failure, prostate disease, malignancy, renal artery stenosis, systemic disease, infection, warfarin",
+    "mean_age": null,
+    "female_pct": null,
+    "diabetes_status": "T2D",
+    "primary_outcome": "other"
+  },
+  "intervention": {
+    "agent": "resveratrol",
+    "form": "capsule",
+    "dose_mg_per_day": 500,
+    "duration_weeks": 12.857,
+    "cointerventions": "Losartan 12.5 mg/day"
+  },
+  "comparison": {
+    "type": "placebo",
+    "description": "identical placebo capsules"
+  },
+  "arms": [
+    {
+      "name": "resveratrol",
+      "n": 30,
+      "dose_mg_per_day": 500,
+      "duration_weeks": 12.857
+    },
+    {
+      "name": "placebo",
+      "n": 30,
+      "dose_mg_per_day": 0,
+      "duration_weeks": 12.857
+    }
+  ],
+  "outcomes_raw": [
+    {
+      "name": "urinary albumin/creatinine ratio",
+      "timepoint_weeks": 12.857,
+      "arm_name": "resveratrol",
+      "baseline_mean": null,
+      "baseline_sd": null,
+      "followup_mean": null,
+      "followup_sd": null,
+      "change_mean": -46.4,
+      "change_sd": null,
+      "units": "mg/g",
+      "notes": "95% CI: -64.5 to -28.3"
+    },
+    {
+      "name": "urinary albumin/creatinine ratio",
+      "timepoint_weeks": 12.857,
+      "arm_name": "placebo",
+      "baseline_mean": null,
+      "baseline_sd": null,
+      "followup_mean": null,
+      "followup_sd": null,
+      "change_mean": 29.9,
+      "change_sd": null,
+      "units": "mg/g",
+      "notes": "95% CI: 4.9 to 54.9"
+    }
+  ],
+  "effects_by_outcome": [],
+  "risk_of_bias": {
+    "randomization_process": null,
+    "deviations_from_intended": null,
+    "missing_outcome_data": null,
+    "measurement_of_outcome": null,
+    "selection_of_reported_result": null,
+    "overall": null
+  },
+  "effect": {
+    "type": null,
+    "estimate": null,
+    "ci_low": null,
+    "ci_high": null,
+    "p_value": null
+  },
+  "where_found": [
+    {
+      "section": "abstract",
+      "page": null
+    },
+    {
+      "section": "methods",
+      "page": null
+    },
+    {
+      "section": "results",
+      "page": null
+    }
+  ],
+  "evidence": [
+    {
+      "section": "abstract",
+      "page": null,
+      "snippet": "Secondary outcomes were oxidative stress markers, and anthropometric and biochemical measures."
+    },
+    {
+      "section": "results",
+      "page": null,
+      "snippet": "Mean urine albumin/creatinine ratio was significantly reduced in the resveratrol group vs placebo (−46.4 mg/g, 95% CI: −64.5 to −28.3 vs 29.9 mg/g, 95% CI: 4.9 to 54.9; P < 0.001)."
+    }
+  ],
+  "missing_fields": [
+    "study_metadata.mean_age",
+    "study_metadata.female_pct",
+    "study_metadata.inclusion_key",
+    "study_metadata.exclusion_key",
+    "outcomes_raw[HbA1c]",
+    "outcomes_raw[FPG]",
+    "effects_by_outcome[HbA1c]",
+    "effects_by_outcome[FPG]",
+    "risk_of_bias.*",
+    "effect.*"
+  ],
+  "confidence": 0.6,
+  "comment": "No glycemic effect reported",
+  "comment_detailed": "I searched the abstract, methods, and results for HbA1c, fasting plasma glucose, and HOMA-IR data. The article reports only changes in urinary albumin/creatinine ratio and mentions HbA1c as a secondary outcome but provides no numeric results. Therefore, glycemic control outcomes are unknown. Full tables or supplementary material might contain the missing data. The risk of bias assessment is incomplete due to lack of detail on randomization and blinding procedures beyond the brief description. The effect estimate for glycemic control cannot be derived from the available text."
+}

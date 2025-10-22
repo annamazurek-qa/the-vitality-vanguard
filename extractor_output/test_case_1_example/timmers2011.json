@@ -1,0 +1,167 @@
+{
+  "study_metadata": {
+    "design": "RCT",
+    "species": "Homo sapiens",
+    "n_total": 11,
+    "country": null,
+    "setting": null,
+    "population": "obese humans",
+    "inclusion_key": null,
+    "exclusion_key": null,
+    "mean_age": null,
+    "female_pct": null,
+    "diabetes_status": null,
+    "primary_outcome": null
+  },
+  "intervention": {
+    "agent": "resveratrol",
+    "form": null,
+    "dose_mg_per_day": null,
+    "duration_weeks": 4.2857,
+    "cointerventions": null
+  },
+  "comparison": {
+    "type": "placebo",
+    "description": "placebo"
+  },
+  "arms": [
+    {
+      "name": "resveratrol",
+      "n": 11,
+      "dose_mg_per_day": null,
+      "duration_weeks": 4.2857
+    },
+    {
+      "name": "placebo",
+      "n": 11,
+      "dose_mg_per_day": null,
+      "duration_weeks": 4.2857
+    }
+  ],
+  "outcomes_raw": [
+    {
+      "name": "RQ",
+      "timepoint_weeks": 4.2857,
+      "arm_name": "resveratrol",
+      "baseline_mean": null,
+      "baseline_sd": null,
+      "followup_mean": 0.89,
+      "followup_sd": 0.01,
+      "change_mean": null,
+      "change_sd": null,
+      "units": "other",
+      "notes": "p=0.09"
+    },
+    {
+      "name": "RQ",
+      "timepoint_weeks": 4.2857,
+      "arm_name": "placebo",
+      "baseline_mean": null,
+      "baseline_sd": null,
+      "followup_mean": 0.87,
+      "followup_sd": 0.01,
+      "change_mean": null,
+      "change_sd": null,
+      "units": "other",
+      "notes": "p=0.09"
+    },
+    {
+      "name": "EE",
+      "timepoint_weeks": 4.2857,
+      "arm_name": "resveratrol",
+      "baseline_mean": null,
+      "baseline_sd": null,
+      "followup_mean": 7.75,
+      "followup_sd": 0.23,
+      "change_mean": null,
+      "change_sd": null,
+      "units": "MJ/d",
+      "notes": "p=0.007"
+    },
+    {
+      "name": "EE",
+      "timepoint_weeks": 4.2857,
+      "arm_name": "placebo",
+      "baseline_mean": null,
+      "baseline_sd": null,
+      "followup_mean": 8.09,
+      "followup_sd": 0.24,
+      "change_mean": null,
+      "change_sd": null,
+      "units": "MJ/d",
+      "notes": "p=0.007"
+    }
+  ],
+  "effects_by_outcome": [
+    {
+      "name": "RQ",
+      "type": "MD",
+      "timepoint_weeks": 4.2857,
+      "estimate": 0.02,
+      "ci_low": null,
+      "ci_high": null,
+      "p_value": 0.09,
+      "adjusted": "false",
+      "model_notes": null
+    },
+    {
+      "name": "EE",
+      "type": "MD",
+      "timepoint_weeks": 4.2857,
+      "estimate": -1.34,
+      "ci_low": null,
+      "ci_high": null,
+      "p_value": 0.007,
+      "adjusted": "false",
+      "model_notes": null
+    }
+  ],
+  "risk_of_bias": {
+    "randomization_process": null,
+    "deviations_from_intended": null,
+    "missing_outcome_data": null,
+    "measurement_of_outcome": null,
+    "selection_of_reported_result": null,
+    "overall": null
+  },
+  "effect": null,
+  "where_found": [],
+  "evidence": [
+    {
+      "section": "results",
+      "page": null,
+      "snippet": "Table S2 shows RQ values: 0.87 ± 0.01 (placebo) vs 0.89 ± 0.01 (resveratrol) at 30 days (p=0.09)."
+    },
+    {
+      "section": "results",
+      "page": null,
+      "snippet": "EE (MJ/d) at 30 days: 8.09 ± 0.24 (placebo) vs 7.75 ± 0.23 (resveratrol) (p=0.007)."
+    },
+    {
+      "section": "methods",
+      "page": null,
+      "snippet": "Study is a 30‑day, randomized, double‑blind, placebo‑controlled trial in obese humans."
+    }
+  ],
+  "missing_fields": [
+    "study_metadata.country",
+    "study_metadata.setting",
+    "study_metadata.inclusion_key",
+    "study_metadata.exclusion_key",
+    "study_metadata.mean_age",
+    "study_metadata.female_pct",
+    "study_metadata.diabetes_status",
+    "study_metadata.primary_outcome",
+    "intervention.form",
+    "intervention.dose_mg_per_day",
+    "risk_of_bias.randomization_process",
+    "risk_of_bias.deviations_from_intended",
+    "risk_of_bias.missing_outcome_data",
+    "risk_of_bias.measurement_of_outcome",
+    "risk_of_bias.selection_of_reported_result",
+    "risk_of_bias.overall"
+  ],
+  "confidence": 0.6,
+  "comment": "Limited data, key outcomes extracted.",
+  "comment_detailed": "I searched the supplemental tables for numeric outcomes. Table S2 provided RQ and EE values at 30 days, but baseline data were missing, so change values were not calculated. The study design was inferred from the placebo-controlled description and the 30‑day duration, but details such as dose, form, and demographic specifics were not reported. Additional information would be available in the main manuscript or full PDF, which would clarify sample size, age, sex distribution, and risk‑of‑bias assessments."
+}

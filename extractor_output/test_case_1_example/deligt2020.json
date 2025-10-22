@@ -1,0 +1,171 @@
+{
+  "study_metadata": {
+    "design": "double-blind",
+    "species": "Homo sapiens",
+    "n_total": 41,
+    "country": "Netherlands",
+    "setting": "outpatient",
+    "population": "overweight adults",
+    "inclusion_key": "BMI 27-35, age 40-70, stable weight",
+    "exclusion_key": "uncontrolled hypertension, HbA1c >48 mmol/mol, T2D, alcohol >20 g/d, medication interfering with glucose, recent study participation",
+    "mean_age": null,
+    "female_pct": 51.2,
+    "diabetes_status": "prediabetes",
+    "primary_outcome": "other"
+  },
+  "intervention": {
+    "agent": "resveratrol",
+    "form": "capsule",
+    "dose_mg_per_day": 150,
+    "duration_weeks": 24,
+    "cointerventions": null
+  },
+  "comparison": {
+    "type": "placebo",
+    "description": "identical placebo capsules"
+  },
+  "arms": [
+    {
+      "name": "resveratrol",
+      "n": 20,
+      "dose_mg_per_day": 150,
+      "duration_weeks": 24
+    },
+    {
+      "name": "placebo",
+      "n": 21,
+      "dose_mg_per_day": 0,
+      "duration_weeks": 24
+    }
+  ],
+  "outcomes_raw": [
+    {
+      "name": "Matsuda index",
+      "timepoint_weeks": 24,
+      "arm_name": "resveratrol",
+      "baseline_mean": null,
+      "baseline_sd": null,
+      "followup_mean": 5.18,
+      "followup_sd": 0.35,
+      "change_mean": null,
+      "change_sd": null,
+      "units": "other",
+      "notes": "adjusted mean"
+    },
+    {
+      "name": "Matsuda index",
+      "timepoint_weeks": 24,
+      "arm_name": "placebo",
+      "baseline_mean": null,
+      "baseline_sd": null,
+      "followup_mean": 5.5,
+      "followup_sd": 0.34,
+      "change_mean": null,
+      "change_sd": null,
+      "units": "other",
+      "notes": "adjusted mean"
+    },
+    {
+      "name": "HbA1c",
+      "timepoint_weeks": 24,
+      "arm_name": "resveratrol",
+      "baseline_mean": null,
+      "baseline_sd": null,
+      "followup_mean": 35.8,
+      "followup_sd": 0.43,
+      "change_mean": null,
+      "change_sd": null,
+      "units": "other",
+      "notes": "adjusted mean"
+    },
+    {
+      "name": "HbA1c",
+      "timepoint_weeks": 24,
+      "arm_name": "placebo",
+      "baseline_mean": null,
+      "baseline_sd": null,
+      "followup_mean": 37.6,
+      "followup_sd": 0.44,
+      "change_mean": null,
+      "change_sd": null,
+      "units": "other",
+      "notes": "adjusted mean"
+    }
+  ],
+  "effects_by_outcome": [
+    {
+      "name": "Matsuda index",
+      "type": "MD",
+      "timepoint_weeks": 24,
+      "estimate": 0,
+      "ci_low": null,
+      "ci_high": null,
+      "p_value": null,
+      "adjusted": false,
+      "model_notes": "ANCOVA adjusting for baseline"
+    },
+    {
+      "name": "HbA1c",
+      "type": "MD",
+      "timepoint_weeks": 24,
+      "estimate": -1.8,
+      "ci_low": null,
+      "ci_high": null,
+      "p_value": 0.007,
+      "adjusted": false,
+      "model_notes": "ANCOVA adjusting for baseline"
+    }
+  ],
+  "risk_of_bias": {
+    "randomization_process": null,
+    "deviations_from_intended": null,
+    "missing_outcome_data": null,
+    "measurement_of_outcome": null,
+    "selection_of_reported_result": null,
+    "overall": null
+  },
+  "effect": {
+    "type": null,
+    "estimate": null,
+    "ci_low": null,
+    "ci_high": null,
+    "p_value": null
+  },
+  "where_found": [
+    {
+      "section": "abstract",
+      "page": null
+    },
+    {
+      "section": "methods",
+      "page": null
+    },
+    {
+      "section": "results",
+      "page": null
+    }
+  ],
+  "evidence": [
+    {
+      "section": "abstract",
+      "page": null,
+      "snippet": "No effect of resveratrol supplementation after 6 months on insulin sensitivity in overweight adults: a randomized trial."
+    },
+    {
+      "section": "results",
+      "page": null,
+      "snippet": "Insulin sensitivity was not affected after 6 mo of resveratrol treatment (adjusted mean Matsuda index: 5.18 ± 0.35 in the resveratrol arm compared with 5.50 ± 0.34 in the placebo arm)."
+    },
+    {
+      "section": "results",
+      "page": null,
+      "snippet": "The adjusted means showed that postintervention HbA1c was lower on resveratrol (35.8 ± 0.43 mmol/mol) compared with placebo (37.6 ± 0.44 mmol/mol)."
+    }
+  ],
+  "missing_fields": [
+    "study_metadata.mean_age"
+  ],
+  "confidence": 0.8,
+  "comment": "Data extracted; some values missing",
+  "comment_detailed": "I reviewed the abstract, methods, and results sections for study design, population, intervention details, and outcome data. The primary outcome was insulin sensitivity measured by the Matsuda index, and a secondary outcome was HbA1c. Exact baseline means and standard deviations were not reported, so those fields are null. The mean age was not specified, so that field is missing. The risk‑of‑bias domains could not be assessed from the provided text, so they are null. The effect estimates for insulin sensitivity and HbA1c were derived from the reported adjusted means; confidence intervals were not provided, so CI fields are null. The evidence snippets support the extracted values. Full tables or the complete PDF would provide missing baseline data and risk‑of‑bias information."
+}
