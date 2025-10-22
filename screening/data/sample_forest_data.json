@@ -1,0 +1,62 @@
+{
+  "title": "Effect of Resveratrol on HbA1c in Type 2 Diabetes",
+  "effect_measure": "MD",
+  "studies": [
+    {
+      "study_name": "Movahed 2013",
+      "effect_size": -0.48,
+      "ci_lower": -0.85,
+      "ci_upper": -0.11,
+      "weight": 18.5
+    },
+    {
+      "study_name": "Brasnyo 2011",
+      "effect_size": -0.32,
+      "ci_lower": -0.72,
+      "ci_upper": 0.08,
+      "weight": 15.2
+    },
+    {
+      "study_name": "Thazhath 2016",
+      "effect_size": -0.21,
+      "ci_lower": -0.58,
+      "ci_upper": 0.16,
+      "weight": 16.8
+    },
+    {
+      "study_name": "Bhatt 2012",
+      "effect_size": -0.55,
+      "ci_lower": -1.02,
+      "ci_upper": -0.08,
+      "weight": 12.3
+    },
+    {
+      "study_name": "Crandall 2012",
+      "effect_size": -0.38,
+      "ci_lower": -0.71,
+      "ci_upper": -0.05,
+      "weight": 19.7
+    },
+    {
+      "study_name": "Anton 2014",
+      "effect_size": -0.29,
+      "ci_lower": -0.68,
+      "ci_upper": 0.10,
+      "weight": 17.5
+    }
+  ],
+  "pooled": {
+    "study_name": "Overall (Random Effects)",
+    "effect_size": -0.37,
+    "ci_lower": -0.58,
+    "ci_upper": -0.16,
+    "weight": 100.0,
+    "is_pooled": true
+  },
+  "heterogeneity": {
+    "i_squared": 23.4,
+    "tau_squared": 0.012,
+    "p_value": 0.251
+  },
+  "note": "This is sample data for demonstration purposes. Not real meta-analysis results."
+}
