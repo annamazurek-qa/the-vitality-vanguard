@@ -1,0 +1,53 @@
+======================================================================
+THE VITALITY VANGUARD - META-ANALYSIS PIPELINE
+======================================================================
+Started at: 2025-10-23T00:34:10.182219
+Output directory: /Users/anna.mazurek/Documents/Hackathon/the-vitality-vanguard/results_complete
+
+
+======================================================================
+STEP 1: Protocol & PICO Formulation
+======================================================================
+Loading existing protocol from: protocol.json
+✓ Protocol loaded and saved to: results_complete/1_protocol/protocol.json
+
+======================================================================
+STEP 2: Systematic Search & Retrieval
+======================================================================
+Search query: ((older adult OR elderly OR aged OR senior OR older people) AND (calorie restriction OR caloric restriction OR intermittent fasting OR time restricted feeding OR alternate day fasting OR periodic fasting) AND (longevity OR lifespan OR healthspan OR telomere OR epigenetic clock OR biomarker* OR mortality OR age-related disease OR frailty))
+Searching PubMed...
+✓ Found 2886 results, retrieved 20 PMIDs
+Fetching article metadata...
+✓ Saved 20 citations to: results_complete/2_search/citations.jsonl
+
+======================================================================
+STEP 3: Screening & Selection
+======================================================================
+Running Title/Abstract screening...
+Running Full-Text screening...
+Generating PRISMA statistics...
+Generating PRISMA flow diagram...
+✓ Screening complete: 0 studies included
+
+======================================================================
+STEP 4: Data Extraction
+======================================================================
+Extracting data from 0 studies...
+NOTE: This requires PDF files in ./pdfs/ directory
+✓ Extraction complete: 0 files
+
+======================================================================
+STEP 5: Meta-Analysis & Statistical Synthesis
+======================================================================
+Warning: No extraction files found. Skipping analysis.
+
+======================================================================
+STEP 6: Final Report Generation
+======================================================================
+✓ Final report saved to: results_complete/FINAL_REPORT.md
+
+======================================================================
+PIPELINE COMPLETE
+======================================================================
+Total runtime: 2.5 seconds
+All outputs saved to: /Users/anna.mazurek/Documents/Hackathon/the-vitality-vanguard/results_complete

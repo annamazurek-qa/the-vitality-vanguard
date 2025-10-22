@@ -33,19 +33,36 @@ from typing import Dict, List, Optional
 
 # Module imports
 try:
-    from PrePico import PICOExtractor
     from search_agent import build_query, search_pubmed, fetch_metadata
     from extractor import PDFLLMExtractor
-    from meta_analyzer import (
-        load_jsons,
-        build_study_rows,
-        pool_fixed_inv_var,
-        make_forest
-    )
 except ImportError as e:
     print(f"Error importing modules: {e}")
     print("Make sure all required modules are in the current directory.")
     sys.exit(1)
+
+# Try to import PrePico (optional, requires scispacy)
+try:
+    from PrePico import PICOExtractor
+    HAS_PREPICO = True
+except ImportError:
+    HAS_PREPICO = False
+    print("Warning: PrePico module not available (requires scispacy)")
+    print("Protocol formulation from research questions will be limited.")
+
+# Try to import meta_analyzer (may need stub functions)
+HAS_META_ANALYZER = False
+try:
+    import meta_analyzer
+    # Check if required functions exist
+    if hasattr(meta_analyzer, 'load_jsons'):
+        from meta_analyzer import load_jsons, build_study_rows, pool_fixed_inv_var, make_forest
+        HAS_META_ANALYZER = True
+except (ImportError, AttributeError):
+    pass
+
+if not HAS_META_ANALYZER:
+    print("Warning: Meta-analyzer module incomplete")
+    print("Module 5 (meta-analysis) will generate basic summaries only")
 
 
 class MetaAnalysisPipeline:
@@ -129,11 +146,14 @@ class MetaAnalysisPipeline:
             raise ValueError("Must provide either --question or --protocol")
 
         self.log(f"Research question: {question}")
-        self.log("Extracting PICO elements...")
 
-        # Initialize PICO extractor
-        extractor = PICOExtractor()
-        pico_result = extractor.extract_pico(question)
+        if HAS_PREPICO:
+            self.log("Extracting PICO elements with PrePico...")
+            extractor = PICOExtractor()
+            pico_result = extractor.extract_pico(question)
+        else:
+            self.log("PrePico not available - using simple extraction...")
+            pico_result = self._simple_pico_extraction(question)
 
         # Build protocol structure
         protocol = {
@@ -174,6 +194,75 @@ class MetaAnalysisPipeline:
         self.log(f"  Outcomes: {', '.join(protocol['pico']['outcomes'])}")
 
         return protocol
+
+    def _simple_pico_extraction(self, question: str) -> Dict:
+        """
+        Simple PICO extraction using regex patterns (fallback when scispacy unavailable).
+
+        Args:
+            question: Research question
+
+        Returns:
+            Dictionary with PICO elements
+        """
+        import re
+
+        # Basic patterns
+        question_lower = question.lower()
+
+        # Extract intervention/treatment (common drug names, interventions)
+        intervention_patterns = [
+            r'\b(resveratrol|metformin|aspirin|statin|calorie restriction|fasting|exercise)\b',
+            r'\b(\w+)\s+(?:treatment|therapy|supplementation|intervention)\b',
+            r'\btaking\s+(\w+)\b',
+            r'\bdoes\s+(\w+)\s+(?:improve|reduce|affect)\b'
+        ]
+        intervention = ""
+        for pattern in intervention_patterns:
+            match = re.search(pattern, question_lower, re.IGNORECASE)
+            if match:
+                intervention = match.group(1)
+                break
+
+        # Extract population (look for disease/condition keywords)
+        population_patterns = [
+            r'\b(?:in |with |among )(people|adults|patients|individuals)\s+(?:with|having)\s+([\w\s]+?)(?:\?|$|,)',
+            r'\b(type 2 diabetes|diabetes|cancer|heart disease|hypertension|obesity)\b',
+            r'\b(elderly|older adults|children|adolescents)\b'
+        ]
+        population = ""
+        for pattern in population_patterns:
+            match = re.search(pattern, question_lower, re.IGNORECASE)
+            if match:
+                population = match.group(0).strip()
+                break
+
+        # Extract outcomes (what's being measured)
+        outcome_patterns = [
+            r'\b(?:improve|reduce|affect|lower|increase)\s+([\w\s]+?)(?:\?|$)',
+            r'\b(glycemic control|blood pressure|mortality|survival|lifespan|cancer risk)\b',
+            r'\b(HbA1c|glucose|cholesterol|triglycerides)\b'
+        ]
+        outcomes = []
+        for pattern in outcome_patterns:
+            matches = re.finditer(pattern, question_lower, re.IGNORECASE)
+            for match in matches:
+                outcome = match.group(1) if len(match.groups()) > 0 else match.group(0)
+                outcomes.append(outcome.strip())
+
+        # Default comparison
+        comparison = "placebo or standard care"
+        if "compared to" in question_lower or "versus" in question_lower:
+            comp_match = re.search(r'(?:compared to|versus|vs\.?)\s+([\w\s]+?)(?:\?|$|,)', question_lower)
+            if comp_match:
+                comparison = comp_match.group(1).strip()
+
+        return {
+            "population": population if population else "adults",
+            "intervention": intervention if intervention else "intervention",
+            "comparison": comparison,
+            "outcomes": list(set(outcomes)) if outcomes else ["primary outcome"]
+        }
 
     def _generate_keywords(self, pico_result: Dict) -> Dict:
         """Generate search keywords from PICO elements."""
@@ -396,6 +485,12 @@ class MetaAnalysisPipeline:
         if not json_files:
             self.log("Warning: No extraction files found. Skipping analysis.")
             return {}
+
+        if not HAS_META_ANALYZER:
+            self.log("Warning: Meta-analyzer functions not available.")
+            self.log("Creating basic summary only...")
+            # Basic summary without full meta-analysis
+            return {"note": "Meta-analysis module incomplete - see extracted data in extraction_dir"}
 
         self.log(f"Loading {len(json_files)} extraction files...")
         studies = load_jsons([str(f) for f in json_files])

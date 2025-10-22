@@ -1,0 +1,12 @@
+{
+  "identified": {},
+  "deduplicated": 0,
+  "screened": 20,
+  "ta_excluded": 0,
+  "fulltext_assessed": 20,
+  "fulltext_excluded": 20,
+  "included": 0,
+  "reasons": {
+    "fulltext_unavailable": 20
+  }
+}
