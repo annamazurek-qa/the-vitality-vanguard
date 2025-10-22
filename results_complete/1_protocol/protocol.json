@@ -1,0 +1,149 @@
+{
+  "protocol_id": "longevity_2025_001",
+  "title": "Effects of Calorie Restriction / Intermittent Fasting on Longevity and Aging Biomarkers in Adults",
+  "description": "Systematic search protocol for studies investigating calorie restriction or intermittent fasting and their associations with lifespan, healthspan, and biomarkers of aging in adult humans.",
+  "created_date": "2025-10-17",
+  "pico": {
+    "population": "Adults aged 50 years and older (human studies)",
+    "intervention": "Calorie restriction or intermittent fasting (time-restricted feeding, alternate-day fasting, periodic fasting)",
+    "comparison": "Usual diet or ad libitum intake (or alternative dietary regimens)",
+    "outcomes": [
+      "All-cause mortality / lifespan",
+      "Healthspan measures (physical function, frailty)",
+      "Biomarkers of aging (telomere length, epigenetic clocks, inflammatory markers, metabolic markers)",
+      "Incidence of age-related disease (cardiovascular disease, neurodegeneration, cancer)"
+    ]
+  },
+  "scope_and_limits": {
+    "population_notes": "Primarily human studies. Animal studies may be collected separately if specified in future iterations.",
+    "age_cutoff": ">=50",
+    "study_setting": "Any (community, clinical trial, cohort, etc.)"
+  },
+  "inclusion_criteria": [
+    "Original research articles (randomized controlled trials, non-randomized trials, cohort studies, case-control studies, cross-sectional studies)",
+    "Human participants with mean or median age >= 50 or subgroup analyses reporting results for >=50",
+    "Studies reporting at least one predefined outcome",
+    "Articles published from 2000-01-01 to 2025-10-17",
+    "Publications in English",
+    "Full text available (open access or accessible via institutional subscription) \u2014 if full text unavailable, include metadata/abstract"
+  ],
+  "exclusion_criteria": [
+    "Animal-only studies (unless flagged for separate animal review)",
+    "In vitro / cell culture studies",
+    "Narrative reviews, opinion pieces, editorials (but systematic reviews may be harvested for references)",
+    "Case reports or small case series (n < 5) unless reporting unique mechanistic endpoints",
+    "Non-English publications (unless translation feasible in later stage)"
+  ],
+  "databases": [
+    "pubmed",
+    "pmc",
+    "embase",
+    "cochranelibrary",
+    "clinicaltrials_gov",
+    "semantic_scholar"
+  ],
+  "search_parameters": {
+    "date_range": {
+      "from": "2000-01-01",
+      "to": "2025-10-17"
+    },
+    "language": [
+      "English"
+    ],
+    "study_designs": [
+      "randomized controlled trial",
+      "non-randomized trial",
+      "cohort",
+      "case-control",
+      "cross-sectional"
+    ],
+    "retmax_per_db": 1000,
+    "use_mesh": true,
+    "boolean_logic": "use AND/OR/NOT as appropriate; group synonyms with OR, combine concepts with AND"
+  },
+  "keywords": {
+    "population_terms": [
+      "older adult",
+      "elderly",
+      "aged",
+      "senior",
+      "older people"
+    ],
+    "intervention_terms": [
+      "calorie restriction",
+      "caloric restriction",
+      "intermittent fasting",
+      "time restricted feeding",
+      "alternate day fasting",
+      "periodic fasting"
+    ],
+    "outcome_terms": [
+      "longevity",
+      "lifespan",
+      "healthspan",
+      "telomere",
+      "epigenetic clock",
+      "biomarker*",
+      "mortality",
+      "age-related disease",
+      "frailty"
+    ],
+    "other_terms": [
+      "diet",
+      "metabolism",
+      "aging",
+      "ageing"
+    ]
+  },
+  "mesh_terms": [
+    "Caloric Restriction",
+    "Fasting",
+    "Aging",
+    "Longevity",
+    "Telomere",
+    "Epigenesis, Genetic",
+    "Biomarkers"
+  ],
+  "example_search_strings": {
+    "pubmed_simple": "(\"calorie restriction\"[Title/Abstract] OR \"caloric restriction\"[Title/Abstract] OR \"intermittent fasting\"[Title/Abstract] OR \"time restricted feeding\"[Title/Abstract] OR \"alternate day fasting\"[Title/Abstract]) AND (aging[Title/Abstract] OR ageing[Title/Abstract] OR longevity[Title/Abstract] OR lifespan[Title/Abstract]) AND (humans[MeSH Terms] OR humans[Title/Abstract])",
+    "pubmed_with_mesh": "((\"Caloric Restriction\"[MeSH] OR \"Fasting\"[MeSH]) OR (\"calorie restriction\"[Title/Abstract] OR \"intermittent fasting\"[Title/Abstract])) AND (\"Aging\"[MeSH] OR \"Longevity\"[MeSH] OR aging[Title/Abstract]) AND (\"Aged\"[MeSH] OR \"Aged, 80 and over\"[MeSH] OR adult[Title/Abstract])",
+    "pmc_oai_example": "Use PMID list returned by PubMed search to check for PMCID via ELink and then fetch full-text from PMC OAI-PMH if PMCID exists."
+  },
+  "query_template": {
+    "combine_rules": "Group synonyms with OR inside parentheses, then combine concept blocks with AND. Example block structure: (population_terms) AND (intervention_terms) AND (outcome_terms). Apply MeSH mapping where available.",
+    "final_example": "((\"older adult\" OR elderly OR aged) AND (\"calorie restriction\" OR \"intermittent fasting\" OR \"time restricted feeding\") AND (longevity OR lifespan OR \"biomarker\" OR telomere OR \"epigenetic clock\"))"
+  },
+  "output_preferences": {
+    "save_formats": [
+      "txt",
+      "bibtex",
+      "ris"
+    ],
+    "also_download_fulltext_when_available": true,
+    "fulltext_formats": [
+      "pdf",
+      "pmc_xml"
+    ],
+    "results_file_prefix": "longevity_search_2025",
+    "deduplication": "doi_and_title_matching_then_fuzzy_title_match",
+    "export_fields_for_bibliography": [
+      "title",
+      "authors",
+      "journal",
+      "year",
+      "doi",
+      "pmid",
+      "pmcid",
+      "abstract",
+      "url"
+    ]
+  },
+  "workflow_notes": {
+    "step_1": "Use Entrez ESearch on PubMed with the 'pubmed_with_mesh' string or programmatically construct queries from the keywords/mesh arrays.",
+    "step_2": "Retrieve PMIDs; use ESummary/Efetch to obtain metadata and abstracts.",
+    "step_3": "For each PMID, call ELink to find matching PMCIDs (linkname=pubmed_pmc). If PMCID present, fetch full text via PMC OAI-PMH or the PMC article landing page.",
+    "step_4": "Aggregate records from all databases, normalize fields, remove duplicates based on DOI/PMID/title.",
+    "step_5": "Export final library to TXT and BibTeX/RIS files; download available PDFs into a 'fulltext' subfolder."
+  },
+  "notes_for_developers": "This protocol is intentionally conservative (English-only, 2000-present). Adjust date range, languages, and inclusion criteria as needed. retmax_per_db can be increased when running full harvests; consider using API key rate limits and NCBI request policies."
+}

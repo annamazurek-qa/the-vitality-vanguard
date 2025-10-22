@@ -1,0 +1,20 @@
+{"id": "PMID:41097150", "stage": "ta", "decision": "include", "reason": "ml_high", "score": 0.7, "threshold": 0.7, "rules": ["kw_design"], "ts": "2025-10-22T22:34:12Z"}
+{"id": "PMID:41092926", "stage": "ta", "decision": "include", "reason": "ml_high", "score": 0.7, "threshold": 0.7, "rules": [], "ts": "2025-10-22T22:34:12Z"}
+{"id": "PMID:41088595", "stage": "ta", "decision": "maybe", "reason": "ml_mid", "score": 0.5, "threshold": 0.7, "rules": ["kw_pos"], "ts": "2025-10-22T22:34:12Z"}
+{"id": "PMID:41079058", "stage": "ta", "decision": "maybe", "reason": "ml_mid", "score": 0.5, "threshold": 0.7, "rules": [], "ts": "2025-10-22T22:34:12Z"}
+{"id": "PMID:41073128", "stage": "ta", "decision": "maybe", "reason": "ml_mid", "score": 0.5, "threshold": 0.7, "rules": [], "ts": "2025-10-22T22:34:12Z"}
+{"id": "PMID:41064103", "stage": "ta", "decision": "maybe", "reason": "ml_mid", "score": 0.5, "threshold": 0.7, "rules": [], "ts": "2025-10-22T22:34:12Z"}
+{"id": "PMID:41063446", "stage": "ta", "decision": "include", "reason": "ml_high", "score": 0.7, "threshold": 0.7, "rules": ["kw_pos", "kw_neg"], "ts": "2025-10-22T22:34:12Z"}
+{"id": "PMID:41057629", "stage": "ta", "decision": "maybe", "reason": "ml_mid", "score": 0.5, "threshold": 0.7, "rules": ["kw_neg"], "ts": "2025-10-22T22:34:12Z"}
+{"id": "PMID:41044190", "stage": "ta", "decision": "maybe", "reason": "ml_mid", "score": 0.5, "threshold": 0.7, "rules": [], "ts": "2025-10-22T22:34:12Z"}
+{"id": "PMID:41042638", "stage": "ta", "decision": "maybe", "reason": "ml_mid", "score": 0.5, "threshold": 0.7, "rules": [], "ts": "2025-10-22T22:34:12Z"}
+{"id": "PMID:41040360", "stage": "ta", "decision": "maybe", "reason": "ml_mid", "score": 0.5, "threshold": 0.7, "rules": [], "ts": "2025-10-22T22:34:12Z"}
+{"id": "PMID:41032639", "stage": "ta", "decision": "maybe", "reason": "ml_mid", "score": 0.5, "threshold": 0.7, "rules": [], "ts": "2025-10-22T22:34:12Z"}
+{"id": "PMID:41023331", "stage": "ta", "decision": "maybe", "reason": "ml_mid", "score": 0.5, "threshold": 0.7, "rules": [], "ts": "2025-10-22T22:34:12Z"}
+{"id": "PMID:41010539", "stage": "ta", "decision": "maybe", "reason": "ml_mid", "score": 0.5, "threshold": 0.7, "rules": [], "ts": "2025-10-22T22:34:12Z"}
+{"id": "PMID:40995175", "stage": "ta", "decision": "maybe", "reason": "ml_mid", "score": 0.5, "threshold": 0.7, "rules": ["kw_pos"], "ts": "2025-10-22T22:34:12Z"}
+{"id": "PMID:40993467", "stage": "ta", "decision": "maybe", "reason": "ml_mid", "score": 0.5, "threshold": 0.7, "rules": ["kw_neg"], "ts": "2025-10-22T22:34:12Z"}
+{"id": "PMID:40988225", "stage": "ta", "decision": "maybe", "reason": "ml_mid", "score": 0.5, "threshold": 0.7, "rules": [], "ts": "2025-10-22T22:34:12Z"}
+{"id": "PMID:40988029", "stage": "ta", "decision": "maybe", "reason": "ml_mid", "score": 0.5, "threshold": 0.7, "rules": [], "ts": "2025-10-22T22:34:12Z"}
+{"id": "PMID:40979159", "stage": "ta", "decision": "maybe", "reason": "ml_mid", "score": 0.5, "threshold": 0.7, "rules": [], "ts": "2025-10-22T22:34:12Z"}
+{"id": "PMID:40971995", "stage": "ta", "decision": "include", "reason": "ml_high", "score": 0.7, "threshold": 0.7, "rules": ["kw_design"], "ts": "2025-10-22T22:34:12Z"}

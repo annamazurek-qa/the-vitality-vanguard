@@ -55,7 +55,10 @@ def fetch_metadata(pmids, batch_size=200):
         batch_data = response.json().get("result", {})
         for pid in batch:
             if pid in batch_data:
-                all_metadata.append(batch_data[pid])
+                record = batch_data[pid]
+                # Add 'id' field for compatibility with screening module
+                record["id"] = f"PMID:{record.get('uid', pid)}"
+                all_metadata.append(record)
         sleep(0.1)  
     return all_metadata
 

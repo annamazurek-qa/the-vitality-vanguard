@@ -1,0 +1,55 @@
+======================================================================
+THE VITALITY VANGUARD - META-ANALYSIS PIPELINE
+======================================================================
+Started at: 2025-10-23T00:13:38.525778
+Output directory: /Users/anna.mazurek/Documents/Hackathon/the-vitality-vanguard/results_test
+
+
+======================================================================
+STEP 1: Protocol & PICO Formulation
+======================================================================
+Research question: Does taking resveratrol improve glycemic control in people with type 2 diabetes?
+PrePico not available - using simple extraction...
+✓ Protocol created and saved to: results_test/1_protocol/protocol.json
+  Population: in people with type 2 diabetes?
+  Intervention: resveratrol
+  Comparison: placebo or standard care
+  Outcomes: glycemic control, glycemic control in people with type 2 diabetes
+
+======================================================================
+STEP 2: Systematic Search & Retrieval
+======================================================================
+Search query: ((people OR type OR 2 OR diabetes?) AND (resveratrol) AND (glycemic control OR glycemic control in people with type 2 diabetes))
+Searching PubMed...
+✓ Found 50 results, retrieved 10 PMIDs
+Fetching article metadata...
+✓ Saved 10 citations to: results_test/2_search/citations.jsonl
+
+======================================================================
+STEP 3: Screening & Selection
+======================================================================
+Running Title/Abstract screening...
+Warning: TA screening returned code 1
+Error: Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/Users/anna.mazurek/Documents/Hackathon/the-vitality-vanguard/screening/cli/ta_screen.py", line 71, in <module>
+    main()
+    ~~~~^^
+  File "/Users/anna.mazurek/Documents/Hackathon/the-vitality-vanguard/screening/cli/ta_screen.py", line 39, in main
+    tid = rec["id"]
+          ~~~^^^^^^
+KeyError: 'id'
+
+Running Full-Text screening...
+Generating PRISMA statistics...
+Generating PRISMA flow diagram...
+✓ Screening complete: 0 studies included
+
+======================================================================
+STEP 4: Data Extraction
+======================================================================
+Extracting data from 0 studies...
+NOTE: This requires PDF files in ./pdfs/ directory
+
+✗ ERROR: The api_key client option must be set either by passing api_key to the client or by setting the OPENAI_API_KEY environment variable
