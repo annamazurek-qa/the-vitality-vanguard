@@ -7,3 +7,6 @@ debug_logs
 extractor_output/*
 !extractor_output/test_case_1_example/
 !extractor_output/test_case_1_example/*
+meta_output/*
+!meta_output/test_case_1_example/
+!meta_output/test_case_1_example/*
