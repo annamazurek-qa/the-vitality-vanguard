@@ -2,7 +2,7 @@
 
 ## 🎯 30-Second Elevator Pitch
 
-*"I built an automated screening module for systematic reviews that reduces screening time from 6-10 weeks to under 10 minutes. It uses a hybrid approach combining expert keyword rules with ML scoring to filter thousands of citations down to eligible studies. The system is PRISMA-compliant, provides complete audit trails, and achieved 100% accuracy on real test cases. It's production-ready and integrates seamlessly with the rest of our pipeline."*
+*"I built an automated screening module for systematic reviews that reduces screening time from 6-10 weeks to under 10 minutes. It uses a hybrid approach combining expert keyword rules with ML scoring to filter thousands of citations down to eligible studies. The system is PRISMA-compliant, generates publication-ready flow diagrams and forest plots, provides complete audit trails, and achieved 100% accuracy on real test cases. It's production-ready and integrates seamlessly with the rest of our pipeline."*
 
 ---
 
@@ -12,8 +12,8 @@
 - **Time Saved:** 6-10 weeks → <10 minutes
 - **Accuracy:** 100% on test cases (2/2 correct)
 - **Cost Savings:** $10,000+ in researcher time
-- **Code:** ~1,200 lines (clean, modular)
-- **Dependencies:** 1 (scikit-learn)
+- **Code:** ~1,500 lines (clean, modular)
+- **Dependencies:** 2 (scikit-learn, matplotlib)
 
 ---
 
@@ -23,6 +23,7 @@
 1. **Stage 1:** Title/Abstract screening (keywords + ML)
 2. **Stage 2:** Full-text PICO validation (weighted scoring)
 3. **Stage 3:** PRISMA statistics generation
+4. **Stage 4:** PRISMA flow diagram & forest plot visualization (NEW!)
 
 ### How It Works
 - **Keywords:** Domain expert knowledge (positive, negative, design)
@@ -76,6 +77,26 @@ python3 -m screening.cli.make_prisma \
 
 # 8. View PRISMA stats
 cat screening/out/demo_prisma.json | jq
+
+# 9. Generate PRISMA flow diagram (NEW!)
+python3 -m screening.cli.make_plots \
+  --prisma screening/out/demo_prisma.json \
+  --output screening/out/prisma_flow.png \
+  --title "Resveratrol & T2D Screening Demo" \
+  --dpi 300
+
+# 10. Open the diagram
+open screening/out/prisma_flow.png  # macOS
+
+# 11. Generate forest plot (optional, with sample data)
+python3 -m screening.cli.make_plots \
+  --forest screening/data/sample_forest_data.json \
+  --output screening/out/forest_plot.png \
+  --effect-measure MD \
+  --dpi 300
+
+# 12. View both plots
+open screening/out/*.png
 ```
 
 ---

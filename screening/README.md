@@ -430,7 +430,102 @@ jq -r 'select(.decision=="include") | .id' screening/out/ft_decisions.jsonl > in
 cat screening/out/prisma.json | jq
 ```
 
-### **Step 9: Export for Module 5**
+### **Step 9: Generate PRISMA Flow Diagram (NEW)**
+
+Visualize the screening process with a publication-ready PRISMA flow diagram:
+
+**Install matplotlib (if not already installed):**
+```bash
+pip install matplotlib
+```
+
+**Generate PRISMA flow diagram:**
+```bash
+python3 -m screening.cli.make_plots \
+  --prisma screening/out/prisma.json \
+  --output screening/out/prisma_flow.png \
+  --title "Your Review Title" \
+  --dpi 300
+```
+
+**Parameters:**
+- `--prisma`: Path to PRISMA statistics JSON (from Step 8)
+- `--output`: Output path for PNG/PDF/SVG file
+- `--title`: Custom title for the diagram (optional)
+- `--dpi`: Resolution (default: 300, use 600 for publication quality)
+- `--format`: Output format - png, pdf, or svg (default: png)
+
+**What you get:**
+- PRISMA 2020 compliant flow diagram
+- Shows all screening stages with exclusion reasons
+- Color-coded boxes (blue=screening, red=excluded, green=included)
+- Ready for manuscript submission
+
+**Example output:**
+```
+✓ PRISMA flow diagram saved to: screening/out/prisma_flow.png
+```
+
+**View the diagram:**
+```bash
+open screening/out/prisma_flow.png  # macOS
+xdg-open screening/out/prisma_flow.png  # Linux
+```
+
+**Advanced: Generate Forest Plot (requires Module 5 data)**
+
+If you have meta-analysis results from Module 5, you can also generate forest plots:
+
+```bash
+# Create forest plot from Module 5 meta-analysis results
+python3 -m screening.cli.make_plots \
+  --forest module5/out/meta_analysis.json \
+  --output screening/out/forest_plot.png \
+  --effect-measure OR \
+  --dpi 300
+```
+
+**Expected Module 5 data format:**
+```json
+{
+  "title": "Effect of Intervention on Outcome",
+  "effect_measure": "OR",
+  "studies": [
+    {
+      "study_name": "Smith 2020",
+      "effect_size": 0.85,
+      "ci_lower": 0.70,
+      "ci_upper": 1.02,
+      "weight": 25.3
+    }
+  ],
+  "pooled": {
+    "study_name": "Overall (Random Effects)",
+    "effect_size": 0.89,
+    "ci_lower": 0.78,
+    "ci_upper": 1.01,
+    "weight": 100.0,
+    "is_pooled": true
+  }
+}
+```
+
+**Generate both plots at once:**
+```bash
+python3 -m screening.cli.make_plots \
+  --prisma screening/out/prisma.json \
+  --forest module5/out/meta_analysis.json \
+  --output-dir screening/out/plots/ \
+  --dpi 600
+```
+
+This creates:
+- `plots/prisma_flow.png` - PRISMA flow diagram
+- `plots/forest_plot.png` - Forest plot
+
+---
+
+### **Step 10: Export for Module 5**
 
 **Create included studies file:**
 ```bash
@@ -532,6 +627,47 @@ PRISMA flow diagram statistics:
   }
 }
 ```
+
+### **prisma_flow.png** (NEW)
+Visual PRISMA 2020 flow diagram generated from prisma.json:
+- **Format:** PNG/PDF/SVG (configurable)
+- **Resolution:** 300-600 DPI (publication quality)
+- **Features:**
+  - Color-coded stages (blue=screening, red=excluded, green=included)
+  - Shows all exclusion reasons with counts
+  - PRISMA 2020 citation included
+  - Ready for manuscript submission
+
+**How to generate:**
+```bash
+python3 -m screening.cli.make_plots \
+  --prisma screening/out/prisma.json \
+  --output screening/out/prisma_flow.png \
+  --title "Your Review Title" \
+  --dpi 600
+```
+
+### **forest_plot.png** (Optional, requires Module 5)
+Forest plot for meta-analysis results:
+- **Format:** PNG/PDF/SVG (configurable)
+- **Effect measures:** OR, RR, MD, SMD
+- **Features:**
+  - Individual study effects with confidence intervals
+  - Pooled effect as diamond
+  - Study weights shown as square sizes
+  - Null effect reference line
+  - Publication-ready quality
+
+**How to generate:**
+```bash
+python3 -m screening.cli.make_plots \
+  --forest module5/out/meta_analysis.json \
+  --output screening/out/forest_plot.png \
+  --effect-measure OR \
+  --dpi 600
+```
+
+**Note:** Forest plot requires meta-analysis data from Module 5. See sample format in Step 9.
 
 ---
 
