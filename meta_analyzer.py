@@ -1,12 +1,11 @@
-
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Ultra-simple meta analyzer for extractor JSONs.
+Ultra-simple meta analyzer — SMD-only (Hedges' g) from arm-level 'outcomes'.
 
 How to use:
 1) Put this file next to your JSONs (or anywhere).
-2) Run:  python meta_analyzer_min.py
+2) Run:  python meta_analyzer.py
 Outputs appear in ./meta_output next to this file.
 """
 
@@ -18,202 +17,6 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 Z = 1.96
-
-# --- Add this helper near the top (imports: os, json, math, glob already available) ---
-def _impute_ci_from_raw(json_paths, outdir):
-    """
-    Fill missing CIs for continuous MDs using follow-up or change stats
-    when both arms are present at the same outcome/timepoint.
-
-    Writes updated copies to {outdir}/ci_imputed/.
-    """
-    import os, json, math
-
-    outdir_ci = os.path.join(outdir, "ci_imputed")
-    os.makedirs(outdir_ci, exist_ok=True)
-    Z = 1.96
-
-    def _as_list_of_dicts(x):
-        if x is None:
-            return []
-        if isinstance(x, dict):
-            return [x]
-        if isinstance(x, list):
-            return [i for i in x if isinstance(i, dict)]
-        return []
-
-    def _f(x):
-        try:
-            return float(x)
-        except Exception:
-            return None
-
-    def _i(x):
-        try:
-            return int(x)
-        except Exception:
-            v = _f(x)
-            return int(v) if v is not None else None
-
-    def _classify_arm(arm_name, exposure_label, comparator_label):
-        """Return 'intervention' | 'control' | None based on simple heuristics."""
-        s = str(arm_name or "").lower()
-        exp = str(exposure_label or "").lower()
-        comp = str(comparator_label or "").lower()
-
-        # obvious control markers
-        control_tokens = ["placebo", "control", "standard care", "usual care", "no treatment", "non-use", "non use"]
-        if any(tok in s for tok in control_tokens) or (comp and comp in s):
-            return "control"
-
-        # obvious intervention markers
-        if exp and exp in s:
-            return "intervention"
-        intervention_tokens = ["resveratrol", "metformin"]
-        if any(tok in s for tok in intervention_tokens) and not any(tok in s for tok in control_tokens):
-            return "intervention"
-
-        return None
-
-    def _pair_stats(rows, exposure_label, comparator_label, mean_key, sd_key):
-        """
-        Try to find one intervention and one control row with given keys and n.
-        Returns (md, ci_low, ci_high, unit) or None.
-        """
-        # index by arm name
-        by_arm = {}
-        for r in rows:
-            arm = r.get("arm_name")
-            if not isinstance(arm, str):
-                continue
-            by_arm.setdefault(arm, []).append(r)
-
-        # flatten to one row per arm (prefer row that has the needed fields)
-        arms = {}
-        for arm, lst in by_arm.items():
-            best = None
-            for r in lst:
-                m, s, n = _f(r.get(mean_key)), _f(r.get(sd_key)), _i(r.get("n"))
-                if m is not None and s is not None and n is not None:
-                    best = r
-                    break
-            if best is not None:
-                arms[arm] = best
-
-        if len(arms) < 2:
-            return None
-
-        # try to classify
-        classified = {}
-        for arm, r in arms.items():
-            tag = _classify_arm(arm, exposure_label, comparator_label)
-            if tag:
-                classified[tag] = (arm, r)
-
-        # if classification failed but we have exactly two arms, pick a reasonable default:
-        if "intervention" not in classified or "control" not in classified:
-            if len(arms) == 2:
-                a_name, b_name = list(arms.keys())
-                # prefer the one that doesn't look like control as intervention
-                a_tag = _classify_arm(a_name, exposure_label, comparator_label)
-                b_tag = _classify_arm(b_name, exposure_label, comparator_label)
-                # choose intervention as the one not explicitly control
-                if a_tag == "control":
-                    classified["control"] = (a_name, arms[a_name])
-                    classified["intervention"] = (b_name, arms[b_name])
-                elif b_tag == "control":
-                    classified["control"] = (b_name, arms[b_name])
-                    classified["intervention"] = (a_name, arms[a_name])
-                else:
-                    # last resort: alphabetical, but skip to avoid wrong sign
-                    return None
-            else:
-                return None
-
-        _, a = classified.get("intervention")
-        _, b = classified.get("control")
-        if a is None or b is None:
-            return None
-
-        m1, s1, n1 = _f(a.get(mean_key)), _f(a.get(sd_key)), _i(a.get("n"))
-        m0, s0, n0 = _f(b.get(mean_key)), _f(b.get(sd_key)), _i(b.get("n"))
-        if None in (m1, s1, n1, m0, s0, n0):
-            return None
-
-        md = m1 - m0
-        se = ((s1**2) / n1 + (s0**2) / n0) ** 0.5
-        unit = a.get("units") or b.get("units")
-        return md, md - Z * se, md + Z * se, unit
-
-    updated = []
-    for p in json_paths:
-        try:
-            with open(p, "r", encoding="utf-8") as f:
-                data = json.load(f)
-        except Exception:
-            continue
-
-        raw = _as_list_of_dicts(data.get("outcomes_raw"))
-        if not raw:
-            continue
-
-        exp = (data.get("exposure") or {}).get("label")
-        comp = (data.get("exposure") or {}).get("comparator")
-
-        # group raw rows by (name, timepoint_weeks)
-        groups = {}
-        for r in raw:
-            # guard in case a stray non-dict slipped through
-            if not isinstance(r, dict):
-                continue
-            key = (r.get("name"), r.get("timepoint_weeks"))
-            groups.setdefault(key, []).append(r)
-
-        changed = False
-        for (name, tp), rows in groups.items():
-            # try follow-up first, then change scores
-            res = _pair_stats(rows, exp, comp, "followup_mean", "followup_sd")
-            if res is None:
-                res = _pair_stats(rows, exp, comp, "change_mean", "change_sd")
-            if res is None:
-                continue
-
-            est, lo, hi, unit = res
-            efs = data.get("effects_by_outcome") or []
-            attached = False
-
-            for e in efs:
-                if e.get("name") == name and (e.get("timepoint_weeks") == tp or (e.get("timepoint_weeks") is None and tp is None)):
-                    # only fill CIs if missing
-                    if e.get("ci_low") is None and e.get("ci_high") is None:
-                        e["ci_low"] = round(lo, 4)
-                        e["ci_high"] = round(hi, 4)
-                        if e.get("estimate") is None:
-                            e["estimate"] = round(est, 4)
-                        e["unit"] = e.get("unit") or unit
-                        e["notes"] = (e.get("notes") or "") + " [CI imputed from raw (unadjusted)]"
-                        changed = True
-                        attached = True
-                        break
-
-            if not attached:
-                # append a new, explicitly unadjusted MD effect
-                efs.append({
-                    "name": name, "type": "MD", "timepoint_weeks": tp,
-                    "estimate": round(est, 4), "ci_low": round(lo, 4), "ci_high": round(hi, 4),
-                    "adjusted": False, "unit": unit, "subgroup": None,
-                    "notes": "Effect computed from raw (unadjusted)"
-                })
-                data["effects_by_outcome"] = efs
-                changed = True
-
-        if changed:
-            outp = os.path.join(outdir_ci, os.path.basename(p))
-            with open(outp, "w", encoding="utf-8") as w:
-                json.dump(data, w, ensure_ascii=False, indent=2)
-            updated.append(outp)
-
-    return updated
 
 def coerce_float(x):
     if x is None or (isinstance(x, str) and str(x).strip() == ""):
@@ -228,34 +31,54 @@ def coerce_float(x):
             pass
         return np.nan
 
-
-def normalize_type(t: Optional[str]) -> Optional[str]:
-    if t is None:
-        return None
-    t = str(t).strip().upper()
-    aliases = {
-        "MEAN DIFFERENCE": "MD",
-        "STANDARDIZED MEAN DIFFERENCE": "SMD",
-        "HEDGE'S G": "SMD",
-        "HEDGES G": "SMD",
-        "COHEN D": "SMD",
-        "COHEN'S D": "SMD",
-        "RISK RATIO": "RR",
-        "ODDS RATIO": "OR",
-        "HAZARD RATIO": "HR",
-        "LOG(RR)": "LOGRR",
-        "LOG(OR)": "LOGOR",
-        "LOG(HR)": "LOGHR",
-    }
-    return aliases.get(t, t)
-
-
 def se_from_ci(ci_low, ci_high):
     lo, hi = coerce_float(ci_low), coerce_float(ci_high)
     if np.isnan(lo) or np.isnan(hi):
         return np.nan
     return (hi - lo) / (2 * Z)
 
+def _classify_arm(arm_name: Optional[str]) -> Optional[str]:
+    s = str(arm_name or "").strip().lower()
+    if s in {"intervention", "treated", "exposed"}:
+        return "intervention"
+    if s in {"control", "placebo", "unexposed"}:
+        return "control"
+    return None
+
+def _compute_smd_ci(a: Dict[str, Any], b: Dict[str, Any]) -> Tuple[float, float, float]:
+    """
+    Hedges' g and 95% CI from two arms at follow-up.
+    g = J * d, d = (m1 - m0) / s_pooled
+    s_pooled = sqrt( ((n1-1)s1^2 + (n0-1)s0^2) / (n1 + n0 - 2) )
+    Var(g) ≈ J^2 * ( (n1 + n0)/(n1*n0) + d^2 / (2*(n1 + n0 - 2)) )
+    """
+    m1 = coerce_float(a.get("followup_mean"))
+    s1 = coerce_float(a.get("followup_sd"))
+    n1 = coerce_float(a.get("n"))
+    m0 = coerce_float(b.get("followup_mean"))
+    s0 = coerce_float(b.get("followup_sd"))
+    n0 = coerce_float(b.get("n"))
+
+    if any(np.isnan(v) for v in (m1, s1, n1, m0, s0, n0)) or n1 <= 1 or n0 <= 1:
+        raise ValueError("Missing or invalid follow-up stats for SMD computation")
+
+    df = (n1 + n0 - 2)
+    if df <= 0:
+        raise ValueError("Non-positive degrees of freedom for SMD")
+
+    sp2 = (((n1 - 1) * (s1 ** 2)) + ((n0 - 1) * (s0 ** 2))) / df
+    if sp2 <= 0:
+        raise ValueError("Non-positive pooled variance for SMD")
+
+    sp = np.sqrt(sp2)
+    d = (m1 - m0) / sp
+    J = 1.0 - 3.0 / (4.0 * df - 1.0)  # Hedges' small-sample correction
+    g = J * d
+
+    var_g = (J ** 2) * ((n1 + n0) / (n1 * n0) + (d ** 2) / (2.0 * df))
+    se_g = np.sqrt(var_g)
+    lo, hi = g - Z * se_g, g + Z * se_g
+    return float(g), float(lo), float(hi)
 
 class MetaAnalyzer:
     def __init__(self, json_paths: List[str], outdir: str, min_k: int = 2):
@@ -276,38 +99,68 @@ class MetaAnalyzer:
 
     @staticmethod
     def load_effect_rows(path: str) -> List[Dict[str, Any]]:
+        """
+        NEW SCHEMA READER (SMD-only):
+        - consumes arm-level `outcomes` list
+        - pairs intervention vs control per (name, timepoint_weeks)
+        - computes Hedges' g + CI on follow-up values
+        """
         with open(path, "r", encoding="utf-8") as f:
             data = json.load(f)
 
         study = data.get("study_metadata", {}) or {}
-        effects = data.get("effects_by_outcome", []) or []
+        outcomes = data.get("outcomes", []) or []
+
+        # group rows by (name, timepoint_weeks)
+        groups: Dict[Tuple[Any, Any], List[Dict[str, Any]]] = {}
+        for r in outcomes:
+            if not isinstance(r, dict):
+                continue
+            key = (r.get("name"), r.get("timepoint_weeks"))
+            groups.setdefault(key, []).append(r)
 
         rows = []
-        for e in effects:
+        for (name, tp), arm_rows in groups.items():
+            # pick one intervention and one control
+            a_row = None
+            b_row = None
+            for r in arm_rows:
+                tag = _classify_arm(r.get("arm_name"))
+                if tag == "intervention" and a_row is None:
+                    a_row = r
+                elif tag == "control" and b_row is None:
+                    b_row = r
+            if not a_row or not b_row:
+                continue
+
+            try:
+                g, glo, ghi = _compute_smd_ci(a_row, b_row)
+            except Exception:
+                continue
+
             rows.append({
                 "file": os.path.basename(path),
-                "study_id": study.get("study_id") or study.get("doi") or study.get("title") or os.path.basename(path),
+                "study_id": study.get("study_id") or os.path.basename(path),
                 "design": study.get("design"),
                 "species": study.get("species"),
-                "outcome": e.get("name"),
-                "type": normalize_type(e.get("type")),
-                "timepoint_weeks": coerce_float(e.get("timepoint_weeks")),
-                "estimate": coerce_float(e.get("estimate")),
-                "ci_low": coerce_float(e.get("ci_low")) if e.get("ci_low") is not None else np.nan,
-                "ci_high": coerce_float(e.get("ci_high")) if e.get("ci_high") is not None else np.nan,
-                "p_value": coerce_float(e.get("p_value")),
-                "adjusted": e.get("adjusted"),
-                "unit": e.get("unit"),
-                "model_notes": e.get("model_notes"),
+                "outcome": name,
+                "type": "SMD",
+                "timepoint_weeks": coerce_float(tp),
+                "estimate": g,
+                "ci_low": glo,
+                "ci_high": ghi,
+                "p_value": np.nan,
+                "adjusted": None,
+                "unit": "SD units",
+                "model_notes": "Computed from follow-up means & SDs (Hedges' g)",
             })
+
         return rows
 
     @staticmethod
     def unit_consistent(group: pd.DataFrame) -> Tuple[bool, Optional[str]]:
-        units = [u for u in group["unit"].dropna().unique().tolist() if str(u).strip() != ""]
-        if len(units) <= 1:
-            return True, (units[0] if units else None)
-        return False, None
+        # SMD is unitless; unit consistency is always satisfied.
+        return True, "SD units"
 
     @staticmethod
     def dersimonian_laird(ests: np.ndarray, ses: np.ndarray) -> Tuple[float, Tuple[float, float], float, float]:
@@ -452,7 +305,7 @@ class MetaAnalyzer:
         plt.axvline(pooled_row["pooled"], linestyle="--")
         plt.fill_betweenx([0, len(g) + 1], pooled_row["ci_low"], pooled_row["ci_high"], alpha=0.15)
         plt.yticks(y, labels, fontsize=8)
-        plt.xlabel(f"Effect ({group['type'].iloc[0]})")
+        plt.xlabel("Effect (SMD, Hedges' g)")
         plt.title(f"{group['outcome'].iloc[0]} — Random-effects (DL)")
         plt.tight_layout()
         plt.savefig(outpath, dpi=200)
@@ -481,10 +334,5 @@ if __name__ == "__main__":
 
     os.makedirs(OUTDIR, exist_ok=True)
 
-    # NEW: impute missing CIs into copies under OUTDIR/ci_imputed/
-    json_paths = sorted(glob.glob(os.path.join(INPATH, "*.json")))
-    _impute_ci_from_raw(json_paths, OUTDIR)
-
-    # Proceed with your usual analyzer on the originals or on the ci_imputed copies
     analyzer = MetaAnalyzer(json_paths=[], outdir=OUTDIR, min_k=MIN_K)
     analyzer.run(make_plots=MAKE_PLOTS)

@@ -5,6 +5,7 @@ from typing import List, Dict, Any, Tuple, Optional
 #import fitz  # 
 from PyPDF2 import PdfReader
 from rapidfuzz import fuzz
+from docling.document_converter import DocumentConverter
 from openai import OpenAI
 
 from dotenv import load_dotenv
@@ -44,24 +45,9 @@ class PDFLLMExtractor:
             "comparator": "string|null"     # placebo|non_use|standard_care|other
         },
 
-        "effects_by_outcome": [
+        "outcomes": [
             {
-                "name": "HOMA_IR|FPG|HbA1c|overall_cancer|site_specific|other",
-                "type": "MD|SMD|RR|OR|HR|LOGRR|LOGOR|LOGHR|null",
-                "timepoint_weeks": "float|null",
-                "estimate": "float|null",     # on the scale implied by 'type' (e.g., MD or RR or LOGRR)
-                "ci_low": "float|null",
-                "ci_high": "float|null",
-                "adjusted": "true|false|null",
-                "unit": "HOMA_units|mmol_L|mg_dL|%|ratio|other|null",
-                "subgroup": "string|null",    # optional: pooled separately if present
-                "notes": "string|null"
-            }
-        ],
-
-        "outcomes_raw": [
-            {
-                "name": "string",
+                "name": "HOMA_IR|FPG|HbA1c",
                 "timepoint_weeks": "float|null",
                 "arm_name": "intervention|control|exposed|unexposed|other",
                 "n": "int|null",
@@ -69,8 +55,6 @@ class PDFLLMExtractor:
                 "baseline_sd": "float|null",
                 "followup_mean": "float|null",
                 "followup_sd": "float|null",
-                "change_mean": "float|null",
-                "change_sd": "float|null",
                 "units": "string|null"
             }
         ],
@@ -238,6 +222,25 @@ class PDFLLMExtractor:
                 uniq.append(h)
         return uniq
 
+    def _read_pdf(self, pdf_path: str) -> str:
+        """
+        Extracts unified, structured text (Markdown) from PDF using Docling only.
+        Returns a single continuous text string suitable for LLM processing.
+        """
+        try:
+            converter = DocumentConverter()
+            result = converter.convert(pdf_path)
+            text = result.document.export_to_markdown() or ""
+            text = text.strip()
+            if self.debug:
+                self._d(f"Docling extracted text length: {len(text)}")
+                if self.save_debug:
+                    self._save_text("docling_markdown", text[:20000])
+            return text
+        except Exception as e:
+            self._d(f"Docling error: {type(e).__name__}: {e}")
+            return ""
+
     # ========= Section slicing =========
     def slice_sections(self, full_text: str) -> Dict[str, str]:
         out = {}
@@ -303,8 +306,6 @@ class PDFLLMExtractor:
             # Fallback: treat it as raw text
             text = str(content)
 
-        text = text[:14000]  # Safety truncate
-
         msg = f"""Task: Extract fields in this schema from the article text. If unknown, use null.
 Schema (types/examples, not values):
 {schema_json}
@@ -317,8 +318,7 @@ Rules:
 - 'comment' ≤20 words summarizing status.
 - 'comment_detailed' ≤150 words explaining: (a) what you looked for (sections/phrases), 
   (b) why fields are null or uncertain, (c) what would likely help (e.g., tables, full PDF, Methods).
-- Set 'confidence' in [0,1]. 
-- If CI present, ensure estimate ∈ [ci_low, ci_high].
+- Set 'confidence' in [0,1].
 
 Question: {question}
 
@@ -478,18 +478,19 @@ TEXT:
     # ========= Public: run end-to-end on a PDF =========
     def extract(self, pdf_path: str, question: str) -> Dict[str, Any]:
         self.pdf_name = Path(pdf_path).stem
-        # 1) Pages
-        pages = self.extract_pages(pdf_path)
-        if not pages:
-            result = self._empty_payload("No text pages extracted (scanned PDF?)")
+
+        # --- Single unified Docling extraction ---
+        text = self.extract_pages(pdf_path)
+
+        if not text:
+            result = self._empty_payload("No text extracted (possibly scanned or empty PDF)")
             self._save_output(pdf_path, result)
             return result
 
-        # 2) Context
-        # context = self.build_context(pages)
-        user_payload = self.make_user_message(question, pages)
+        # User message
+        user_payload = self.make_user_message(question, text)
 
-        # 3) LLM
+        # LLM
         try:
             raw = self.llm_raw_output_all(self.SYSTEM_PROMPT, user_payload)
         except Exception as e:
@@ -500,13 +501,13 @@ TEXT:
             self._save_output(pdf_path, result)
             return result
 
-        # 4) Parse
+        # Parse
         try:
             parsed = self.parse_json_safely(raw)
         except Exception as e:
             result = self._empty_payload(
                 f"JSON parse failed: {e}",
-                evidence=[{"section": "full_tail", "page": None, "snippet": "See llm_raw_*.txt for the raw content"}],
+                evidence=[{"section": "full_text", "page": None, "snippet": "See raw response file"}],
             )
             self._save_output(pdf_path, result)
             return result
