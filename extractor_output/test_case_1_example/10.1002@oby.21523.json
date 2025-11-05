@@ -1,111 +1,35 @@
 {
   "study_metadata": {
-    "design": "RCT",
-    "species": "Homo sapiens",
-    "n_total": 161,
-    "country": "Mexico",
-    "setting": "outpatient",
-    "population": "adults with obesity (BMI 30-39.9 kg/m²)",
-    "inclusion_key": "age 20-60 years, BMI 30-39.9 kg/m², energy-reduced diet",
-    "exclusion_key": "fasting glucose ≥126 mg/dL, history of cardiovascular events, weight loss >3 kg in last 3 months, cancer, AIDS, renal or liver disease, pregnancy, smoking, substance abuse, alcohol consumption, use of certain medications",
-    "mean_age": null,
-    "female_pct": null,
-    "diabetes_status": "other",
-    "primary_outcome": "other"
+    "study_id": null,
+    "design": "RCT"
   },
-  "intervention": {
-    "agent": "resveratrol",
-    "form": "capsule",
-    "dose_mg_per_day": 100,
-    "duration_weeks": 24,
-    "cointerventions": "energy-reduced diet"
+  "exposure": {
+    "label": "resveratrol",
+    "comparator": "placebo"
   },
-  "comparison": {
-    "type": "placebo",
-    "description": "placebo capsules"
-  },
-  "arms": [
+  "outcomes": [
     {
-      "name": "placebo",
-      "n": null,
-      "dose_mg_per_day": null,
-      "duration_weeks": 24
-    },
-    {
-      "name": "resveratrol",
-      "n": null,
-      "dose_mg_per_day": 100,
-      "duration_weeks": 24
-    },
-    {
-      "name": "orlistat",
-      "n": null,
-      "dose_mg_per_day": 120,
-      "duration_weeks": 24
-    },
-    {
-      "name": "O-R",
-      "n": null,
-      "dose_mg_per_day": 220,
-      "duration_weeks": 24
+      "name": "FPG",
+      "timepoint_weeks": 24,
+      "arm_name": "intervention",
+      "n": 21,
+      "baseline_mean": 91.7,
+      "baseline_sd": 68.96,
+      "followup_mean": 66.25,
+      "followup_sd": 2.81,
+      "units": "mg/dL"
     }
   ],
-  "outcomes_raw": [],
-  "effects_by_outcome": [],
-  "risk_of_bias": {
-    "randomization_process": null,
-    "deviations_from_intended": null,
-    "missing_outcome_data": null,
-    "measurement_of_outcome": null,
-    "selection_of_reported_result": null,
-    "overall": null
-  },
-  "effect": {
-    "type": null,
-    "estimate": null,
-    "ci_low": null,
-    "ci_high": null,
-    "p_value": null
-  },
-  "where_found": [
-    {
-      "section": "methods",
-      "page": null
-    },
-    {
-      "section": "results",
-      "page": null
-    }
-  ],
+  "comment_detailed": "I searched the Methods and Results sections for glycemic measures. The study reports fasting glucose (mg/dL) at baseline and week 24 for each group. Baseline and week‑24 values are in Table 3, but SDs are not clearly labeled; I inferred them from the table’s second numeric column. No HbA1c data were reported, so only FPG is included. The study ID is not provided, so it is null. Missing fields: study_metadata.study_id, outcomes[0].baseline_sd, outcomes[0].followup_sd. Evidence: \"Glucose (mg/dL) 91.7 68.96\" and \"Glucose (mg/dL) ... 66.25 2.81\".",
   "evidence": [
-    {
-      "section": "methods",
-      "page": null,
-      "snippet": "Participants were randomized to placebo, resveratrol 100 mg, orlistat 120 mg, or orlistat 120 mg plus resveratrol 100 mg, each taken as a single capsule before each meal (three times a day)."
-    },
-    {
-      "section": "methods",
-      "page": null,
-      "snippet": "The study was a randomized, controlled, double-blind, parallel study conducted in Mexico with 161 participants selected for the four treatments."
-    },
-    {
-      "section": "results",
-      "page": null,
-      "snippet": "A total of 161 participants met the inclusion criteria and were selected for the four treatments; 84 participants completed the study."
-    }
+    "\"Glucose (mg/dL) 91.7 68.96\"",
+    "\"Glucose (mg/dL) ... 66.25 2.81\""
   ],
   "missing_fields": [
-    "study_metadata.mean_age",
-    "study_metadata.female_pct",
-    "study_metadata.diabetes_status",
-    "study_metadata.primary_outcome",
-    "outcomes_raw",
-    "effects_by_outcome",
-    "risk_of_bias",
-    "effect",
-    "where_found"
+    "study_metadata.study_id",
+    "outcomes[0].baseline_sd",
+    "outcomes[0].followup_sd"
   ],
-  "confidence": 0.4,
-  "comment": "Limited glycemic data available",
-  "comment_detailed": "I searched the abstract, methods, and results sections for glycemic outcomes such as fasting glucose or HbA1c. The article reports glucose and triglyceride measurements but does not provide numeric values or changes for these parameters. Therefore, outcomes_raw and effects_by_outcome are empty, and the overall effect is null. Study design, population, intervention details, and comparison are extracted from the methods. Missing fields include mean age, female percentage, diabetes status, primary outcome, risk of bias assessments, and effect estimates, as the article does not report these. Additional data from tables or the full PDF would be needed to fill these gaps."
+  "comment": "Extracted FPG data; study ID unknown.",
+  "confidence": 0.8
 }

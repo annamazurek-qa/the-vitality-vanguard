@@ -1,89 +1,21 @@
 {
   "study_metadata": {
-    "design": "double-blind",
-    "species": "Homo sapiens",
-    "n_total": 50,
-    "country": "Iran",
-    "setting": "outpatient",
-    "population": "NAFLD patients",
-    "inclusion_key": "NAFLD with steatosis grade ≥2, elastography >4 kPa, ALT >30/19 IU/L",
-    "exclusion_key": "weight loss >10%, pregnancy, etc.",
-    "mean_age": null,
-    "female_pct": null,
-    "diabetes_status": null,
-    "primary_outcome": "other"
+    "study_id": null,
+    "design": "RCT"
   },
-  "intervention": {
-    "agent": "resveratrol",
-    "form": "capsule",
-    "dose_mg_per_day": 500,
-    "duration_weeks": 12,
-    "cointerventions": "lifestyle modification (diet, exercise)"
+  "exposure": {
+    "label": "resveratrol supplementation",
+    "comparator": "placebo"
   },
-  "comparison": {
-    "type": "placebo",
-    "description": "medium‑chain triglyceride capsule"
-  },
-  "arms": [
-    {
-      "name": "resveratrol",
-      "n": 25,
-      "dose_mg_per_day": 500,
-      "duration_weeks": 12
-    },
-    {
-      "name": "placebo",
-      "n": 25,
-      "dose_mg_per_day": 0,
-      "duration_weeks": 12
-    }
-  ],
-  "outcomes_raw": [],
-  "effects_by_outcome": [],
-  "risk_of_bias": {
-    "randomization_process": null,
-    "deviations_from_intended": null,
-    "missing_outcome_data": null,
-    "measurement_of_outcome": null,
-    "selection_of_reported_result": null,
-    "overall": null
-  },
-  "effect": null,
-  "where_found": [],
-  "evidence": [
-    {
-      "section": "abstract",
-      "page": null,
-      "snippet": "In this randomized, double-blinded, controlled clinical trial, 50 NAFLD patients were supplemented with either a 500-mg resveratrol capsule or a placebo capsule for 12 weeks."
-    },
-    {
-      "section": "methods",
-      "page": null,
-      "snippet": "Patients who fulfilled all eligibility criteria were randomly assigned to receive a capsule containing either 500 mg trans-resveratrol or the same amount of medium-chain triglyceride as placebo, once a day for 12 weeks."
-    },
-    {
-      "section": "results",
-      "page": null,
-      "snippet": "From June 2012 to December 2012, 50 patients were enrolled and underwent randomization (Figure)."
-    }
-  ],
+  "outcomes": [],
   "missing_fields": [
-    "study_metadata.mean_age",
-    "study_metadata.female_pct",
-    "study_metadata.diabetes_status",
-    "study_metadata.primary_outcome",
-    "outcomes_raw",
-    "effects_by_outcome",
-    "risk_of_bias.randomization_process",
-    "risk_of_bias.deviations_from_intended",
-    "risk_of_bias.missing_outcome_data",
-    "risk_of_bias.measurement_of_outcome",
-    "risk_of_bias.selection_of_reported_result",
-    "risk_of_bias.overall",
-    "effect",
-    "where_found"
+    "outcomes"
   ],
-  "confidence": 0.7,
-  "comment": "No glycemic data reported",
-  "comment_detailed": "I searched the abstract, methods, and results for glycemic outcomes such as FPG, HbA1c, or HOMA-IR. The study focused on liver enzymes and inflammatory markers in NAFLD patients, with no mention of glucose or insulin measures. Therefore, the effect of resveratrol on glycemic control cannot be determined from this article. Additional data from other trials would be needed to answer the question."
+  "evidence": [
+    "Study reports 12‑week RCT of 500 mg resveratrol vs placebo in NAFLD patients.",
+    "Baseline and 12‑week data presented for ALT, AST, inflammatory markers, but no FPG, HbA1c or HOMA‑IR values are shown."
+  ],
+  "comment": "No glycemic data reported.",
+  "comment_detailed": "I searched the abstract, methods, and results for glycemic measures (FPG, HbA1c, HOMA‑IR). The study focuses on liver enzymes and inflammatory markers; no tables or text mention glucose or insulin indices. Thus, glycemic outcomes are missing. Full PDF or supplementary tables might reveal such data if collected.",
+  "confidence": 0.8
 }

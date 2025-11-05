@@ -1,14 +1,4 @@
 outcome,type,k,pooled,ci_low,ci_high,tau2,I2,unit,note
-FPG,MD,1,,,,,,mg_dL,Less than min-k (2); skipping pooling
-FPG,,0,,,,,,,Less than min-k (2); skipping pooling
-HOMA_IR,MD,1,,,,,,ratio,Less than min-k (2); skipping pooling
-HOMA_IR,,0,,,,,,,Less than min-k (2); skipping pooling
-HbA1c,MD,0,,,,,,,Less than min-k (2); skipping pooling
-HbA1c,SMD,0,,,,,,,Less than min-k (2); skipping pooling
-HbA1c,,0,,,,,,,Less than min-k (2); skipping pooling
-Insulin,MD,0,,,,,,,Less than min-k (2); skipping pooling
-QUICKI,MD,1,,,,,,ratio,Less than min-k (2); skipping pooling
-fasting_insulin,SMD,0,,,,,,,Less than min-k (2); skipping pooling
-insulin_resistance_index,SMD,0,,,,,,,Less than min-k (2); skipping pooling
-other,MD,0,,,,,,,Less than min-k (2); skipping pooling
-other,,0,,,,,,,Less than min-k (2); skipping pooling
+FPG,SMD,9,-0.1331514623271405,-0.3805966565797885,0.11429373192550746,0.07090710570863772,50.41072222070239,SD units,OK
+HOMA_IR,SMD,10,-0.4342341154289824,-0.7614317588742519,-0.10703647198371297,0.19510350346564023,72.03218507211832,SD units,OK
+HbA1c,SMD,8,-0.1316520900931784,-0.4467197971566472,0.1834156169702904,0.1255610283591416,61.77295944653051,SD units,OK

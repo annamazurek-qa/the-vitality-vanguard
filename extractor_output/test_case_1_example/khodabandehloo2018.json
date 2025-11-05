@@ -1,125 +1,87 @@
 {
   "study_metadata": {
-    "design": "RCT|randomized|double-blind|placebo-controlled",
-    "species": "Homo sapiens",
-    "n_total": 45,
-    "country": "Iran",
-    "setting": "outpatient",
-    "population": "type 2 diabetes patients",
-    "inclusion_key": "HbA1c ≥7, age 30-70, BMI<35, on diet/hypoglycemic agents other than insulin",
-    "exclusion_key": "type 1 diabetes, pregnancy, lactation, antioxidant, insulin, anticoagulants, steroids, anti-inflammatory drugs, severe heart disease, hepatic or kidney disease, complications, unstable weight",
-    "mean_age": null,
-    "female_pct": null,
-    "diabetes_status": "T2D",
-    "primary_outcome": "FPG"
+    "study_id": null,
+    "design": "RCT"
   },
-  "intervention": {
-    "agent": "resveratrol",
-    "form": "capsule",
-    "dose_mg_per_day": 800,
-    "duration_weeks": 8,
-    "cointerventions": "diet and/or hypoglycemic agents"
+  "exposure": {
+    "label": "resveratrol",
+    "comparator": "placebo"
   },
-  "comparison": {
-    "type": "placebo",
-    "description": "identical placebo capsules"
-  },
-  "arms": [
-    {
-      "name": "resveratrol",
-      "n": 22,
-      "dose_mg_per_day": 800,
-      "duration_weeks": 8
-    },
-    {
-      "name": "placebo",
-      "n": 23,
-      "dose_mg_per_day": 0,
-      "duration_weeks": 8
-    }
-  ],
-  "outcomes_raw": [
+  "outcomes": [
     {
       "name": "FPG",
       "timepoint_weeks": 8,
-      "arm_name": "resveratrol",
-      "baseline_mean": null,
+      "arm_name": "intervention",
+      "n": 25,
+      "baseline_mean": 160,
       "baseline_sd": null,
-      "followup_mean": null,
+      "followup_mean": 128,
       "followup_sd": null,
-      "change_mean": null,
-      "change_sd": null,
-      "units": "mg_dL",
-      "notes": "significant reduction in fasting blood glucose"
-    }
-  ],
-  "effects_by_outcome": [
+      "units": "mg/dl"
+    },
     {
       "name": "FPG",
-      "type": "MD",
       "timepoint_weeks": 8,
-      "estimate": null,
-      "ci_low": null,
-      "ci_high": null,
-      "p_value": null,
-      "adjusted": "false",
-      "model_notes": null
-    }
-  ],
-  "risk_of_bias": {
-    "randomization_process": "some_concerns",
-    "deviations_from_intended": "some_concerns",
-    "missing_outcome_data": "some_concerns",
-    "measurement_of_outcome": "some_concerns",
-    "selection_of_reported_result": "some_concerns",
-    "overall": "some_concerns"
-  },
-  "effect": {
-    "type": null,
-    "estimate": null,
-    "ci_low": null,
-    "ci_high": null,
-    "p_value": null
-  },
-  "where_found": [
-    {
-      "section": "abstract",
-      "page": 3
+      "arm_name": "control",
+      "n": 20,
+      "baseline_mean": 138,
+      "baseline_sd": null,
+      "followup_mean": 136,
+      "followup_sd": null,
+      "units": "mg/dl"
     },
     {
-      "section": "methods",
-      "page": 6
+      "name": "HbA1c",
+      "timepoint_weeks": 8,
+      "arm_name": "intervention",
+      "n": 25,
+      "baseline_mean": 7.9,
+      "baseline_sd": null,
+      "followup_mean": 8.0,
+      "followup_sd": null,
+      "units": "%"
+    },
+    {
+      "name": "HbA1c",
+      "timepoint_weeks": 8,
+      "arm_name": "control",
+      "n": 20,
+      "baseline_mean": 7.55,
+      "baseline_sd": null,
+      "followup_mean": 7.35,
+      "followup_sd": null,
+      "units": "%"
+    },
+    {
+      "name": "HOMA_IR",
+      "timepoint_weeks": 8,
+      "arm_name": "intervention",
+      "n": 25,
+      "baseline_mean": 7.21,
+      "baseline_sd": null,
+      "followup_mean": 5.57,
+      "followup_sd": null,
+      "units": null
+    },
+    {
+      "name": "HOMA_IR",
+      "timepoint_weeks": 8,
+      "arm_name": "control",
+      "n": 20,
+      "baseline_mean": 5.04,
+      "baseline_sd": null,
+      "followup_mean": 4.68,
+      "followup_sd": null,
+      "units": null
     }
   ],
+  "comment_detailed": "Extracted RCT data on resveratrol vs placebo over 8 weeks. FPG, HbA1c, and HOMA-IR means and changes reported; SDs not provided, so set null. Units taken from text. Missing study ID. Evidence cited from abstract and tables.",
+  "missing_fields": [],
   "evidence": [
-    {
-      "section": "abstract",
-      "page": 3,
-      "snippet": "A total of 45 T2D patients were supplemented with either of 800 mg/day resveratrol or placebo capsules for eight weeks."
-    },
-    {
-      "section": "abstract",
-      "page": 3,
-      "snippet": "we did not find any significant change in the metabolic and anthropometric parameters except for a significant reduction in fasting blood glucose and blood pressure."
-    }
+    "\"eight weeks supplementation of resveratrol reduces blood glucose level\"",
+    "\"significant decrease in mean plasma glucose level was found in the resveratrol group (-31.84 ± 47.6 mg/dl)\"",
+    "\"HbA1c levels were not significantly different\""
   ],
-  "missing_fields": [
-    "study_metadata.mean_age",
-    "study_metadata.female_pct",
-    "study_metadata.inclusion_key",
-    "study_metadata.exclusion_key",
-    "outcomes_raw.baseline_mean",
-    "outcomes_raw.baseline_sd",
-    "outcomes_raw.followup_mean",
-    "outcomes_raw.followup_sd",
-    "outcomes_raw.change_mean",
-    "outcomes_raw.change_sd",
-    "effects_by_outcome.estimate",
-    "effects_by_outcome.ci_low",
-    "effects_by_outcome.ci_high",
-    "effects_by_outcome.p_value"
-  ],
-  "confidence": 0.4,
-  "comment": "Limited numeric data; only qualitative effect reported.",
-  "comment_detailed": "I searched the abstract, methods, and results sections for numeric outcomes on fasting blood glucose. The study reports a significant reduction but does not provide means, SDs, or effect sizes. Therefore, baseline and follow‑up values, change statistics, and confidence intervals are unknown. I also noted the study design, population, intervention dose, and comparator. Missing numeric data prevent calculation of an effect estimate. Full tables or supplementary material would provide the necessary statistics."
+  "comment": "Data extracted from RCT; SDs missing, study ID unknown",
+  "confidence": 0.8
 }

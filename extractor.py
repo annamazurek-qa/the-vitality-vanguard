@@ -1,11 +1,11 @@
 import os, re, json
 from pathlib import Path
-from typing import List, Dict, Any, Tuple, Optional
+from typing import List, Dict, Any, Tuple, Optional, Union
+import tempfile
 
 #import fitz  # 
 from PyPDF2 import PdfReader
-from rapidfuzz import fuzz
-from docling.document_converter import DocumentConverter
+#from docling.document_converter import DocumentConverter
 from openai import OpenAI
 
 from dotenv import load_dotenv
@@ -19,7 +19,6 @@ class PDFLLMExtractor:
     - Heuristically slices sections
     - Builds a compact context
     - Calls LLM and parses strict JSON
-    - Optional debug mode prints/records essential intermediate outputs
     """
 
     # ---------- Regex config ----------
@@ -74,23 +73,18 @@ class PDFLLMExtractor:
         model: str = "openai/gpt-oss-20b",
         temperature: float = 0.0,
         max_tokens: int = 5000,
-        debug: bool = False,
-        save_debug: bool = False,
-        debug_dir: str = "debug_logs",
         output_dir: Optional[str] = "extractor_output",
     ):
         self.model = model
         self.temperature = temperature
         self.max_tokens = max_tokens
-        self.debug = debug
-        self.save_debug = save_debug
         self.pdf_name = None
-        self.debug_dir = Path(debug_dir)
         self.output_dir = Path(output_dir) if output_dir else None
-        if self.save_debug:
-            self.debug_dir.mkdir(parents=True, exist_ok=True)
         if self.output_dir:
             self.output_dir.mkdir(parents=True, exist_ok=True)
+        self.full_text_dir = (self.output_dir / "full_text_extraction") if self.output_dir else None
+        if self.full_text_dir:
+            self.full_text_dir.mkdir(parents=True, exist_ok=True)
 
         self.client = OpenAI(
             base_url=base_url,
@@ -99,77 +93,89 @@ class PDFLLMExtractor:
 
     # ========= Utility: debug printing/saving =========
     def _d(self, *args):
-        if self.debug:
-            print("[DEBUG]", *args)
+        print("[DEBUG]", *args)
+    
+    def _sanitize_basename(self, name: str) -> str:
+        # keep readable names; strip illegal fs chars and trim
+        name = re.sub(r"[\\/:\*\?\"<>\|\s]+", "_", name).strip("_")
+        return name or "file"
 
-    def _save_text(self, name: str, data: Any) -> Path:
-        """Save debug data to a UTF-8 .txt file.
-
-        Accepts strings and other Python types (e.g., dict, list). Dicts are
-        rendered with one top-level key per block for readability.
+    def save_any(
+        self,
+        dest_dir: Union[str, Path],
+        content: Union[str, bytes, dict, list],
+        *,
+        pdf_path: Optional[str] = None,
+        base_name: Optional[str] = None,
+        ext: Optional[str] = None,
+        add_timestamp: bool = False,
+    ) -> Optional[Path]:
         """
-        if not self.save_debug:
-            return Path()
+        Universal save (cross-platform, atomic-ish):
+        - creates dest_dir if missing
+        - infers extension when not given
+        - writes to a temp file in the same folder, then os.replace(...) → target
+        Returns Path or None on failure.
+        """
+        try:
+            d = Path(dest_dir)
+            d.mkdir(parents=True, exist_ok=True)
+            if d.exists() and d.is_file():
+                raise IOError(f"Destination path is a file, not a directory: {d}")
 
-        def _indent(text: str, n: int = 2) -> str:
-            pad = " " * n
-            return "\n".join(pad + line if line else pad for line in text.splitlines())
+            # filename stem
+            if base_name:
+                stem = Path(base_name).stem
+            elif pdf_path:
+                stem = Path(pdf_path).stem
+            else:
+                stem = "output"
+            stem = self._sanitize_basename(stem)
 
-        def _format_value(val: Any) -> str:
-            # Strings: pretty-print if they contain valid JSON
-            if isinstance(val, str):
-                s = val.strip()
-                if s.startswith("{") or s.startswith("["):
-                    try:
-                        parsed = json.loads(s)
-                        return json.dumps(parsed, ensure_ascii=False, indent=2, sort_keys=True)
-                    except Exception:
-                        pass
-                return val
-            # Mapping: pretty JSON for nested dicts when not top-level
-            if isinstance(val, dict):
-                try:
-                    return json.dumps(val, ensure_ascii=False, indent=2, sort_keys=True)
-                except Exception:
-                    from pprint import pformat
-                    return pformat(val, width=100, compact=False)
-            # Sequences/Sets: one item per line
-            if isinstance(val, (list, tuple, set)):
-                lines = []
-                for item in val:
-                    try:
-                        as_json = json.dumps(item, ensure_ascii=False)
-                    except Exception:
-                        from pprint import pformat
-                        as_json = pformat(item, width=100, compact=False)
-                    lines.append(f"- {as_json}")
-                return "\n".join(lines)
-            # Fallback: JSON if possible, else repr
+            # extension
+            if ext:
+                suffix = ext if ext.startswith(".") else f".{ext}"
+            else:
+                if isinstance(content, (dict, list)):
+                    suffix = ".json"
+                elif isinstance(content, bytes):
+                    suffix = ".bin"
+                else:
+                    suffix = ".txt"
+
+            if add_timestamp:
+                from datetime import datetime
+                stem = f"{stem}_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
+
+            target = d / f"{stem}{suffix}"
+
+            # prepare bytes
+            if isinstance(content, (dict, list)):
+                blob = json.dumps(content, ensure_ascii=False, indent=2).encode("utf-8")
+            elif isinstance(content, str):
+                blob = content.encode("utf-8")
+            else:
+                blob = content
+
+            # write temp then replace (works on Windows & POSIX)
+            fd, tmp_path = tempfile.mkstemp(dir=str(d))
             try:
-                return json.dumps(val, ensure_ascii=False, indent=2)
+                with os.fdopen(fd, "wb") as tmp:
+                    tmp.write(blob)
+                os.replace(tmp_path, str(target))
             except Exception:
-                from pprint import pformat
-                return pformat(val, width=100, compact=False)
+                # ensure temp file is removed if replace failed
+                try:
+                    if os.path.exists(tmp_path):
+                        os.remove(tmp_path)
+                finally:
+                    raise
 
-        def _format_for_save(obj: Any) -> str:
-            # Top-level dict: one block per key with clear separation
-            if isinstance(obj, dict):
-                parts = []
-                for k in sorted(obj.keys(), key=lambda x: str(x)):
-                    v = obj[k]
-                    v_text = _format_value(v)
-                    parts.append(f"{k}:\n{_indent(v_text, 2)}")
-                return "\n\n".join(parts)
-            # Other types
-            return _format_value(obj)
-
-        text = _format_for_save(data) if data is not None else ""
-
-        fname = self.debug_dir / f"{self.pdf_name}_{name}.txt"
-        with open(fname, "w", encoding="utf-8") as f:
-            f.write(text)
-        self._d(f"Saved {name} -> {fname}")
-        return fname
+            self._d(f"Saved: {target}")
+            return target
+        except Exception as e:
+            self._d(f"save_any error: {type(e).__name__}: {e}")
+            return None
 
     def _save_output(self, pdf_path: str, payload: Dict[str, Any]) -> Optional[Path]:
         """Persist extraction results to `extractor_output/<pdfname>.json`."""
@@ -182,108 +188,53 @@ class PDFLLMExtractor:
         self._d(f"Saved extraction output -> {target}")
         return target
 
-    # ========= PDF → pages =========
-    def extract_pages(self, pdf_path: str) -> List[Dict[str, Any]]:
-        pages: List[Dict[str, Any]] = []
+    def extract_text_pypdf2(self, pdf_path: str, normalize: bool = True) -> str:
+        """Current backend: PyPDF2. Returns one unified text string.
+        Set normalize=False to avoid whitespace/line cleanup (more 'raw')."""
+        buf = []
         try:
             with open(pdf_path, "rb") as f:
                 reader = PdfReader(f)
-                for i, page in enumerate(reader.pages):
-                    # PyPDF2 may return None if the page has no extractable text
+                for page in reader.pages:
                     try:
-                        text = page.extract_text() or ""
+                        t = page.extract_text() or ""
                     except Exception:
-                        text = ""
-                    text = re.sub(r"[ \t]+", " ", text)
-                    text = re.sub(r"\n{3,}", "\n\n", text).strip()
-                    pages.append({"page": i + 1, "text": text})
+                        t = ""
+                    buf.append(t)
         except Exception as e:
-            self._d(f"PDF read error: {type(e).__name__}: {e}")
+            self._d(f"PyPDF2 read error: {type(e).__name__}: {e}")
+            return ""
+        text = "\n".join(buf)  # keep native line breaks; no extra blanks injected
+        if normalize:
+            text = re.sub(r"[ \t]+", " ", text)
+            text = re.sub(r"\n{3,}", "\n\n", text).strip()
+        return text
 
-        self._d(f"Pages extracted: {len(pages)}")
-        if pages:
-            self._d("Page[1] head:", repr(pages[0]["text"][:200]))
-            if self.save_debug:
-                self._save_text('pages', pages)
-        return pages
-
-    # ========= Table-ish finder (text only) =========
-    def find_table_like_blocks(self, text: str, window: int = 6) -> List[str]:
-        lines = text.splitlines()
-        hits = []
-        for i, l in enumerate(lines):
-            if self.TABLE_HINT.search(l):
-                start = max(0, i - window)
-                end = min(len(lines), i + window)
-                hits.append("\n".join(lines[start:end]))
-        uniq = []
-        for h in hits:
-            if not any(fuzz.token_set_ratio(h, u) > 90 for u in uniq):
-                uniq.append(h)
-        return uniq
-
-    def _read_pdf(self, pdf_path: str) -> str:
-        """
-        Extracts unified, structured text (Markdown) from PDF using Docling only.
-        Returns a single continuous text string suitable for LLM processing.
-        """
+    def extract_text_docling(self, pdf_path: str) -> str:
+        """Alternative backend: Docling. Returns one unified text string."""
         try:
             converter = DocumentConverter()
             result = converter.convert(pdf_path)
-            text = result.document.export_to_markdown() or ""
-            text = text.strip()
-            if self.debug:
-                self._d(f"Docling extracted text length: {len(text)}")
-                if self.save_debug:
-                    self._save_text("docling_markdown", text[:20000])
+            # markdown export tends to keep structure; normalize a bit
+            text = (result.document.export_to_markdown() or "").strip()
+            text = re.sub(r"[ \t]+", " ", text)
+            text = re.sub(r"\n{3,}", "\n\n", text).strip()
             return text
         except Exception as e:
             self._d(f"Docling error: {type(e).__name__}: {e}")
             return ""
 
-    # ========= Section slicing =========
-    def slice_sections(self, full_text: str) -> Dict[str, str]:
-        out = {}
-        for name, rx in self.SECTION_HEADS:
-            m = rx.search(full_text)
-            if m:
-                out[name] = m.group(1).strip()[:8000]
-        for k, v in out.items():
-            self._d(f"Section '{k}' length: {len(v)}")
-        return out
-
-    # ========= Context builder =========
-    def build_context(self, pages: List[Dict[str, Any]], include_tables: bool = True) -> Dict[str, str]:
-        full = "\n\n---PAGE BREAK---\n\n".join(p["text"] for p in pages)
-        secs = self.slice_sections(full)
-
-        table_blocks = []
-        if include_tables:
-            for p in pages:
-                table_blocks += self.find_table_like_blocks(p["text"])
-
-        context = {
-            "abstract": secs.get("abstract", "")[:4000],
-            "methods": secs.get("methods", "")[:6000],
-            "results": secs.get("results", "")[:8000],
-            "discussion": secs.get("discussion", "")[:6000],
-            "conclusion": secs.get("conclusion", "")[:2000],
-            "tables_texty": ("\n\n".join(table_blocks)[:6000]) if include_tables else "",
-            "full_tail": full[:8000],
-        }
-
-        # Debug summary
-        self._d("Context lengths:",
-                {k: len(v) for k, v in context.items()})
-        if self.debug:
-            for key in ("results"):
-                if context.get(key):
-                    self._d(f"{key.upper()} head:", repr(context[key][:200]))
-
-        if self.save_debug:
-            self._save_text('context', context)
-
-        return context
+    def load_saved_text(self, pdf_path: str) -> str:
+        """Loads extractor_output/full_text_extraction/<pdfname>.txt if present."""
+        if not self.output_dir:
+            return ""
+        stem = Path(pdf_path).stem
+        f = (self.output_dir / "full_text_extraction" / f"{stem}.txt")
+        try:
+            return f.read_text(encoding="utf-8")
+        except Exception as e:
+            self._d(f"load_saved_text error: {type(e).__name__}: {e}")
+            return ""
 
     # ========= Prompt builder =========
     def make_user_message(self, question: str, content) -> str:
@@ -326,8 +277,7 @@ TEXT:
 {text}
 """
         self._d("User message length:", len(msg))
-        if self.debug:
-            self._d("User message head:", repr(msg[:300]))
+        self._d("User message head:", repr(msg[:300]))
         return msg
 
     # ========= LLM call variants & extraction =========
@@ -426,20 +376,16 @@ TEXT:
                     full = json.dumps(resp, ensure_ascii=False, default=str)
                 except Exception:
                     full = "<unserializable response>"
-            self._save_text(f"full_response_{label}", full)
 
             text, where = self._extract_any_content(resp)
             if text:
                 self._d(f"{label} -> content via {where}, length={len(text)}")
-                self._save_text(f"llm_raw_{label}", text)
-                if self.debug:
-                    self._d("Raw head:", repr(text[:200]))
-                    self._d("Raw tail:", repr(text[-200:]))
+                self._d("Raw head:", repr(text[:200]))
+                self._d("Raw tail:", repr(text[-200:]))
                 return text
             else:
                 self._d(f"{label} -> empty content. Details: {where}")
 
-        self._save_text("llm_raw_all_attempts_empty", "")
         raise RuntimeError("All attempts returned empty content. Inspect the saved full_response_*.txt files.")
 
     # ========= JSON parsing (transparent) =========
@@ -470,25 +416,29 @@ TEXT:
         raise ValueError(f"Could not parse model output as JSON. First 400 chars: {snippet}")
 
     def _log_steps(self, steps: List[str]):
-        if self.debug:
-            self._d("JSON parsing steps:")
-            for s in steps:
-                self._d(" -", s)
+        self._d("JSON parsing steps:")
+        for s in steps:
+            self._d(" -", s)
 
     # ========= Public: run end-to-end on a PDF =========
     def extract(self, pdf_path: str, question: str) -> Dict[str, Any]:
         self.pdf_name = Path(pdf_path).stem
-
+        
         # --- Single unified Docling extraction ---
-        text = self.extract_pages(pdf_path)
+        full_text = self.extract_text_pypdf2(pdf_path)
 
-        if not text:
-            result = self._empty_payload("No text extracted (possibly scanned or empty PDF)")
-            self._save_output(pdf_path, result)
-            return result
+        self.save_any(
+            dest_dir=(self.output_dir / "full_text_extraction"),
+            content=full_text or "",
+            pdf_path=pdf_path,   # will use original PDF name
+            ext=".txt",
+        )
+        
+        #full_text = self.load_saved_text(pdf_path)
 
+        
         # User message
-        user_payload = self.make_user_message(question, text)
+        user_payload = self.make_user_message(question, full_text)
 
         # LLM
         try:
@@ -499,7 +449,7 @@ TEXT:
                 evidence=[{"section": "full_tail", "page": None, "snippet": "LLM returned empty/failed; inspect full_response_*.txt"}],
             )
             self._save_output(pdf_path, result)
-            return result
+            return
 
         # Parse
         try:
@@ -510,18 +460,19 @@ TEXT:
                 evidence=[{"section": "full_text", "page": None, "snippet": "See raw response file"}],
             )
             self._save_output(pdf_path, result)
-            return result
+            return
 
         self._save_output(pdf_path, parsed)
-        return parsed
 
     def extract_folder(self, folder_path: str, question: str) -> None:
         """Run extraction for every PDF in a folder (non-recursive)."""
         folder = Path(folder_path)
         if not folder.is_dir():
             raise ValueError(f"Not a folder: {folder_path}")
-        for fp in sorted(list(folder.glob("*.pdf")) + list(folder.glob("*.PDF"))):
-            self.extract(str(fp), question)
+        # Windows globbing is case-insensitive; using both patterns doubles the list.
+        files = sorted({str(p.resolve()) for p in folder.glob("*.pdf")})
+        for fp in files:
+            self.extract(fp, question)
 
     # ========= Helper: null payload with explanation =========
     def _empty_payload(self, comment: str, evidence: Optional[List[Dict[str, Any]]] = None) -> Dict[str, Any]:
@@ -550,9 +501,7 @@ if __name__ == "__main__":
     question = "What is the effect of oral resveratrol on glycemic control in randomized human trials?"
 
     extractor = PDFLLMExtractor(
-        model="openai/gpt-oss-20b",
-        debug=True,          # print essential debug
-        save_debug=True      # also dump raw/full responses to debug_logs/
+        model="openai/gpt-oss-20b"
     )
     
     # result = extractor.extract(pdf_path, question)

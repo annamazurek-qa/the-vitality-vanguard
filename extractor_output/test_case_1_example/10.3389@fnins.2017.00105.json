@@ -1,117 +1,43 @@
 {
   "study_metadata": {
-    "design": "RCT|randomized|double-blind",
-    "species": "Homo sapiens",
-    "n_total": 40,
-    "country": "Germany",
-    "setting": "outpatient",
-    "population": "patients with mild cognitive impairment",
-    "inclusion_key": "MCI diagnosis per Mayo criteria",
-    "exclusion_key": "MMSE<24, severe untreated medical, neurological, psychiatric diseases, brain pathologies, non-right-handedness, non-fluent German, BMI<18 or >35",
-    "mean_age": null,
-    "female_pct": 52.5,
-    "diabetes_status": null,
-    "primary_outcome": "HbA1c"
+    "study_id": "NCT01219244",
+    "design": "RCT"
   },
-  "intervention": {
-    "agent": "resveratrol",
-    "form": "capsule",
-    "dose_mg_per_day": 200,
-    "duration_weeks": 26,
-    "cointerventions": "350 mg quercetin"
+  "exposure": {
+    "label": "resveratrol",
+    "comparator": "placebo"
   },
-  "comparison": {
-    "type": "placebo",
-    "description": "1,015 mg olive oil"
-  },
-  "arms": [
+  "outcomes": [
     {
-      "name": "resveratrol",
+      "name": "HbA1c",
+      "timepoint_weeks": 26,
+      "arm_name": "intervention",
       "n": 18,
-      "dose_mg_per_day": 200,
-      "duration_weeks": 26
+      "baseline_mean": 5.86,
+      "baseline_sd": 0.36,
+      "followup_mean": 5.71,
+      "followup_sd": 0.33,
+      "units": "%"
     },
     {
-      "name": "placebo",
+      "name": "HbA1c",
+      "timepoint_weeks": 26,
+      "arm_name": "control",
       "n": 22,
-      "dose_mg_per_day": 0,
-      "duration_weeks": 26
+      "baseline_mean": 5.73,
+      "baseline_sd": 0.29,
+      "followup_mean": 5.71,
+      "followup_sd": 0.28,
+      "units": "%"
     }
   ],
-  "outcomes_raw": [
-    {
-      "name": "HbA1c",
-      "timepoint_weeks": 26,
-      "arm_name": "resveratrol",
-      "baseline_mean": null,
-      "baseline_sd": null,
-      "followup_mean": null,
-      "followup_sd": null,
-      "change_mean": null,
-      "change_sd": null,
-      "units": "%",
-      "notes": "lower HbA1c with moderate effect size"
-    }
-  ],
-  "effects_by_outcome": [
-    {
-      "name": "HbA1c",
-      "type": "SMD",
-      "timepoint_weeks": 26,
-      "estimate": 0.66,
-      "ci_low": null,
-      "ci_high": null,
-      "p_value": 0.059,
-      "adjusted": false,
-      "model_notes": "Cohen’s d = 0.66, ANOVARM p = 0.059"
-    }
-  ],
-  "risk_of_bias": {
-    "randomization_process": null,
-    "deviations_from_intended": null,
-    "missing_outcome_data": null,
-    "measurement_of_outcome": null,
-    "selection_of_reported_result": null,
-    "overall": null
-  },
-  "effect": {
-    "type": "SMD",
-    "estimate": 0.66,
-    "ci_low": null,
-    "ci_high": null,
-    "p_value": 0.059
-  },
-  "where_found": [
-    {
-      "section": "abstract",
-      "page": null
-    },
-    {
-      "section": "methods",
-      "page": null
-    },
-    {
-      "section": "results",
-      "page": null
-    }
-  ],
+  "comment_detailed": "Extracted HbA1c data from a 26‑week RCT of resveratrol vs placebo in 40 MCI patients. Baseline and follow‑up means and SDs reported for each arm. No other glycemic outcomes reported. All fields populated from text.",
+  "missing_fields": [],
   "evidence": [
-    {
-      "section": "abstract",
-      "page": null,
-      "snippet": "resveratrol (200 mg/d; n = 18) or placebo (1,015 mg/d olive oil; n = 22) intake."
-    },
-    {
-      "section": "results",
-      "page": null,
-      "snippet": "lower glycated hemoglobin A1c concentration with a moderate effect size (ANOVARM p = 0.059, Cohen’s d = 0.66)"
-    }
+    "\"26 weeks of resveratrol (200 mg/d; n=18) or placebo (1,015 mg/d olive oil; n=22)\"",
+    "\"HbA1c [%] 5.86±0.36 5.71 ±0.33\"",
+    "\"HbA1c [%] 5.73±0.29 5.71 ±0.28\""
   ],
-  "missing_fields": [
-    "study_metadata.mean_age",
-    "study_metadata.diabetes_status"
-  ],
-  "confidence": 0.8,
-  "comment": "Effect size reported but no raw means; data limited.",
-  "comment_detailed": "I searched the abstract, methods, and results for study design, participant numbers, intervention details, and outcome data. The study is a randomized, double-blind trial with 40 MCI patients (18 resveratrol, 22 placebo) in Germany, 26 weeks duration, 200 mg resveratrol capsules plus quercetin. Glycated hemoglobin A1c was the primary glycemic outcome; the paper reports a moderate effect size (Cohen’s d = 0.66, p = 0.059) but does not provide baseline or follow-up means or SDs. Therefore, mean age and diabetes status are unknown, and raw outcome statistics are missing. Full tables or supplementary data would provide the necessary numeric values for a precise effect estimate. Confidence is moderate (0.8) due to the clear reporting of design and effect size but lack of raw data."
+  "comment": "All requested fields extracted",
+  "confidence": 0.9
 }

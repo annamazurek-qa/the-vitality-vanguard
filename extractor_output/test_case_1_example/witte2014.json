@@ -1,125 +1,45 @@
 {
   "study_metadata": {
-    "design": "double-blind",
-    "species": "Homo sapiens",
-    "n_total": 46,
-    "country": "Germany",
-    "setting": "outpatient",
-    "population": "healthy older adults, overweight, 50–75 years",
-    "inclusion_key": "BMI 25–30 kg/m², age 50–80, no diabetes, no severe untreated medical, neurological, or psychiatric disease",
-    "exclusion_key": "diabetes mellitus type 2, severe untreated medical, neurological, or psychiatric disease, daily alcohol >50 g, cigarettes >10/day, coffee >6 cups/day, non‑German speaking",
-    "mean_age": null,
-    "female_pct": 39.1,
-    "diabetes_status": "other",
-    "primary_outcome": "HbA1c"
+    "study_id": null,
+    "design": "RCT"
   },
-  "intervention": {
-    "agent": "resveratrol",
-    "form": "capsule",
-    "dose_mg_per_day": 200,
-    "duration_weeks": 26,
-    "cointerventions": "quercetin 320 mg"
+  "exposure": {
+    "label": "resveratrol",
+    "comparator": "placebo"
   },
-  "comparison": {
-    "type": "placebo",
-    "description": "placebo capsules sunflower oil 1015 mg"
-  },
-  "arms": [
-    {
-      "name": "resveratrol",
-      "n": 23,
-      "dose_mg_per_day": 200,
-      "duration_weeks": 26
-    },
-    {
-      "name": "placebo",
-      "n": 23,
-      "dose_mg_per_day": 0,
-      "duration_weeks": 26
-    }
-  ],
-  "outcomes_raw": [
+  "outcomes": [
     {
       "name": "HbA1c",
       "timepoint_weeks": 26,
-      "arm_name": "resveratrol",
-      "baseline_mean": null,
-      "baseline_sd": null,
-      "followup_mean": null,
-      "followup_sd": null,
-      "change_mean": null,
-      "change_sd": null,
-      "units": "%",
-      "notes": "significant decrease compared with placebo"
-    }
-  ],
-  "effects_by_outcome": [],
-  "risk_of_bias": {
-    "randomization_process": null,
-    "deviations_from_intended": null,
-    "missing_outcome_data": null,
-    "measurement_of_outcome": null,
-    "selection_of_reported_result": null,
-    "overall": null
-  },
-  "effect": {
-    "type": null,
-    "estimate": null,
-    "ci_low": null,
-    "ci_high": null,
-    "p_value": null
-  },
-  "where_found": [
+      "arm_name": "intervention",
+      "n": 23,
+      "baseline_mean": 5.83,
+      "baseline_sd": 0.2,
+      "followup_mean": 5.7,
+      "followup_sd": 0.2,
+      "units": "%"
+    },
     {
-      "section": "results",
-      "page": 7863
+      "name": "HbA1c",
+      "timepoint_weeks": 26,
+      "arm_name": "control",
+      "n": 23,
+      "baseline_mean": 5.85,
+      "baseline_sd": 0.3,
+      "followup_mean": 5.88,
+      "followup_sd": 0.3,
+      "units": "%"
     }
   ],
+  "comment_detailed": "I searched the Methods and Results sections for glycemic outcomes. The study reports HbA1c values pre‑ and post‑26 weeks for both groups, with means and SDs. No other glucose metrics (HOMA‑IR, FPG) were reported, so those fields remain null. The study ID was not provided. The design is a double‑blind, placebo‑controlled RCT. Evidence snippets are drawn from Table 5 and the text describing HbA1c changes.",
+  "comment": "HbA1c reduced in resveratrol group; no other glycemic data.",
   "evidence": [
-    {
-      "section": "results",
-      "page": 7863,
-      "snippet": "resveratrol led to significant decreases in glycated hemoglobin (HbA1c) compared with placebo (all p < 0.05)."
-    },
-    {
-      "section": "methods",
-      "page": 7863,
-      "snippet": "Subjects received 200 mg of resveratrol and 320 mg of quercetin daily for 26 weeks; placebo capsules contained sunflower oil."
-    },
-    {
-      "section": "abstract",
-      "page": 7863,
-      "snippet": "Twenty‑three healthy overweight older adults completed 26 weeks of resveratrol intake (200 mg/d) and were pairwise matched to 23 placebo participants."
-    }
+    "\"HbA1c, %a5.83/H110060.2 5.70 /H110060.2\"",
+    "\"Subjects of the resveratrol group showed a significant reduction in HbA1c\"",
+    "\"Table 5. Fasting serum parameters, anthropometric measures, vascular parameters, physical activity, and mood of subjects before and after the intervention/control period\""
   ],
   "missing_fields": [
-    "study_metadata.mean_age",
-    "study_metadata.inclusion_key",
-    "study_metadata.exclusion_key",
-    "study_metadata.population",
-    "outcomes_raw[0].baseline_mean",
-    "outcomes_raw[0].baseline_sd",
-    "outcomes_raw[0].followup_mean",
-    "outcomes_raw[0].followup_sd",
-    "outcomes_raw[0].change_mean",
-    "outcomes_raw[0].change_sd",
-    "effects_by_outcome[0].estimate",
-    "effects_by_outcome[0].ci_low",
-    "effects_by_outcome[0].ci_high",
-    "effects_by_outcome[0].p_value",
-    "risk_of_bias.randomization_process",
-    "risk_of_bias.deviations_from_intended",
-    "risk_of_bias.missing_outcome_data",
-    "risk_of_bias.measurement_of_outcome",
-    "risk_of_bias.selection_of_reported_result",
-    "risk_of_bias.overall",
-    "effect.type",
-    "effect.estimate",
-    "effect.ci_low",
-    "effect.ci_high",
-    "effect.p_value"
+    "study_metadata.study_id"
   ],
-  "confidence": 0.7,
-  "comment": "Only qualitative HbA1c improvement reported",
-  "comment_detailed": "I searched the abstract, methods, and results for glycemic outcomes. The study reports a significant decrease in HbA1c but provides no numeric values, standard deviations, or effect sizes. Consequently, baseline and follow‑up means, SDs, and change statistics are unknown, and no effect estimate can be calculated. Risk‑of‑bias domains are not described. Full tables or supplementary data would provide the missing numeric information needed for quantitative synthesis."
+  "confidence": 0.9
 }

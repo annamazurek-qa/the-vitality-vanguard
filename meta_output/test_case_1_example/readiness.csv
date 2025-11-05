@@ -1,31 +1,28 @@
 file,study_id,outcome,type,timepoint_weeks,readiness
-10.1002@oby.21523.json,10.1002@oby.21523.json,FPG,,,No effect estimate
-10.1017@s0007114511000316.json,10.1017@s0007114511000316.json,HOMA_IR,MD,4.0,No effect estimate
-10.1089@met.2014.0082.json,10.1089@met.2014.0082.json,other,MD,12.0,No effect estimate
-10.3389@fnins.2017.00105.json,10.3389@fnins.2017.00105.json,HbA1c,SMD,26.0,Missing CI (or unparsable)
-abdollahi2019.json,IRCT20171118037528N1,FPG,MD,8.0,Missing CI (or unparsable)
-anton2014.json,anton2014.json,FPG,,12.86,No effect estimate
-banaszewska2016.json,NCT01720459,other,,12.0,No effect estimate
-bhatt2012.json,bhatt2012.json,HbA1c,MD,12.0,Missing CI (or unparsable)
-bo2016.json,bo2016.json,HbA1c,MD,,No effect estimate
-chachay2014.json,Chachay2014,HOMA_IR,MD,8.0,No effect estimate
-chen2015.json,chen2015.json,FPG,MD,12.0,Missing CI (or unparsable)
-chen2015.json,chen2015.json,HOMA_IR,MD,12.0,Missing CI (or unparsable)
-deligt2020.json,deligt2020.json,HbA1c,MD,24.0,Missing CI (or unparsable)
-goh2014.json,NCT01677611,HbA1c,,12.0,No effect estimate
-hoseini2019.json,10.1039/C9FO01075K,FPG,MD,4.0,Ready
-hoseini2019.json,10.1039/C9FO01075K,HOMA_IR,MD,4.0,Ready
-hoseini2019.json,10.1039/C9FO01075K,QUICKI,MD,4.0,Ready
-kantartzis2018.json,NCT01635114,HOMA_IR,MD,12.0,No effect estimate
-kantartzis2018.json,NCT01635114,HbA1c,MD,12.0,No effect estimate
-khodabandehloo2018.json,NTR 7870,FPG,MD,8.0,No effect estimate
-pollack2017.json,pollack2017.json,HOMA_IR,,6.0,No effect estimate
-poulsen2013.json,NCT01150955,HOMA_IR,,4.0,No effect estimate
-thaungzaw2021.json,thaungzaw2021.json,fasting_insulin,SMD,52.0,Missing CI (or unparsable)
-thaungzaw2021.json,thaungzaw2021.json,insulin_resistance_index,SMD,52.0,Missing CI (or unparsable)
-vandermade2015.json,vandermade2015.json,FPG,MD,4.0,Missing CI (or unparsable)
-vandermade2015.json,vandermade2015.json,Insulin,MD,4.0,Missing CI (or unparsable)
-witte2014.json,witte2014.json,HbA1c,MD,26.0,No effect estimate
-yoshino2012.json,yoshino2012.json,HOMA_IR,MD,12.0,No effect estimate
-zarejavid2016.json,zarejavid2016.json,Insulin,MD,4.0,Missing CI (or unparsable)
-zarejavid2016.json,zarejavid2016.json,HOMA_IR,MD,4.0,Missing CI (or unparsable)
+10.3389@fnins.2017.00105.json,NCT01219244,HbA1c,SMD,26.0,Ready
+abdollahi2019.json,abdollahi2019.json,FPG,SMD,8.0,Ready
+abdollahi2019.json,abdollahi2019.json,HbA1c,SMD,8.0,Ready
+abdollahi2019.json,abdollahi2019.json,HOMA_IR,SMD,8.0,Ready
+hoseini2019.json,hoseini2019.json,FPG,SMD,4.0,Ready
+hoseini2019.json,hoseini2019.json,HOMA_IR,SMD,4.0,Ready
+movahed2013.json,movahed2013.json,FPG,SMD,6.4,Ready
+movahed2013.json,movahed2013.json,HbA1c,SMD,6.4,Ready
+movahed2013.json,movahed2013.json,HOMA_IR,SMD,6.4,Ready
+pollack2017.json,pollack2017.json,HOMA_IR,SMD,6.0,Ready
+pollack2017.json,pollack2017.json,FPG,SMD,6.0,Ready
+pollack2017.json,pollack2017.json,HbA1c,SMD,6.0,Ready
+poulsen2013.json,NCT01150955,FPG,SMD,4.0,Ready
+poulsen2013.json,NCT01150955,HOMA_IR,SMD,4.0,Ready
+poulsen2013.json,NCT01150955,HbA1c,SMD,4.0,Ready
+sattarinezhad2019.json,sattarinezhad2019.json,FPG,SMD,12.0,Ready
+sattarinezhad2019.json,sattarinezhad2019.json,HbA1c,SMD,12.0,Ready
+sattarinezhad2019.json,sattarinezhad2019.json,HOMA_IR,SMD,12.0,Ready
+seyyedebrahimi2018.json,IRCT2015072523336N1,HbA1c,SMD,8.0,Ready
+seyyedebrahimi2018.json,IRCT2015072523336N1,FPG,SMD,8.0,Ready
+seyyedebrahimi2018.json,IRCT2015072523336N1,HOMA_IR,SMD,8.0,Ready
+vandermade2015.json,vandermade2015.json,FPG,SMD,4.0,Ready
+vandermade2015.json,vandermade2015.json,HOMA_IR,SMD,4.0,Ready
+witte2014.json,witte2014.json,HbA1c,SMD,26.0,Ready
+yoshino2012.json,NCT00823381,HOMA_IR,SMD,12.0,Ready
+zarejavid2016.json,zarejavid2016.json,FPG,SMD,4.0,Ready
+zarejavid2016.json,zarejavid2016.json,HOMA_IR,SMD,4.0,Ready

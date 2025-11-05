@@ -1,175 +1,66 @@
 {
   "study_metadata": {
-    "design": "RCT",
-    "species": "Homo sapiens",
-    "n_total": 56,
-    "country": "Iran",
-    "setting": "outpatient",
-    "population": "patients with type 2 diabetes mellitus and coronary heart disease",
-    "inclusion_key": "patients with T2DM, aged 40-85 years old with proven 2- and 3-vessel CHD",
-    "exclusion_key": "consuming resveratrol three months prior, taking antioxidant/anti-inflammatory supplements, acute MI or surgery in past 3 months, renal or hepatic failure",
-    "mean_age": null,
-    "female_pct": null,
-    "diabetes_status": "T2D",
-    "primary_outcome": "HOMA_IR"
+    "study_id": null,
+    "design": "RCT"
   },
-  "intervention": {
-    "agent": "resveratrol",
-    "form": "capsule",
-    "dose_mg_per_day": 500,
-    "duration_weeks": 4,
-    "cointerventions": null
+  "exposure": {
+    "label": "resveratrol",
+    "comparator": "placebo"
   },
-  "comparison": {
-    "type": "placebo",
-    "description": "identical placebo capsules"
-  },
-  "arms": [
+  "outcomes": [
     {
-      "name": "resveratrol",
-      "n": 28,
-      "dose_mg_per_day": 500,
-      "duration_weeks": 4
-    },
-    {
-      "name": "placebo",
-      "n": 28,
-      "dose_mg_per_day": 0,
-      "duration_weeks": 4
-    }
-  ],
-  "outcomes_raw": [
-    {
-      "name": "HOMA_IR",
+      "name": "FPG",
       "timepoint_weeks": 4,
-      "arm_name": "resveratrol",
-      "baseline_mean": null,
-      "baseline_sd": null,
-      "followup_mean": null,
-      "followup_sd": null,
-      "change_mean": -1.09,
-      "change_sd": null,
-      "units": "HOMA_units",
-      "notes": null
+      "arm_name": "intervention",
+      "n": 28,
+      "baseline_mean": 133.9,
+      "baseline_sd": 52.2,
+      "followup_mean": 129.5,
+      "followup_sd": 56.2,
+      "units": "mg/dL"
     },
     {
       "name": "FPG",
       "timepoint_weeks": 4,
-      "arm_name": "resveratrol",
-      "baseline_mean": null,
-      "baseline_sd": null,
-      "followup_mean": null,
-      "followup_sd": null,
-      "change_mean": -10.04,
-      "change_sd": null,
-      "units": "mg_dL",
-      "notes": null
+      "arm_name": "control",
+      "n": 28,
+      "baseline_mean": 136.6,
+      "baseline_sd": 50.0,
+      "followup_mean": 122.5,
+      "followup_sd": 53.1,
+      "units": "mg/dL"
     },
-    {
-      "name": "Insulin",
-      "timepoint_weeks": 4,
-      "arm_name": "resveratrol",
-      "baseline_mean": null,
-      "baseline_sd": null,
-      "followup_mean": null,
-      "followup_sd": null,
-      "change_mean": -1.09,
-      "change_sd": null,
-      "units": null,
-      "notes": null
-    }
-  ],
-  "effects_by_outcome": [
     {
       "name": "HOMA_IR",
-      "type": "MD",
       "timepoint_weeks": 4,
-      "estimate": -1.09,
-      "ci_low": -1.93,
-      "ci_high": -1.09,
-      "p_value": 0.01,
-      "adjusted": false,
-      "model_notes": null
+      "arm_name": "intervention",
+      "n": 28,
+      "baseline_mean": 4.3,
+      "baseline_sd": 2.5,
+      "followup_mean": 4.0,
+      "followup_sd": 2.0,
+      "units": "unitless"
     },
     {
-      "name": "FPG",
-      "type": "MD",
+      "name": "HOMA_IR",
       "timepoint_weeks": 4,
-      "estimate": -10.04,
-      "ci_low": -18.23,
-      "ci_high": -1.86,
-      "p_value": 0.01,
-      "adjusted": false,
-      "model_notes": null
-    },
-    {
-      "name": "Insulin",
-      "type": "MD",
-      "timepoint_weeks": 4,
-      "estimate": -1.09,
-      "ci_low": -1.93,
-      "ci_high": -1.09,
-      "p_value": 0.01,
-      "adjusted": false,
-      "model_notes": null
+      "arm_name": "control",
+      "n": 28,
+      "baseline_mean": 4.1,
+      "baseline_sd": 2.5,
+      "followup_mean": 3.4,
+      "followup_sd": 1.7,
+      "units": "unitless"
     }
   ],
-  "risk_of_bias": {
-    "randomization_process": "low",
-    "deviations_from_intended": "low",
-    "missing_outcome_data": "low",
-    "measurement_of_outcome": "low",
-    "selection_of_reported_result": "low",
-    "overall": "low"
-  },
-  "effect": {
-    "type": "MD",
-    "estimate": -1.09,
-    "ci_low": -1.93,
-    "ci_high": -1.09,
-    "p_value": 0.01
-  },
-  "where_found": [
-    {
-      "section": "abstract",
-      "page": 2
-    },
-    {
-      "section": "methods",
-      "page": 5
-    },
-    {
-      "section": "results",
-      "page": 2
-    }
+  "comment": "Data extracted for FPG and HOMA-IR at 4 weeks.",
+  "comment_detailed": "I identified the randomized, double‑blind, placebo‑controlled design and extracted exposure labels. Outcomes were taken from Table 3, which reports baseline and week 4 means ± SD for FPG and HOMA‑IR in both groups. HbA1c was not reported, so omitted. Study ID was not provided, so set null. Units were taken from the table; HOMA‑IR is unitless. Missing fields: study_metadata.study_id.",
+  "missing_fields": [
+    "study_metadata.study_id"
   ],
   "evidence": [
-    {
-      "section": "abstract",
-      "page": 2,
-      "snippet": "This randomized, double-blind, placebo-controlled trial was performed in 56 patients with T2DM and CHD. Patients were randomly divided into two groups to receive either 500 mg resveratrol/day (n=28) or placebo (n=28) for 4 weeks. Resveratrol reduced fasting glucose (β -10.04 mg/dL; 95% CI, -18.23, -1.86; P=0.01) ..."
-    },
-    {
-      "section": "abstract",
-      "page": 2,
-      "snippet": "Resveratrol reduced insulin (β -1.09 µIU/mL; 95% CI, -1.93, -0.24; P=0.01) and insulin resistance (β -0.48; 95% CI, -0.76, -0.21; P=0.001) ..."
-    },
-    {
-      "section": "methods",
-      "page": 5,
-      "snippet": "Participants were randomly allocated (balanced block randomization) into two groups to take either 500 mg/day resveratrol (Nutrissence, Las Vegas, USA) or placebo (Barij Essence, Kashan, Iran) (n=28 in each group) for 4 weeks."
-    }
+    "Table 3 shows FPG 133.9±52.2 (resveratrol) vs 136.6±50.0 (placebo) at baseline and 129.5±56.2 vs 122.5±53.1 at week 4.",
+    "Table 3 lists HOMA‑IR 4.3±2.5 vs 4.1±2.5 at baseline and 4.0±2.0 vs 3.4±1.7 at week 4."
   ],
-  "missing_fields": [
-    "study_metadata.mean_age",
-    "study_metadata.female_pct",
-    "outcomes_raw.baseline_mean",
-    "outcomes_raw.baseline_sd",
-    "outcomes_raw.followup_mean",
-    "outcomes_raw.followup_sd",
-    "outcomes_raw.change_sd"
-  ],
-  "confidence": 0.9,
-  "comment": "Data extracted from RCT; effect on HOMA-IR and FPG reported.",
-  "comment_detailed": "I searched the abstract, methods, and results sections for study design, population, intervention details, and outcome data. The abstract provided the primary outcome (HOMA-IR) and secondary outcomes (FPG, insulin) with beta coefficients and 95% CIs. Specific baseline means, SDs, and follow-up values were not reported, so those fields are null. Risk of bias was judged low based on randomization, blinding, and outcome measurement. Missing fields include age, sex distribution, and detailed outcome statistics. Full tables or supplementary data would provide these details."
+  "confidence": 0.9
 }

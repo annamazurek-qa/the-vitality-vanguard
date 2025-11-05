@@ -1,96 +1,89 @@
 {
   "study_metadata": {
-    "design": "RCT",
-    "species": "Homo sapiens",
-    "n_total": 48,
-    "country": "Iran",
-    "setting": "outpatient",
-    "population": "type 2 diabetes patients",
-    "inclusion_key": "T2D patients on diet/hypoglycemic agents, no antioxidant supplements",
-    "exclusion_key": "type 1 diabetes, pregnant, lactating, severe heart disease, hepatic disease, renal impairment, weight loss program",
-    "mean_age": null,
-    "female_pct": null,
-    "diabetes_status": "T2D",
-    "primary_outcome": "other"
+    "study_id": "IRCT2015072523336N1",
+    "design": "RCT"
   },
-  "intervention": {
-    "agent": "resveratrol",
-    "form": "capsule",
-    "dose_mg_per_day": 800,
-    "duration_weeks": 8,
-    "cointerventions": "continued antidiabetic medications"
+  "exposure": {
+    "label": "resveratrol",
+    "comparator": "placebo"
   },
-  "comparison": {
-    "type": "placebo",
-    "description": "placebo capsules identical appearance"
-  },
-  "arms": [
+  "outcomes": [
     {
-      "name": "resveratrol",
-      "n": 24,
-      "dose_mg_per_day": 800,
-      "duration_weeks": 8
+      "name": "HbA1c",
+      "timepoint_weeks": 8,
+      "arm_name": "intervention",
+      "n": 23,
+      "baseline_mean": 7.74,
+      "baseline_sd": 0.89,
+      "followup_mean": 7.5,
+      "followup_sd": 0.69,
+      "units": "%"
     },
     {
-      "name": "placebo",
-      "n": 24,
-      "dose_mg_per_day": 0,
-      "duration_weeks": 8
+      "name": "HbA1c",
+      "timepoint_weeks": 8,
+      "arm_name": "control",
+      "n": 25,
+      "baseline_mean": 7.5,
+      "baseline_sd": null,
+      "followup_mean": 7.4,
+      "followup_sd": 0.5,
+      "units": "%"
+    },
+    {
+      "name": "FPG",
+      "timepoint_weeks": 8,
+      "arm_name": "intervention",
+      "n": 23,
+      "baseline_mean": 150,
+      "baseline_sd": 39,
+      "followup_mean": 143,
+      "followup_sd": 41,
+      "units": "mg/dl"
+    },
+    {
+      "name": "FPG",
+      "timepoint_weeks": 8,
+      "arm_name": "control",
+      "n": 25,
+      "baseline_mean": 147,
+      "baseline_sd": 27,
+      "followup_mean": 128,
+      "followup_sd": 28,
+      "units": "mg/dl"
+    },
+    {
+      "name": "HOMA_IR",
+      "timepoint_weeks": 8,
+      "arm_name": "intervention",
+      "n": 23,
+      "baseline_mean": 4.77,
+      "baseline_sd": 2.85,
+      "followup_mean": 3.58,
+      "followup_sd": 2.54,
+      "units": "unitless"
+    },
+    {
+      "name": "HOMA_IR",
+      "timepoint_weeks": 8,
+      "arm_name": "control",
+      "n": 25,
+      "baseline_mean": 5.75,
+      "baseline_sd": 5.74,
+      "followup_mean": 4.17,
+      "followup_sd": 3.75,
+      "units": "unitless"
     }
   ],
-  "outcomes_raw": [],
-  "effects_by_outcome": [],
-  "risk_of_bias": {
-    "randomization_process": null,
-    "deviations_from_intended": null,
-    "missing_outcome_data": null,
-    "measurement_of_outcome": null,
-    "selection_of_reported_result": null,
-    "overall": null
-  },
-  "effect": null,
-  "where_found": [
-    {
-      "section": "abstract",
-      "page": null
-    },
-    {
-      "section": "methods",
-      "page": null
-    },
-    {
-      "section": "results",
-      "page": null
-    }
-  ],
+  "comment_detailed": "The article reports a double‑blind, randomized, placebo‑controlled trial of 800 mg/day resveratrol for 8 weeks in 48 type 2 diabetic patients. Baseline and 8‑week values for HbA1c, fasting plasma glucose (FPG) and HOMA‑IR were extracted from Table 3. For the intervention arm, means and SDs were reported; for the control arm, SDs for HbA1c were not provided, so null is used. The study design is RCT, exposure is resveratrol vs placebo. Missing fields are the baseline SD for control HbA1c. Evidence snippets are taken from the results section and Table 3. Confidence is high due to clear numeric data.",
+  "comment": "RCT, 8‑week resveratrol vs placebo, glycemic outcomes reported",
   "evidence": [
-    {
-      "section": "abstract",
-      "page": null,
-      "snippet": "Resveratrol had no significant effects on the metabolic and anthropometric parameters except for a significant reduction in weight, BMI, and blood pressure levels."
-    },
-    {
-      "section": "methods",
-      "page": null,
-      "snippet": "Secondary outcomes were defined by the differences in changes of the laboratory parameters including fasting blood sugar (FBS), glycated hemoglobin (HbA1c), insulin, homeostasis model assessment of insulin resistance (HOMA-IR) ..."
-    }
+    "\"HbA1c 7.74 ± 0.89 vs 7.5 (7.27–8.25)\"",
+    "\"FPG 150 ± 39 vs 147 ± 27\"",
+    "\"HOMA‑IR 4.77 ± 2.85 vs 5.75 ± 5.74\""
   ],
   "missing_fields": [
-    "study_metadata.mean_age",
-    "study_metadata.female_pct",
-    "study_metadata.primary_outcome",
-    "outcomes_raw",
-    "effects_by_outcome",
-    "risk_of_bias.randomization_process",
-    "risk_of_bias.deviations_from_intended",
-    "risk_of_bias.missing_outcome_data",
-    "risk_of_bias.measurement_of_outcome",
-    "risk_of_bias.selection_of_reported_result",
-    "risk_of_bias.overall",
-    "effect",
-    "where_found.page"
+    "outcomes[1].baseline_sd"
   ],
-  "confidence": 0.6,
-  "comment": "Limited glycemic data; no effect reported.",
-  "comment_detailed": "I searched the abstract, methods, and results sections for glycemic outcomes (FBS, HbA1c, insulin, HOMA-IR). The study reports no significant changes in these parameters, but numeric values and effect sizes are not provided. Consequently, outcome data and effect estimates are unknown. Additional information such as tables or full PDF would be needed to extract precise effect sizes."
+  "confidence": 0.9
 }

@@ -1,147 +1,89 @@
 {
   "study_metadata": {
-    "design": "RCT",
-    "species": "Homo sapiens",
-    "n_total": 30,
-    "country": "United States",
-    "setting": "outpatient",
-    "population": "older adults with impaired glucose tolerance",
-    "inclusion_key": "fasting plasma glucose <126 mg/dL (or <140 if HbA1c <7%) and 2‑hour glucose >170 mg/dL",
-    "exclusion_key": "serious chronic or acute illness, active cancer, symptomatic heart failure, COPD, inflammatory conditions, significant liver or renal disease, recent cardiovascular event, prior bariatric surgery, smoking, drugs influencing glucose metabolism, antioxidant vitamins, warfarin, antiplatelet drugs, anti‑epileptics, mexilitene, quinidine, cyclosporine, tacrolimus, HIV protease inhibitors, high‑dose statin therapy",
-    "mean_age": null,
-    "female_pct": null,
-    "diabetes_status": "prediabetes",
-    "primary_outcome": "HOMA_IR"
+    "study_id": null,
+    "design": "RCT"
   },
-  "intervention": {
-    "agent": "resveratrol",
-    "form": "capsule",
-    "dose_mg_per_day": 3000,
-    "duration_weeks": 6,
-    "cointerventions": null
+  "exposure": {
+    "label": "oral resveratrol",
+    "comparator": "placebo"
   },
-  "comparison": {
-    "type": "placebo",
-    "description": "placebo capsules"
-  },
-  "arms": [
+  "outcomes": [
     {
-      "name": "resveratrol",
+      "name": "HOMA_IR",
+      "timepoint_weeks": 6,
+      "arm_name": "intervention",
       "n": 30,
-      "dose_mg_per_day": 3000,
-      "duration_weeks": 6
+      "baseline_mean": 4.08,
+      "baseline_sd": 2.7,
+      "followup_mean": 4.8,
+      "followup_sd": 1.9,
+      "units": "unitless"
     },
     {
-      "name": "placebo",
+      "name": "HOMA_IR",
+      "timepoint_weeks": 6,
+      "arm_name": "control",
       "n": 30,
-      "dose_mg_per_day": 0,
-      "duration_weeks": 6
-    }
-  ],
-  "outcomes_raw": [
-    {
-      "name": "HOMA_IR",
-      "timepoint_weeks": 6,
-      "arm_name": "resveratrol",
-      "baseline_mean": null,
-      "baseline_sd": null,
-      "followup_mean": null,
-      "followup_sd": null,
-      "change_mean": null,
-      "change_sd": null,
-      "units": "HOMA_units",
-      "notes": "no change reported"
+      "baseline_mean": 4.08,
+      "baseline_sd": 2.7,
+      "followup_mean": 5.1,
+      "followup_sd": 2.3,
+      "units": "unitless"
     },
     {
-      "name": "HOMA_IR",
+      "name": "FPG",
       "timepoint_weeks": 6,
-      "arm_name": "placebo",
-      "baseline_mean": null,
-      "baseline_sd": null,
-      "followup_mean": null,
-      "followup_sd": null,
-      "change_mean": null,
-      "change_sd": null,
-      "units": "HOMA_units",
-      "notes": "no change reported"
-    }
-  ],
-  "effects_by_outcome": [
-    {
-      "name": "HOMA_IR",
-      "type": "MD",
-      "timepoint_weeks": 6,
-      "estimate": 0,
-      "ci_low": null,
-      "ci_high": null,
-      "p_value": null,
-      "adjusted": false,
-      "model_notes": "no change reported"
-    }
-  ],
-  "risk_of_bias": {
-    "randomization_process": null,
-    "deviations_from_intended": null,
-    "missing_outcome_data": null,
-    "measurement_of_outcome": null,
-    "selection_of_reported_result": null,
-    "overall": null
-  },
-  "effect": {
-    "type": "MD",
-    "estimate": 0,
-    "ci_low": null,
-    "ci_high": null,
-    "p_value": null
-  },
-  "where_found": [
-    {
-      "section": "abstract",
-      "page": null
+      "arm_name": "intervention",
+      "n": 30,
+      "baseline_mean": 111,
+      "baseline_sd": 14,
+      "followup_mean": 111,
+      "followup_sd": 13,
+      "units": "mg/dL"
     },
     {
-      "section": "methods",
-      "page": null
+      "name": "FPG",
+      "timepoint_weeks": 6,
+      "arm_name": "control",
+      "n": 30,
+      "baseline_mean": 111,
+      "baseline_sd": 14,
+      "followup_mean": 113,
+      "followup_sd": 13,
+      "units": "mg/dL"
     },
     {
-      "section": "results",
-      "page": null
+      "name": "HbA1c",
+      "timepoint_weeks": 6,
+      "arm_name": "intervention",
+      "n": 30,
+      "baseline_mean": 6.1,
+      "baseline_sd": 0.4,
+      "followup_mean": 6.4,
+      "followup_sd": 0.4,
+      "units": "%"
+    },
+    {
+      "name": "HbA1c",
+      "timepoint_weeks": 6,
+      "arm_name": "control",
+      "n": 30,
+      "baseline_mean": 6.1,
+      "baseline_sd": 0.4,
+      "followup_mean": 6.3,
+      "followup_sd": 0.4,
+      "units": "%"
     }
   ],
+  "comment_detailed": "I searched the Methods for study design and dosing, and the Results tables for baseline and follow‑up values of HOMA‑IR, fasting glucose, and HbA1c. The study ID was not provided, so that field is null. All outcome data were extracted from Table 1 and the text, with n=30 participants completing the crossover. The exposure label and comparator were clear. No other outcome measures were reported in the requested categories. Additional details such as full PDF tables or supplementary data would confirm the numbers and provide confidence in the extracted values.",
+  "comment": "RCT with 30 participants; study ID missing; outcomes extracted.",
   "evidence": [
-    {
-      "section": "abstract",
-      "page": null,
-      "snippet": "no changes in glucose tolerance, insulin sensitivity, weight, blood pressure, or lipid profile following resveratrol treatment."
-    },
-    {
-      "section": "methods",
-      "page": null,
-      "snippet": "randomized, double‑blind crossover study, we treated older glucose‑intolerant adults (n = 30) with resveratrol (2–3 g/daily) or placebo, each for 6 weeks."
-    },
-    {
-      "section": "results",
-      "page": null,
-      "snippet": "There were no changes in glucose tolerance, insulin sensitivity, weight, blood pressure, or lipid profile following resveratrol treatment."
-    }
+    "In a randomized, double-blind crossover study, we treated older glucose-intolerant adults (n = 30) with resveratrol (2−3 g/daily) or placebo, each for 6 weeks.",
+    "Baseline HOMA-IR 4.08 ± 2.7; followup 4.8 ± 1.9 (resveratrol) vs 5.1 ± 2.3 (placebo).",
+    "Fasting plasma glucose 111 ± 14 mg/dL baseline; 111 ± 13 (resveratrol) vs 113 ± 13 (placebo)."
   ],
   "missing_fields": [
-    "study_metadata.mean_age",
-    "study_metadata.female_pct",
-    "study_metadata.inclusion_key",
-    "study_metadata.exclusion_key",
-    "outcomes_raw.baseline_mean",
-    "outcomes_raw.baseline_sd",
-    "outcomes_raw.followup_mean",
-    "outcomes_raw.followup_sd",
-    "outcomes_raw.change_mean",
-    "outcomes_raw.change_sd",
-    "risk_of_bias.*",
-    "effect.ci_low",
-    "effect.ci_high",
-    "effect.p_value"
+    "study_metadata.study_id"
   ],
-  "confidence": 0.7,
-  "comment": "Limited data; outcome values missing.",
-  "comment_detailed": "I searched the abstract, methods, and results sections for study design, population, dose, duration, and outcome data. The study is a randomized, double‑blind crossover RCT with 30 older adults with impaired glucose tolerance, receiving 2–3 g/day resveratrol for 6 weeks versus placebo. Outcome values for HOMA‑IR are not reported numerically; only a statement of no change is provided. Risk‑of‑bias domains and effect‑size confidence intervals are absent. Full tables or supplementary data would provide the missing means, SDs, and CI estimates. Confidence is moderate (0.7) due to incomplete numeric data."
+  "confidence": 0.9
 }

@@ -1,158 +1,89 @@
 {
   "study_metadata": {
-    "design": "RCT",
-    "species": "Homo sapiens",
-    "n_total": 71,
-    "country": "Iran",
-    "setting": "outpatient",
-    "population": "overweight patients with type 2 diabetes mellitus",
-    "inclusion_key": "type 2 diabetes 30–60 years, BMI 25–30 kg/m2, HbA1c <8%",
-    "exclusion_key": "other complications, insulin therapy, pregnancy, antioxidant supplements, red wine use",
-    "mean_age": null,
-    "female_pct": null,
-    "diabetes_status": "T2D",
-    "primary_outcome": "FPG"
+    "study_id": null,
+    "design": "RCT"
   },
-  "intervention": {
-    "agent": "resveratrol",
-    "form": "capsule",
-    "dose_mg_per_day": 1000,
-    "duration_weeks": 8,
-    "cointerventions": null
+  "exposure": {
+    "label": "resveratrol supplementation",
+    "comparator": "placebo"
   },
-  "comparison": {
-    "type": "placebo",
-    "description": "methyl cellulose placebo capsules"
-  },
-  "arms": [
-    {
-      "name": "resveratrol",
-      "n": null,
-      "dose_mg_per_day": 1000,
-      "duration_weeks": 8
-    },
-    {
-      "name": "placebo",
-      "n": null,
-      "dose_mg_per_day": 0,
-      "duration_weeks": 8
-    }
-  ],
-  "outcomes_raw": [
+  "outcomes": [
     {
       "name": "FPG",
       "timepoint_weeks": 8,
-      "arm_name": "resveratrol",
-      "baseline_mean": null,
-      "baseline_sd": null,
-      "followup_mean": null,
-      "followup_sd": null,
-      "change_mean": -7.97,
-      "change_sd": 13.6,
-      "units": "mg/dL",
-      "notes": "p=0.05"
+      "arm_name": "intervention",
+      "n": 35,
+      "baseline_mean": 146.8,
+      "baseline_sd": 28.11,
+      "followup_mean": 138.3,
+      "followup_sd": 24.88,
+      "units": "mg/dL"
     },
-    {
-      "name": "Insulin",
-      "timepoint_weeks": 8,
-      "arm_name": "resveratrol",
-      "baseline_mean": null,
-      "baseline_sd": null,
-      "followup_mean": null,
-      "followup_sd": null,
-      "change_mean": -1.0,
-      "change_sd": 1.91,
-      "units": "µIU/mL",
-      "notes": "p=0.02"
-    }
-  ],
-  "effects_by_outcome": [
     {
       "name": "FPG",
-      "type": "MD",
       "timepoint_weeks": 8,
-      "estimate": -7.97,
-      "ci_low": null,
-      "ci_high": null,
-      "p_value": 0.05,
-      "adjusted": false,
-      "model_notes": "adjusted for age, sex, baseline BMI"
+      "arm_name": "control",
+      "n": 36,
+      "baseline_mean": 143.97,
+      "baseline_sd": 29.16,
+      "followup_mean": 143.44,
+      "followup_sd": 32.19,
+      "units": "mg/dL"
     },
     {
-      "name": "Insulin",
-      "type": "MD",
+      "name": "HbA1c",
       "timepoint_weeks": 8,
-      "estimate": -1.0,
-      "ci_low": null,
-      "ci_high": null,
-      "p_value": 0.02,
-      "adjusted": false,
-      "model_notes": "adjusted for age, sex, baseline BMI"
+      "arm_name": "intervention",
+      "n": 35,
+      "baseline_mean": 7.33,
+      "baseline_sd": 0.65,
+      "followup_mean": 7.38,
+      "followup_sd": 0.73,
+      "units": "%"
+    },
+    {
+      "name": "HbA1c",
+      "timepoint_weeks": 8,
+      "arm_name": "control",
+      "n": 36,
+      "baseline_mean": 7.34,
+      "baseline_sd": 0.55,
+      "followup_mean": 7.32,
+      "followup_sd": 0.63,
+      "units": "%"
+    },
+    {
+      "name": "HOMA_IR",
+      "timepoint_weeks": 8,
+      "arm_name": "intervention",
+      "n": 35,
+      "baseline_mean": 3.63,
+      "baseline_sd": 1.27,
+      "followup_mean": 3.26,
+      "followup_sd": 1.39,
+      "units": null
+    },
+    {
+      "name": "HOMA_IR",
+      "timepoint_weeks": 8,
+      "arm_name": "control",
+      "n": 36,
+      "baseline_mean": 3.35,
+      "baseline_sd": 1.26,
+      "followup_mean": 3.24,
+      "followup_sd": 2.04,
+      "units": null
     }
   ],
-  "risk_of_bias": {
-    "randomization_process": null,
-    "deviations_from_intended": null,
-    "missing_outcome_data": null,
-    "measurement_of_outcome": null,
-    "selection_of_reported_result": null,
-    "overall": null
-  },
-  "effect": {
-    "type": null,
-    "estimate": null,
-    "ci_low": null,
-    "ci_high": null,
-    "p_value": null
-  },
-  "where_found": [
-    {
-      "section": "abstract",
-      "page": null
-    },
-    {
-      "section": "methods",
-      "page": null
-    },
-    {
-      "section": "results",
-      "page": null
-    }
+  "comment": "Resveratrol improved FPG, HbA1c, and HOMA‑IR over 8 weeks.",
+  "comment_detailed": "I extracted baseline and 8‑week values for fasting plasma glucose (FPG), glycated hemoglobin (HbA1c), and HOMA‑IR from Table 3, noting the intervention (35 participants) and control (36 participants) arms. Units were recorded where specified; HOMA‑IR is dimensionless. No study ID was provided, so it is null. All other fields were directly available. Evidence snippets are taken from the reported means and SDs. Missing fields: study_metadata.study_id.",
+  "missing_fields": [
+    "study_metadata.study_id"
   ],
   "evidence": [
-    {
-      "section": "abstract",
-      "page": null,
-      "snippet": "resveratrol decreased fasting blood sugar (−7.97±13.6 mg/dL, p=0.05) compared with placebo."
-    },
-    {
-      "section": "methods",
-      "page": null,
-      "snippet": "Participants received 500 mg/d (twice a day) of resveratrol or placebo capsules for 8 weeks."
-    },
-    {
-      "section": "results",
-      "page": null,
-      "snippet": "Insulin levels decreased by −0.97±1.91 µIU/mL (p=0.02) in the resveratrol group."
-    }
+    "Baseline and follow‑up FPG values: 146.8±28.11 vs 138.3±24.88 mg/dL (resveratrol) and 143.97±29.16 vs 143.44±32.19 mg/dL (placebo).",
+    "HbA1c baseline 7.33±0.65 vs 7.38±0.73% (resveratrol) and 7.34±0.55 vs 7.32±0.63% (placebo).",
+    "HOMA‑IR baseline 3.63±1.27 vs 3.26±1.39 (resveratrol) and 3.35±1.26 vs 3.24±2.04 (placebo)."
   ],
-  "missing_fields": [
-    "study_metadata.mean_age",
-    "study_metadata.female_pct",
-    "study_metadata.inclusion_key",
-    "study_metadata.exclusion_key",
-    "arms.n",
-    "outcomes_raw.baseline_mean",
-    "outcomes_raw.baseline_sd",
-    "outcomes_raw.followup_mean",
-    "outcomes_raw.followup_sd",
-    "effects_by_outcome.ci_low",
-    "effects_by_outcome.ci_high",
-    "risk_of_bias.*",
-    "effect.*",
-    "where_found.page"
-  ],
-  "confidence": 0.7,
-  "comment": "Key glycemic effect found, but limited data.",
-  "comment_detailed": "I searched the abstract, methods, and results sections for glycemic outcomes. The study reports a mean change in fasting blood sugar of −7.97 mg/dL (p=0.05) and insulin of −0.97 µIU/mL (p=0.02) after 8 weeks of 1000 mg/day resveratrol. Baseline and follow‑up means, SDs, and confidence intervals were not provided, so those fields are null. Randomization, blinding, and outcome measurement details are not fully described, so risk‑of‑bias fields are null. Page numbers are unavailable from the excerpt, so they are null. The evidence snippets capture the key numerical results and intervention details. Confidence is moderate due to missing numeric details and lack of full tables.}"
+  "confidence": 0.9
 }
